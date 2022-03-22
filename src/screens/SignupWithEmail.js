@@ -12,7 +12,7 @@ import {
     Platform,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Logo from '../assets/img/logo/dark.png'
+import Logo from 'assets/img/logo/dark.png'
 
 import { createStackNavigator } from '@react-navigation/stack'
 

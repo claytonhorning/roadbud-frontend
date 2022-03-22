@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import Car from 'assets/img/car.svg'
 import Logo from 'assets/img/logo/dark.png'
+import { style } from './styles'
 
 const { height, width } = Dimensions.get('window')
 
@@ -66,101 +67,4 @@ export default function Signup() {
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    topContainer: {
-        flex: 2,
-        alignItems: 'center',
-        marginHorizontal: 10,
-        zIndex: 1,
-    },
-    header: {
-        fontSize: 22,
-        fontWeight: '500',
-        color: '#000',
-        marginBottom: 20,
-        opacity: 0.7,
-    },
-    signupOption: {
-        paddingHorizontal: 25,
-        marginVertical: 15,
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        height: 60,
-        borderRadius: 100,
-    },
-    signupFB: {
-        paddingHorizontal: 25,
-        marginVertical: 15,
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#1877F2',
-        height: 60,
-        borderRadius: 100,
-    },
-    signupEmail: {
-        paddingHorizontal: 25,
-        marginVertical: 15,
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#000',
-        height: 60,
-        borderRadius: 100,
-    },
-    signupOptionText: {
-        fontSize: 16,
-        fontWeight: '500',
-        marginLeft: 15,
-    },
-    signupTextLight: {
-        fontSize: 16,
-        fontWeight: '500',
-        marginLeft: 15,
-        color: '#fff',
-    },
-    logo: {
-        resizeMode: 'contain',
-        height: 50,
-        width: 230,
-        marginVertical: 15,
-    },
-    bottomContainer: {
-        flex: 1,
-        marginHorizontal: 10,
-        zIndex: 0,
-    },
-    loginTextRow: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    loginText: {
-        fontSize: 16,
-        color: '#000',
-    },
-    loginTextFlare: {
-        fontSize: 16,
-        color: '#FF7A01',
-    },
-    car: {
-        position: 'absolute',
-        right: -100,
-        bottom: height * 0.1,
-        opacity: 0.7,
-        zIndex: 0,
-    },
-    optionLogo: {
-        height: 34,
-        width: 34,
-    },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-    },
-})
+const styles = StyleSheet.create(style)

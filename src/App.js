@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import SignupWithEmail from './screens/SignupWithEmail'
+import Signup from 'screens/Signup'
 
 export default function App() {
-    return <SignupWithEmail />
+    return <Signup />
 }
