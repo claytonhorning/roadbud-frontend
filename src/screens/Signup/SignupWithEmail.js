@@ -109,6 +109,7 @@ export default function SignupWithEmail() {
                                 <CustomTextInput
                                     style={[styles.input, styles.shadowProp]}
                                     placeholder="Password"
+                                    autoFocus={true}
                                 />
                             </View>
                             <View>
@@ -122,7 +123,17 @@ export default function SignupWithEmail() {
                             </View>
                         </View>
                         <View style={styles.bottomContainer}>
-                            <TouchableOpacity style={styles.submitButton}>
+                            <TouchableOpacity
+                                style={[styles.backButton, styles.shadowProp]}
+                                onPress={() => {
+                                    setStep(1)
+                                }}
+                            >
+                                <Text style={styles.submitText}>Back</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.submitButton, styles.shadowProp]}
+                            >
                                 <Text style={styles.submitText}>Sign Up</Text>
                             </TouchableOpacity>
                         </View>
@@ -174,22 +185,29 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
     },
     submitButton: {
+        flex: 2,
         backgroundColor: '#000',
         height: 60,
         borderRadius: 10,
-        marginbottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    backButton: {
+        flex: 1,
+        backgroundColor: '#ccc',
+        height: 60,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 15,
     },
     submitText: {
         color: '#fff',
         fontSize: 18,
         fontWeight: '600',
     },
-    goBackText: {
-        color: '#047FE8',
-    },
     bottomContainer: {
-        marginBottom: 10,
+        flexDirection: 'row',
+        marginBottom: 15,
     },
 })
