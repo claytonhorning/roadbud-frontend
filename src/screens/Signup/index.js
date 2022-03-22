@@ -28,7 +28,7 @@ export default function Signup() {
                     >
                         <Image
                             style={styles.optionLogo}
-                            source={require('../assets/img/logo/google-logo.png')}
+                            source={require('assets/img/logo/google-logo.png')}
                         />
                         <Text style={styles.signupOptionText}>
                             Sign up with Google
@@ -39,7 +39,7 @@ export default function Signup() {
                     >
                         <Image
                             style={styles.optionLogo}
-                            source={require('../assets/img/logo/fb-logo-white.png')}
+                            source={require('assets/img/logo/fb-logo-white.png')}
                         />
                         <Text style={styles.signupTextLight}>
                             Sign up with Facebook

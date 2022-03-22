@@ -81,7 +81,7 @@ exports.style = {
     car: {
         position: 'absolute',
         right: -100,
-        // bottom: height * 0.1,
+        bottom: 100,
         opacity: 0.7,
         zIndex: 0,
     },
