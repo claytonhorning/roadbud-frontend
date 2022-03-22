@@ -12,7 +12,7 @@ import {
     Platform,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Logo from '../assets/img/logo/dark.png'
+import Logo from 'assets/img/logo/dark.png'
 
 export const CustomTextInput = (props) => {
     const [isFocused, setIsFocused] = useState(false)
