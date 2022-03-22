@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#fff',
         height: 60,
-        borderRadius: 10,
+        borderRadius: 100,
     },
     signupFB: {
         paddingHorizontal: 25,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#1877F2',
         height: 60,
-        borderRadius: 10,
+        borderRadius: 100,
     },
     signupEmail: {
         paddingHorizontal: 25,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#000',
         height: 60,
-        borderRadius: 10,
+        borderRadius: 100,
     },
     signupOptionText: {
         fontSize: 16,
