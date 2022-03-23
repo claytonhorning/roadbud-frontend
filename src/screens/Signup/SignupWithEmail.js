@@ -15,10 +15,11 @@ import {
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Logo from 'assets/img/logo/dark.png'
+import { isDisabled } from 'react-native/Libraries/LogBox/Data/LogBoxData'
 
 const { height, width } = Dimensions.get('window')
 
-export const CustomTextInput = (props) => {
+const CustomTextInput = (props) => {
     const [isFocused, setIsFocused] = useState(false)
     return (
         <TextInput
@@ -33,23 +34,104 @@ export const CustomTextInput = (props) => {
     )
 }
 
+const isValidObjField = (obj) => {
+    return Object.values(obj).every((value) => value.trim())
+}
+
+const updateError = (error, stateUpdater) => {
+    stateUpdater(error)
+    setTimeout(() => {
+        stateUpdater('')
+    }, 2500)
+}
+
+const isValidEmail = (value) => {
+    const regx =
+        /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    return regx.test(value)
+}
+
 export default function SignupWithEmail() {
-    const [keyboardStatus, setKeyboardStatus] = useState(false)
     const [step, setStep] = useState(1)
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+    })
+    const [error, setError] = useState('')
+    const [isStepOneValid, setStepOneValidity] = useState(false)
+    const [isStepTwoValid, setStepTwoValidity] = useState(false)
 
-    useEffect(() => {
-        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardStatus('Shown')
-        })
-        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardStatus('Hidden')
-        })
+    const { fullName, email, password, confirmPassword } = formData
 
-        return () => {
-            showSubscription.remove()
-            hideSubscription.remove()
-        }
-    }, [])
+    const handleOnChangeText = (value, fieldName) => {
+        setFormData({ ...formData, [fieldName]: value })
+    }
+    const isValidForm = () => {
+        if (!isValidObjField(formData))
+            return updateError('All fields required', setError)
+
+        if (!fullName.trim() || fullName.length < 3)
+            return updateError('Invalid Name', setError)
+
+        if (!isValidEmail(email)) return updateError('Invalid Email', setError)
+
+        if (!password.trim() || password.length < 8)
+            return updateError(
+                'Password must be more than 8 characters.',
+                setError
+            )
+
+        if (password !== confirmPassword)
+            return updateError('Password does not match', setError)
+
+        return true
+    }
+
+    console.log(password, confirmPassword)
+
+    const isValidStepOne = () => {
+        if (!fullName.trim() || fullName.length < 3)
+            return updateError(
+                'Invalid Name',
+                setError,
+                setStepOneValidity(false)
+            )
+
+        if (!isValidEmail(email))
+            return updateError(
+                'Invalid Email',
+                setError,
+                setStepOneValidity(false)
+            )
+        setStepOneValidity(true)
+        return true
+    }
+
+    const isValidStepTwo = () => {
+        if (!password.trim() || password.length < 8)
+            return updateError(
+                'Password must be more than 8 characters.',
+                setError,
+                setStepTwoValidity(false)
+            )
+
+        if (password !== confirmPassword)
+            return updateError(
+                'Password does not match',
+                setError,
+                setStepTwoValidity(false)
+            )
+
+        setStepTwoValidity(true)
+        return true
+    }
+    console.log(isStepTwoValid)
+
+    const submitForm = () => {
+        console.log('Form submitted')
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -70,8 +152,16 @@ export default function SignupWithEmail() {
                                     style={[styles.input, styles.shadowProp]}
                                     placeholder="Full Name"
                                     autoFocus={true}
+                                    value={fullName}
+                                    onChangeText={(value) =>
+                                        handleOnChangeText(value, 'fullName')
+                                    }
                                 />
+                                {error ? (
+                                    <Text style={styles.errorMsg}>{error}</Text>
+                                ) : null}
                             </View>
+
                             <View>
                                 <Text style={styles.inputLabel}>
                                     Email Address
@@ -79,14 +169,32 @@ export default function SignupWithEmail() {
                                 <CustomTextInput
                                     style={[styles.input, styles.shadowProp]}
                                     placeholder="Email Address"
+                                    autoCapitalize="none"
+                                    value={email}
+                                    onChangeText={(value) =>
+                                        handleOnChangeText(value, 'email')
+                                    }
                                 />
                             </View>
                         </View>
                         <View style={styles.bottomContainer}>
                             <TouchableOpacity
-                                style={styles.submitButton}
+                                disabled={isStepOneValid ? false : true}
+                                style={
+                                    isStepOneValid
+                                        ? [
+                                              styles.submitButton,
+                                              styles.shadowProp,
+                                          ]
+                                        : [
+                                              styles.submitButtonDisabled,
+                                              styles.shadowProp,
+                                          ]
+                                }
                                 onPress={() => {
-                                    setStep(2)
+                                    {
+                                        isValidStepOne() ? setStep(2) : null
+                                    }
                                 }}
                             >
                                 <Text style={styles.submitText}>Next</Text>
@@ -109,8 +217,16 @@ export default function SignupWithEmail() {
                                 <CustomTextInput
                                     style={[styles.input, styles.shadowProp]}
                                     placeholder="Password"
+                                    autoCapitalize="none"
                                     autoFocus={true}
+                                    value={password}
+                                    onChangeText={(value) =>
+                                        handleOnChangeText(value, 'password')
+                                    }
                                 />
+                                {error ? (
+                                    <Text style={styles.errorMsg}>{error}</Text>
+                                ) : null}
                             </View>
                             <View>
                                 <Text style={styles.inputLabel}>
@@ -119,6 +235,14 @@ export default function SignupWithEmail() {
                                 <CustomTextInput
                                     style={[styles.input, styles.shadowProp]}
                                     placeholder="Confirm Password"
+                                    autoCapitalize="none"
+                                    value={confirmPassword}
+                                    onChangeText={(value) =>
+                                        handleOnChangeText(
+                                            value,
+                                            'confirmPassword'
+                                        )
+                                    }
                                 />
                             </View>
                         </View>
@@ -132,7 +256,18 @@ export default function SignupWithEmail() {
                                 <Text style={styles.submitText}>Back</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[styles.submitButton, styles.shadowProp]}
+                                disabled={isStepTwoValid ? false : true}
+                                style={
+                                    isStepTwoValid
+                                        ? [
+                                              styles.submitButton,
+                                              styles.shadowProp,
+                                          ]
+                                        : [
+                                              styles.submitButtonDisabled,
+                                              styles.shadowProp,
+                                          ]
+                                }
                             >
                                 <Text style={styles.submitText}>Sign Up</Text>
                             </TouchableOpacity>
@@ -192,6 +327,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    submitButtonDisabled: {
+        flex: 2,
+        backgroundColor: '#ccc',
+        height: 60,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     backButton: {
         flex: 1,
         backgroundColor: '#ccc',
@@ -209,5 +352,9 @@ const styles = StyleSheet.create({
     bottomContainer: {
         flexDirection: 'row',
         marginBottom: 15,
+    },
+    errorMsg: {
+        color: '#FF9494',
+        marginBottom: 10,
     },
 })
