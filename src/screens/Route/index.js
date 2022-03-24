@@ -7,7 +7,7 @@ import {
     TextInput,
 } from 'react-native'
 import React from 'react'
-import RouteInput from '../../components/RouteInput'
+import RouteInput from '../../components/Inputs/RouteInput'
 
 import LocationFlatlist from '../../components/RouteLocation/LocationFlatlist'
 
@@ -21,7 +21,10 @@ export default function RouteScreen() {
     // If there is another object in array, next location = true
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+                style={styles.content}
+                showsVerticalScrollIndicator={false}
+            >
                 <RouteInput />
                 <Text style={styles.eventCounter}>9 events</Text>
 
@@ -47,6 +50,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    content: {
         marginLeft: 20,
     },
     eventCounter: {
