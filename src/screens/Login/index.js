@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     signUpTextFlare: {
-        color: '#FFA071',
+        color: '#FF7A01',
         fontWeight: '600',
     },
 })
