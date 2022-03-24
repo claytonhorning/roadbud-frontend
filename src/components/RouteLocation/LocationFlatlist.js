@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
 import React from 'react'
 import LocationInfo from './LocationInfo'
-import RouteEvent from '../RouteLocation/RouteEvent'
+import RouteEvent from './RouteEvent/RouteEvent'
 
 const eventData = [
     {
