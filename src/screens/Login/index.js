@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         color: '#000',
         opacity: 0.4,
-        marginBottom: 15,
+        marginBottom: 30,
     },
     logo: {
         resizeMode: 'contain',
