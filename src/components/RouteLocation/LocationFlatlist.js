@@ -50,6 +50,7 @@ export default function index({ location, nextLocation, numEvents }) {
                             timeCreated={event.time}
                             dateCreated={event.date}
                             userCreated={event.user}
+                            isCDOT={event.cdot}
                         />
                     )
                 })}
