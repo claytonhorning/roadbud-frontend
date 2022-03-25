@@ -11,9 +11,9 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		7A58237701721C45B8380BD3 /* libPods-roadbud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3943283195E7859BFE569C52 /* libPods-roadbud.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		B769DE81591367C358C247A7 /* libPods-roadbud-roadbudTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA44D48362D52F12E620C1 /* libPods-roadbud-roadbudTests.a */; };
-		C69AD53962C8402A52D02843 /* libPods-roadbud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAE150B74DF99E5715912042 /* libPods-roadbud.a */; };
+		B36DAFCB3FF6CFAFBA5CD5D0 /* libPods-roadbud-roadbudTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D380686CA5119E3F177B03A /* libPods-roadbud-roadbudTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,20 +30,20 @@
 		00E356EE1AD99517003FC87E /* roadbudTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = roadbudTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* roadbudTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = roadbudTests.m; sourceTree = "<group>"; };
-		092C00B713584C4529F07C7C /* Pods-roadbud-roadbudTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud-roadbudTests.release.xcconfig"; path = "Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* roadbud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = roadbud.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = roadbud/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = roadbud/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = roadbud/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = roadbud/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = roadbud/main.m; sourceTree = "<group>"; };
-		6177A2F2052B7A8B5F751958 /* Pods-roadbud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud.release.xcconfig"; path = "Target Support Files/Pods-roadbud/Pods-roadbud.release.xcconfig"; sourceTree = "<group>"; };
+		3943283195E7859BFE569C52 /* libPods-roadbud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-roadbud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D380686CA5119E3F177B03A /* libPods-roadbud-roadbudTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-roadbud-roadbudTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = roadbud/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9799672232970C1886837DBD /* Pods-roadbud-roadbudTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud-roadbudTests.debug.xcconfig"; path = "Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests.debug.xcconfig"; sourceTree = "<group>"; };
-		AFFA44D48362D52F12E620C1 /* libPods-roadbud-roadbudTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-roadbud-roadbudTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAE150B74DF99E5715912042 /* libPods-roadbud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-roadbud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E0856FDB4F2FF506462E30EA /* Pods-roadbud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud.debug.xcconfig"; path = "Target Support Files/Pods-roadbud/Pods-roadbud.debug.xcconfig"; sourceTree = "<group>"; };
+		92751FA791634D561B6A3DBC /* Pods-roadbud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud.debug.xcconfig"; path = "Target Support Files/Pods-roadbud/Pods-roadbud.debug.xcconfig"; sourceTree = "<group>"; };
+		A8AE7531F076096FAEAB0A91 /* Pods-roadbud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud.release.xcconfig"; path = "Target Support Files/Pods-roadbud/Pods-roadbud.release.xcconfig"; sourceTree = "<group>"; };
+		E0E71B45F73A4016B611E8C6 /* Pods-roadbud-roadbudTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud-roadbudTests.debug.xcconfig"; path = "Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FFB535F0D9BE721074A559AF /* Pods-roadbud-roadbudTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-roadbud-roadbudTests.release.xcconfig"; path = "Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B769DE81591367C358C247A7 /* libPods-roadbud-roadbudTests.a in Frameworks */,
+				B36DAFCB3FF6CFAFBA5CD5D0 /* libPods-roadbud-roadbudTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C69AD53962C8402A52D02843 /* libPods-roadbud.a in Frameworks */,
+				7A58237701721C45B8380BD3 /* libPods-roadbud.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				CAE150B74DF99E5715912042 /* libPods-roadbud.a */,
-				AFFA44D48362D52F12E620C1 /* libPods-roadbud-roadbudTests.a */,
+				3943283195E7859BFE569C52 /* libPods-roadbud.a */,
+				7D380686CA5119E3F177B03A /* libPods-roadbud-roadbudTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,12 +140,11 @@
 		FB558AB100E2457062E0F3E0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E0856FDB4F2FF506462E30EA /* Pods-roadbud.debug.xcconfig */,
-				6177A2F2052B7A8B5F751958 /* Pods-roadbud.release.xcconfig */,
-				9799672232970C1886837DBD /* Pods-roadbud-roadbudTests.debug.xcconfig */,
-				092C00B713584C4529F07C7C /* Pods-roadbud-roadbudTests.release.xcconfig */,
+				92751FA791634D561B6A3DBC /* Pods-roadbud.debug.xcconfig */,
+				A8AE7531F076096FAEAB0A91 /* Pods-roadbud.release.xcconfig */,
+				E0E71B45F73A4016B611E8C6 /* Pods-roadbud-roadbudTests.debug.xcconfig */,
+				FFB535F0D9BE721074A559AF /* Pods-roadbud-roadbudTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -156,12 +155,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "roadbudTests" */;
 			buildPhases = (
-				1705CC0A6AB2D2EC00C1A2D6 /* [CP] Check Pods Manifest.lock */,
+				A18F73FDF69A92D4A8F93C98 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				7C8955DCBAFFE95D89DDD811 /* [CP] Embed Pods Frameworks */,
-				78AA3C9D225E4B23DBB1F7CB /* [CP] Copy Pods Resources */,
+				DBABBAC102D8C540CC94A8D4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -177,14 +175,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "roadbud" */;
 			buildPhases = (
-				920D79FCCCD58FEDF8B7602A /* [CP] Check Pods Manifest.lock */,
+				1F3E3B79E83162458CEE8010 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				F7B3ABF8993B43ADDFE65D21 /* [CP] Embed Pods Frameworks */,
-				886B874FA9C396422A93A634 /* [CP] Copy Pods Resources */,
+				544ABECB4813CBD2BF90CC91 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -265,80 +262,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		1705CC0A6AB2D2EC00C1A2D6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-roadbud-roadbudTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		78AA3C9D225E4B23DBB1F7CB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7C8955DCBAFFE95D89DDD811 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		886B874FA9C396422A93A634 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		920D79FCCCD58FEDF8B7602A /* [CP] Check Pods Manifest.lock */ = {
+		1F3E3B79E83162458CEE8010 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -360,21 +284,60 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F7B3ABF8993B43ADDFE65D21 /* [CP] Embed Pods Frameworks */ = {
+		544ABECB4813CBD2BF90CC91 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-roadbud/Pods-roadbud-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A18F73FDF69A92D4A8F93C98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-roadbud-roadbudTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DBABBAC102D8C540CC94A8D4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-roadbud-roadbudTests/Pods-roadbud-roadbudTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -429,7 +392,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9799672232970C1886837DBD /* Pods-roadbud-roadbudTests.debug.xcconfig */;
+			baseConfigurationReference = E0E71B45F73A4016B611E8C6 /* Pods-roadbud-roadbudTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -456,7 +419,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 092C00B713584C4529F07C7C /* Pods-roadbud-roadbudTests.release.xcconfig */;
+			baseConfigurationReference = FFB535F0D9BE721074A559AF /* Pods-roadbud-roadbudTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -480,7 +443,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0856FDB4F2FF506462E30EA /* Pods-roadbud.debug.xcconfig */;
+			baseConfigurationReference = 92751FA791634D561B6A3DBC /* Pods-roadbud.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -506,7 +469,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6177A2F2052B7A8B5F751958 /* Pods-roadbud.release.xcconfig */;
+			baseConfigurationReference = A8AE7531F076096FAEAB0A91 /* Pods-roadbud.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

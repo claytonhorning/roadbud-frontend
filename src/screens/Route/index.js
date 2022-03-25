@@ -32,6 +32,7 @@ export default function RouteScreen() {
                     return (
                         <View style={styles.locationContainer}>
                             <LocationFlatlist
+                                key={place.id}
                                 numEvents={place.events}
                                 location={place.name}
                                 nextLocation={

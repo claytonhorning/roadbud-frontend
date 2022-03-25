@@ -6,7 +6,7 @@ import RouteEvent from './RouteEvent/RouteEvent'
 const eventData = [
     {
         id: 1,
-        name: 'Herd of Elk on the Road in the Canyon',
+        name: 'Leo',
         posts: 2,
         date: '3/18',
         time: '8:15 AM',
@@ -45,6 +45,7 @@ export default function index({ location, nextLocation, numEvents }) {
                 {eventData.map((event) => {
                     return (
                         <RouteEvent
+                            key={event.id}
                             eventName={event.name}
                             numPosts={event.posts}
                             timeCreated={event.time}
