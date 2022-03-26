@@ -1,7 +1,36 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+
+const eventData = [
+    {
+        id: 1,
+        name: 'Landslide in Glenwood Springs Canyon',
+        latitude: 39.4780483,
+        longitude: -107.27061,
+        eventCount: 3,
+        isCDOT: false,
+    },
+    {
+        id: 2,
+        name: 'Road work on HWY 82 in Glenwood',
+        latitude: 39.580483,
+        longitude: -107.27061,
+        eventCount: 3,
+        isCDOT: false,
+    },
+    {
+        id: 3,
+        name: 'Crash in Glenwood Canyon no Estimated time of re-opening',
+        latitude: 39.5940023,
+        longitude: -107.1745141,
+        eventCount: 3,
+        isCDOT: false,
+    },
+]
+
+//TODO: Setup my location redux
 
 const MapScreen = () => {
     return (
@@ -14,7 +43,22 @@ const MapScreen = () => {
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
-            />
+            >
+                {eventData.map((event) => (
+                    <Marker
+                        key={event.id}
+                        coordinate={{
+                            longitude: event.longitude,
+                            latitude: event.latitude,
+                        }}
+                        title={event.name}
+                        image={{
+                            uri: `cdot-marker`,
+                        }}
+                        style={{ height: 50, width: 50 }}
+                    />
+                ))}
+            </MapView>
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.iconWrapper}>
                     <Icon style={styles.iconButton} name="cloud-rain" />
@@ -36,24 +80,29 @@ const styles = StyleSheet.create({
     },
     bottomButtonsContainer: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 30,
         right: 20,
     },
     iconWrapper: {
+        marginTop: 12,
+        flex: 1,
+        alignSelf: 'center',
         height: 60,
         width: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
         borderRadius: 30,
     },
     iconButton: {
-        color: '#FF7F0A',
+        color: '#fff',
         fontSize: 20,
     },
     iconButtonText: {
+        marginTop: 4,
         fontSize: 12,
         fontWeight: '600',
+        textAlign: 'center',
     },
 })
 
