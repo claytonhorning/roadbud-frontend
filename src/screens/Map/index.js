@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const eventData = [
     {
@@ -34,7 +35,7 @@ const eventData = [
 
 const MapScreen = () => {
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <MapView
                 style={styles.container}
                 initialRegion={{
@@ -59,6 +60,21 @@ const MapScreen = () => {
                     />
                 ))}
             </MapView>
+            <View style={styles.inputContainer}>
+                <MaterialIcon
+                    name="magnify"
+                    style={{ fontSize: 25, marginRight: 10, color: '#4B4B4B' }}
+                />
+                <Text
+                    style={{ marginRight: 5, fontWeight: '500', opacity: 0.5 }}
+                >
+                    Location:
+                </Text>
+                <TextInput
+                    autoCorrect={false}
+                    placeholder="Glenwood Springs, CO"
+                />
+            </View>
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.iconWrapper}>
                     <Icon style={styles.iconButton} name="cloud-rain" />
@@ -77,6 +93,20 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
+    },
+    inputContainer: {
+        position: 'absolute',
+        alignSelf: 'center',
+        width: '90%',
+        marginHorizontal: 20,
+        flexDirection: 'row',
+        top: 40,
+        height: 55,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginTop: 20,
+        paddingHorizontal: 20,
+        alignItems: 'center',
     },
     bottomButtonsContainer: {
         position: 'absolute',
@@ -103,6 +133,9 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '600',
         textAlign: 'center',
+    },
+    locationInput: {
+        height: 50,
     },
 })
 
