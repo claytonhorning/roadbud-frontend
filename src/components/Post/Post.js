@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         fontSize: 14,
-        fontWeight: '500',
         opacity: 0.5,
     },
     header: {

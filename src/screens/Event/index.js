@@ -57,14 +57,7 @@ const eventData = [
 
 export default function EventScreen({ route }) {
     const { itemId } = route.params
-
-    function findPostData(event) {
-        return (event.id = itemId)
-    }
-
     const event = eventData.find(({ id }) => id == itemId)
-
-    console.log(event.posts)
 
     // Take itemid and query database to get corresponding posts
     return (
@@ -128,6 +121,7 @@ export default function EventScreen({ route }) {
                         user={post.user}
                     />
                 ))}
+                <View style={{ paddingTop: 50 }} />
             </ScrollView>
         </SafeAreaView>
     )
