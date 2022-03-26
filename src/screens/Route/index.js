@@ -30,8 +30,9 @@ export default function RouteScreen() {
 
                 {locations.map((place, index) => {
                     return (
-                        <View style={styles.locationContainer}>
+                        <View key={index} style={styles.locationContainer}>
                             <LocationFlatlist
+                                key={place.id}
                                 numEvents={place.events}
                                 location={place.name}
                                 nextLocation={
