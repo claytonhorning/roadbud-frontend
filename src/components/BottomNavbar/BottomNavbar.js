@@ -6,6 +6,7 @@ import AccountScreen from '../../screens/Account'
 import NotificationsScreen from '../../screens/Notifications'
 import PostScreen from '../../screens/Post'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import RouteScreenNavigator from '../RouteScreenNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -18,7 +19,7 @@ export default function BottomNavbar() {
         >
             <Tab.Screen
                 name="Route"
-                component={RouteScreen}
+                component={RouteScreenNavigator}
                 options={{
                     headerShown: false,
                     tabBarActiveTintColor: '#fff',
