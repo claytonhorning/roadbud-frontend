@@ -1,5 +1,12 @@
-import { View, Text, StyleSheet, TextInput, Platform } from 'react-native'
-import React from 'react'
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Platform,
+    TouchableOpacity,
+} from 'react-native'
+import React, { useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -34,6 +41,10 @@ const eventData = [
 //TODO: Setup my location redux, clickable event markers, toggle event types under input
 
 const MapScreen = () => {
+    const [cdotToggled, setCdotToggled] = useState(true)
+    const [roadbudToggled, setRoadbudToggled] = useState(true)
+    const [videoToggled, setVideoToggled] = useState(true)
+
     return (
         <View style={{ flex: 1 }}>
             <MapView
@@ -61,21 +72,72 @@ const MapScreen = () => {
                     />
                 ))}
             </MapView>
-            <View style={styles.inputContainer}>
-                <MaterialIcon
-                    name="magnify"
-                    style={{ fontSize: 25, marginRight: 10, color: '#4B4B4B' }}
-                />
-                <Text
-                    style={{ marginRight: 5, fontWeight: '500', opacity: 0.5 }}
-                >
-                    Location:
-                </Text>
-                <TextInput
-                    autoCorrect={false}
-                    placeholder="Glenwood Springs, CO"
-                />
+            <View style={styles.topContainer}>
+                <View style={styles.inputContainer}>
+                    <MaterialIcon
+                        name="magnify"
+                        style={{
+                            fontSize: 25,
+                            marginRight: 10,
+                            color: '#4B4B4B',
+                        }}
+                    />
+                    <Text
+                        style={{
+                            marginRight: 5,
+                            fontWeight: '500',
+                            opacity: 0.5,
+                        }}
+                    >
+                        Location:
+                    </Text>
+                    <TextInput
+                        autoCorrect={false}
+                        placeholder="Glenwood Springs, CO"
+                    />
+                </View>
+                <View style={styles.chipsContainer}>
+                    <TouchableOpacity
+                        onPress={() => setCdotToggled(!cdotToggled)}
+                        style={
+                            cdotToggled
+                                ? styles.filledChip
+                                : styles.unfilledChip
+                        }
+                    >
+                        <Text style={{ color: cdotToggled ? '#fff' : '#000' }}>
+                            CDOT
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setRoadbudToggled(!roadbudToggled)}
+                        style={
+                            roadbudToggled
+                                ? styles.filledChip
+                                : styles.unfilledChip
+                        }
+                    >
+                        <Text
+                            style={{ color: roadbudToggled ? '#fff' : '#000' }}
+                        >
+                            Roadbud
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setVideoToggled(!videoToggled)}
+                        style={
+                            videoToggled
+                                ? styles.filledChip
+                                : styles.unfilledChip
+                        }
+                    >
+                        <Text style={{ color: videoToggled ? '#fff' : '#000' }}>
+                            Video
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
+
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.iconWrapper}>
                     <Icon style={styles.iconButton} name="cloud-rain" />
@@ -95,13 +157,16 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    inputContainer: {
+    topContainer: {
         position: 'absolute',
         alignSelf: 'center',
         width: '90%',
         marginHorizontal: 20,
-        flexDirection: 'row',
+        flexDirection: 'column',
         top: 40,
+    },
+    inputContainer: {
+        flexDirection: 'row',
         height: 55,
         backgroundColor: '#fff',
         borderRadius: 10,
@@ -137,6 +202,32 @@ const styles = StyleSheet.create({
     },
     locationInput: {
         height: 50,
+    },
+    chipsContainer: {
+        flex: 1,
+        marginTop: 10,
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+    },
+    filledChip: {
+        backgroundColor: '#000',
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+        paddingVertical: 3,
+        borderRadius: 20,
+        marginRight: 10,
+    },
+    unfilledChip: {
+        backgroundColor: '#fff',
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+        paddingVertical: 3,
+        borderRadius: 20,
+        marginRight: 10,
     },
 })
 
