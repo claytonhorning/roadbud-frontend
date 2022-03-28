@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 export default function RouteEvent({
@@ -8,10 +8,19 @@ export default function RouteEvent({
     timeCreated,
     dateCreated,
     userCreated,
+    navigation,
 }) {
     const CDOTEvent = () => {
         return (
-            <View style={[styles.CDOTcontainer, styles.shadowProp]}>
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate('EventScreen', {
+                        itemId: 1,
+                        otherParam: 'anything you want here',
+                    })
+                }
+                style={[styles.CDOTcontainer, styles.shadowProp]}
+            >
                 <View style={styles.dateTimeContainer}>
                     <Text style={styles.CDOTdescriptionText}>
                         {timeCreated}
@@ -31,12 +40,19 @@ export default function RouteEvent({
                         </Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
     const Event = () => {
         return (
-            <View style={[styles.container, styles.shadowProp]}>
+            <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate('EventScreen', {
+                        itemId: 1,
+                    })
+                }
+                style={[styles.container, styles.shadowProp]}
+            >
                 <View style={styles.dateTimeContainer}>
                     <Text style={styles.descriptionText}>{timeCreated}</Text>
                     <Text style={styles.descriptionText}>{dateCreated}</Text>
@@ -52,10 +68,18 @@ export default function RouteEvent({
                         </Text>
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
-    return <>{isCDOT ? <CDOTEvent /> : <Event />}</>
+    return (
+        <>
+            {isCDOT ? (
+                <CDOTEvent navigation={navigation} />
+            ) : (
+                <Event navigation={navigation} />
+            )}
+        </>
+    )
 }
 
 const styles = StyleSheet.create({

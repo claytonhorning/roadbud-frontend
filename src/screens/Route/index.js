@@ -17,7 +17,7 @@ const locations = [
     { id: 3, name: 'Silverthorne', events: 3 },
 ]
 
-export default function RouteScreen() {
+export default function RouteScreen({ navigation }) {
     // If there is another object in array, next location = true
     return (
         <SafeAreaView style={styles.container}>
@@ -32,6 +32,7 @@ export default function RouteScreen() {
                     return (
                         <View key={index} style={styles.locationContainer}>
                             <LocationFlatlist
+                                navigation={navigation}
                                 key={place.id}
                                 numEvents={place.events}
                                 location={place.name}

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Platform } from 'react-native'
 import React from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -31,7 +31,7 @@ const eventData = [
     },
 ]
 
-//TODO: Setup my location redux
+//TODO: Setup my location redux, clickable event markers, toggle event types under input
 
 const MapScreen = () => {
     return (
@@ -44,6 +44,7 @@ const MapScreen = () => {
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
+                showsCompass={false}
             >
                 {eventData.map((event) => (
                     <Marker

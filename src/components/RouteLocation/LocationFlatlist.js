@@ -6,7 +6,7 @@ import RouteEvent from './RouteEvent/RouteEvent'
 const eventData = [
     {
         id: 1,
-        name: 'Leo',
+        name: 'Landslide in Glenwood Springs Canyon',
         posts: 2,
         date: '3/18',
         time: '8:15 AM',
@@ -34,7 +34,12 @@ const eventData = [
     },
 ]
 
-export default function index({ location, nextLocation, numEvents }) {
+export default function index({
+    location,
+    nextLocation,
+    numEvents,
+    navigation,
+}) {
     return (
         <View>
             <LocationInfo numEvents={numEvents} location={location} />
@@ -45,6 +50,7 @@ export default function index({ location, nextLocation, numEvents }) {
                 {eventData.map((event) => {
                     return (
                         <RouteEvent
+                            navigation={navigation}
                             key={event.id}
                             eventName={event.name}
                             numPosts={event.posts}
