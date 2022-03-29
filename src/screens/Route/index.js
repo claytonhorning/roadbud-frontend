@@ -21,28 +21,32 @@ export default function RouteScreen({ navigation }) {
     // If there is another object in array, next location = true
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView
-                style={styles.content}
-                showsVerticalScrollIndicator={false}
-            >
+            <View style={{ marginHorizontal: 20 }}>
                 <RouteInput />
-                <Text style={styles.eventCounter}>9 events</Text>
+            </View>
 
-                {locations.map((place, index) => {
-                    return (
-                        <View key={index} style={styles.locationContainer}>
-                            <LocationFlatlist
-                                navigation={navigation}
-                                key={place.id}
-                                numEvents={place.events}
-                                location={place.name}
-                                nextLocation={
-                                    locations.length == index + 1 ? false : true
-                                }
-                            />
-                        </View>
-                    )
-                })}
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.content}>
+                    <Text style={styles.eventCounter}>9 events</Text>
+
+                    {locations.map((place, index) => {
+                        return (
+                            <View key={index} style={styles.locationContainer}>
+                                <LocationFlatlist
+                                    navigation={navigation}
+                                    key={place.id}
+                                    numEvents={place.events}
+                                    location={place.name}
+                                    nextLocation={
+                                        locations.length == index + 1
+                                            ? false
+                                            : true
+                                    }
+                                />
+                            </View>
+                        )
+                    })}
+                </View>
             </ScrollView>
         </SafeAreaView>
     )

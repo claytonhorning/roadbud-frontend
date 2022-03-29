@@ -27,15 +27,12 @@ export default function RouteInput({ ...props }) {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        flex: 1,
         flexDirection: 'column',
         backgroundColor: '#f2f2f2',
         borderRadius: 10,
         marginTop: 20,
-        marginRight: 20,
     },
     topInputContainer: {
-        flex: 1,
         flexDirection: 'row',
         height: 55,
         alignItems: 'center',
@@ -44,7 +41,6 @@ const styles = StyleSheet.create({
         borderColor: '#EAEAEA',
     },
     bottomInputContainer: {
-        flex: 1,
         flexDirection: 'row',
         height: 55,
         alignItems: 'center',
