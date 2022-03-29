@@ -28,6 +28,7 @@ const PostScreen = ({ navigation }) => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate('PostToEventScreen')}
                     style={[styles.postToEventButton, styles.shadowProp]}
                 >
                     <Text

@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import {
+    View,
+    Text,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+} from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -7,6 +13,8 @@ const Input = ({
     iconName,
     error,
     password,
+    rightButton,
+    largeInput,
     onFocus = () => {},
     ...props
 }) => {
@@ -17,7 +25,9 @@ const Input = ({
             <Text style={styles.inputLabel}>{label}</Text>
             <View
                 style={[
-                    styles.inputContainer,
+                    largeInput
+                        ? styles.largeInputContainer
+                        : styles.inputContainer,
                     {
                         borderColor: error
                             ? 'red'
@@ -29,7 +39,7 @@ const Input = ({
             >
                 <Icon
                     name={iconName}
-                    style={{ fontSize: 22, color: '#FF7A01', marginRight: 10 }}
+                    style={{ fontSize: 22, color: '#FF7A01', marginRight: 15 }}
                 />
                 <TextInput
                     secureTextEntry={hidePassword}
@@ -51,6 +61,13 @@ const Input = ({
                         name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
                     />
                 )}
+                {rightButton && (
+                    <TouchableOpacity style={styles.rightButton}>
+                        <Text style={{ color: '#fff', fontWeight: '600' }}>
+                            {rightButton}
+                        </Text>
+                    </TouchableOpacity>
+                )}
             </View>
             {error && (
                 <Text style={{ color: 'red', fontSize: 12, marginTop: 7 }}>
@@ -65,16 +82,31 @@ const styles = StyleSheet.create({
     inputContainer: {
         height: 55,
         backgroundColor: '#F8F8F8',
-        paddingHorizontal: 20,
         fontSize: 18,
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 0.5,
     },
+    largeInputContainer: {
+        height: 110,
+        backgroundColor: '#F8F8F8',
+        fontSize: 18,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        borderWidth: 0.5,
+        paddingTop: 10,
+    },
     inputLabel: {
         color: '#000',
         fontSize: 14,
         marginBottom: 5,
+    },
+    rightButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        backgroundColor: '#047FE8',
+        paddingHorizontal: 10,
     },
 })
 
