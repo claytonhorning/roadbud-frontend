@@ -4,7 +4,6 @@ import {
     SafeAreaView,
     StyleSheet,
     TouchableOpacity,
-    Button,
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -38,7 +37,7 @@ const PostScreen = ({ navigation }) => {
                             fontWeight: '600',
                         }}
                     >
-                        Post to event
+                        Add to existing event
                     </Text>
                 </TouchableOpacity>
                 <View style={[styles.eventNearContainer, styles.shadowProp]}>
