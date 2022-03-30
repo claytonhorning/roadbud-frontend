@@ -11,7 +11,7 @@ import React, { useState } from 'react'
 import RouteInput from '../../components/Inputs/RouteInput'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-export default function AddNotificationModal({ visible }) {
+export default function AddNotificationModal({ visible, onClosePress }) {
     const [selectedChips, setSelectedChips] = useState([])
     const [unselectedChips, setUnselectedChips] = useState(['CDOT', 'Roadbud'])
 
@@ -28,9 +28,6 @@ export default function AddNotificationModal({ visible }) {
             setSelectedChips([...selectedChips, name])
         }
     }
-    console.log(unselectedChips)
-
-    unselectedChips.map((x) => console.log(x))
 
     const AddChip = ({ name }) => (
         <TouchableOpacity
@@ -38,10 +35,16 @@ export default function AddNotificationModal({ visible }) {
             style={styles.chip}
         >
             <Text style={{ color: '#fff', fontWeight: '600' }}>{name}</Text>
+
             <Icon
-                style={{ color: 'green', fontSize: 16, marginLeft: 5 }}
+                style={{
+                    color: '#2ABC2E',
+                    fontSize: 16,
+                    marginLeft: 5,
+                }}
                 name="plus-circle"
             />
+            <View style={styles.backgroundCircle} />
         </TouchableOpacity>
     )
 
@@ -52,21 +55,41 @@ export default function AddNotificationModal({ visible }) {
         >
             <Text style={{ color: '#fff', fontWeight: '600' }}>{name}</Text>
             <Icon
-                style={{ color: 'red', fontSize: 16, marginLeft: 5 }}
+                style={{ color: '#F50000', fontSize: 16, marginLeft: 5 }}
                 name="minus-circle"
             />
+            <View style={styles.backgroundCircle} />
         </TouchableOpacity>
     )
 
     return (
         <Modal visible={visible} animationType="slide" transparent={true}>
-            <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.container}>
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 >
                     <View style={styles.modalContainer}>
                         <View style={styles.content}>
-                            <Text style={styles.header}>New Notification</Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <Text style={styles.header}>
+                                    New Notification
+                                </Text>
+                                <TouchableOpacity onPress={onClosePress}>
+                                    <Icon
+                                        style={{
+                                            color: '#3d3d3d',
+                                            fontSize: 25,
+                                            marginLeft: 5,
+                                        }}
+                                        name="close"
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             <Text style={{ opacity: 0.5, marginTop: 10 }}>
                                 Receive alerts when an event is posted along
                                 this route.
@@ -107,7 +130,7 @@ export default function AddNotificationModal({ visible }) {
                         </View>
                     </View>
                 </KeyboardAvoidingView>
-            </ScrollView>
+            </View>
         </Modal>
     )
 }
@@ -149,5 +172,14 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginRight: 10,
         marginVertical: 10,
+    },
+    backgroundCircle: {
+        height: 10,
+        width: 10,
+        zIndex: -1,
+        position: 'absolute',
+        right: 12,
+        borderRadius: 10,
+        backgroundColor: '#fff',
     },
 })
