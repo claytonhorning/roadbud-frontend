@@ -9,18 +9,26 @@ import {
 import React, { useState } from 'react'
 import NotificationToggler from '../../components/Notification/NotificationToggler'
 import AddNotificationModal from '../../components/Notification/AddNotificationModal'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const NotificationsScreen = () => {
     const [modalVisible, setModalVisible] = useState(false)
+    const [editToggled, setEditToggled] = useState(false)
 
     return (
         <SafeAreaView style={styles.container}>
-            <AddNotificationModal visible={modalVisible} />
+            <AddNotificationModal
+                visible={modalVisible}
+                onClosePress={() => setModalVisible(!modalVisible)}
+            />
             <ScrollView style={styles.content}>
                 <View style={styles.topContainer}>
                     <Text style={styles.header}>Notifications</Text>
                     <View style={styles.buttonsContainer}>
-                        <TouchableOpacity style={styles.editButton}>
+                        <TouchableOpacity
+                            onPress={() => setEditToggled(!editToggled)}
+                            style={styles.editButton}
+                        >
                             <Text style={{ color: '#fff', fontWeight: '600' }}>
                                 Edit
                             </Text>
@@ -35,11 +43,43 @@ const NotificationsScreen = () => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <NotificationToggler
-                    cdotNotifications={true}
-                    roadbudNotifications={true}
-                    routeName="Glenwood to Denver"
-                />
+                {/* Map through notifications */}
+                <View style={{ flexDirection: 'row' }}>
+                    <NotificationToggler
+                        cdotNotifications={true}
+                        roadbudNotifications={true}
+                        routeName="Glenwood to Denver"
+                    />
+                    {editToggled && (
+                        <View
+                            style={{
+                                flexDirection: 'column',
+                                justifyContent: 'space-around',
+                            }}
+                        >
+                            <TouchableOpacity>
+                                <Icon
+                                    style={{
+                                        marginLeft: 25,
+                                        fontSize: 25,
+                                        color: '#3d3d3d',
+                                    }}
+                                    name="note-edit"
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Icon
+                                    style={{
+                                        marginLeft: 25,
+                                        fontSize: 25,
+                                        color: '#F50000',
+                                    }}
+                                    name="delete"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
