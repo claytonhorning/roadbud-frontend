@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import React from 'react'
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from '../../components/Icon'
 import { TYPOGRAPHY, SHADOWS } from '../../styles'
 const PostScreen = ({ navigation }) => {
     return (
@@ -64,7 +64,7 @@ const PostScreen = ({ navigation }) => {
                         >
                             <Icon
                                 style={{ fontSize: 18, marginRight: 3 }}
-                                name="location-pin"
+                                name="pin"
                             />
                             <Text style={TYPOGRAPHY.paragraph}>3.1 mi.</Text>
                         </View>
