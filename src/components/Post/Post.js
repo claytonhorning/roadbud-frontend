@@ -1,18 +1,19 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
+import { TYPOGRAPHY, SHADOWS } from '../../styles'
 
 export default function Post({ description, imageURI, time, date, user }) {
     return (
-        <View style={[styles.container, styles.shadowProp]}>
+        <View style={styles.container}>
             <View style={styles.descriptionContainer}>
                 <View>
-                    <Text style={styles.descriptionText}>
+                    <Text style={TYPOGRAPHY.detailsLight}>
                         {`${time},`} {date}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.descriptionText}>{user}</Text>
+                    <Text style={TYPOGRAPHY.detailsLight}>{user}</Text>
                     <IconMaterial
                         style={{ fontSize: 25, marginLeft: 5 }}
                         name="dots-horizontal"
@@ -34,22 +35,13 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         marginTop: 30,
         borderRadius: 10,
+        ...SHADOWS.shadowProp,
     },
     descriptionContainer: {
         paddingHorizontal: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-    },
-    descriptionText: {
-        fontSize: 14,
-        opacity: 0.5,
     },
     header: {
         paddingHorizontal: 15,

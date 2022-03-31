@@ -8,12 +8,13 @@ import {
 import React from 'react'
 import Input from '../../components/Inputs/Input'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { TYPOGRAPHY } from '../../styles'
 
 export default function ReportEventScreen() {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.content}>
-                <Text style={styles.header}>Report New Event</Text>
+                <Text style={styles.subheader}>Report New Event</Text>
                 <Input
                     label="Event Title"
                     placeholder="Landslide in Glenwood Canyon"
@@ -23,8 +24,8 @@ export default function ReportEventScreen() {
                     defaultValue="My current location"
                     rightButton={'Find on map'}
                 />
-                <Text style={styles.header}>Post to the New Event</Text>
-                <Text style={{ opacity: 0.5, marginBottom: 15 }}>
+                <Text style={styles.subheader}>Post to the New Event</Text>
+                <Text style={styles.paragraph}>
                     Events need at least one post to describe what's currently
                     happening.
                 </Text>
@@ -104,9 +105,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginHorizontal: 20,
     },
-    header: {
-        fontSize: 20,
-        fontWeight: '600',
+    subheader: {
+        ...TYPOGRAPHY.subheader,
+        marginBottom: 15,
+    },
+    paragraph: {
+        ...TYPOGRAPHY.paragraph,
         marginBottom: 15,
     },
     seperator: {

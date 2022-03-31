@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { TYPOGRAPHY, COLORS, SHADOWS } from '../../../styles'
 
 export default function RouteEvent({
     isCDOT = false,
@@ -19,23 +20,19 @@ export default function RouteEvent({
                         otherParam: 'anything you want here',
                     })
                 }
-                style={[styles.CDOTcontainer, styles.shadowProp]}
+                style={styles.CDOTcontainer}
             >
                 <View style={styles.dateTimeContainer}>
-                    <Text style={styles.CDOTdescriptionText}>
-                        {timeCreated}
-                    </Text>
-                    <Text style={styles.CDOTdescriptionText}>
-                        {dateCreated}
-                    </Text>
+                    <Text style={TYPOGRAPHY.detailsWhite}>{timeCreated}</Text>
+                    <Text style={TYPOGRAPHY.detailsWhite}>{dateCreated}</Text>
                 </View>
                 <View>
                     <Text style={styles.CDOTeventNameText}>{eventName}</Text>
                 </View>
                 <View style={styles.eventInfoContainer}>
-                    <Text style={styles.CDOTdescriptionText}>CDOT</Text>
+                    <Text style={TYPOGRAPHY.detailsWhite}>CDOT</Text>
                     <View style={styles.postChipLight}>
-                        <Text style={{ color: '#000', fontWeight: '600' }}>
+                        <Text style={TYPOGRAPHY.detailsBlack}>
                             {numPosts} posts
                         </Text>
                     </View>
@@ -54,16 +51,16 @@ export default function RouteEvent({
                 style={[styles.container, styles.shadowProp]}
             >
                 <View style={styles.dateTimeContainer}>
-                    <Text style={styles.descriptionText}>{timeCreated}</Text>
-                    <Text style={styles.descriptionText}>{dateCreated}</Text>
+                    <Text style={TYPOGRAPHY.detailsBold}>{timeCreated}</Text>
+                    <Text style={TYPOGRAPHY.detailsBold}>{dateCreated}</Text>
                 </View>
                 <View>
                     <Text style={styles.eventNameText}>{eventName}</Text>
                 </View>
                 <View style={styles.eventInfoContainer}>
-                    <Text style={styles.descriptionText}>CDOT</Text>
+                    <Text style={TYPOGRAPHY.detailsBold}>John B.</Text>
                     <View style={styles.postChipDark}>
-                        <Text style={{ color: '#fff', fontWeight: '700' }}>
+                        <Text style={TYPOGRAPHY.detailsWhite}>
                             {numPosts} posts
                         </Text>
                     </View>
@@ -86,25 +83,27 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         borderRadius: 10,
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.white,
         height: 125,
         width: 240,
         marginVertical: 10,
         marginLeft: 5,
         marginRight: 15,
         padding: 10,
+        ...SHADOWS.shadowProp,
     },
     CDOTcontainer: {
         flex: 1,
         borderRadius: 10,
-        backgroundColor: '#001970',
-        color: '#fff',
+        backgroundColor: COLORS.tertiary,
+        color: COLORS.white,
         height: 125,
         width: 240,
         marginVertical: 10,
         marginLeft: 5,
         marginRight: 15,
         padding: 10,
+        ...SHADOWS.shadowProp,
     },
     dateTimeContainer: {
         flex: 1,
@@ -117,16 +116,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'space-between',
     },
-    descriptionText: {
-        fontSize: 14,
-        opacity: 0.7,
-        fontWeight: '500',
-    },
-    CDOTdescriptionText: {
-        fontSize: 14,
-        fontWeight: '500',
-        color: '#fff',
-    },
     eventNameText: {
         fontSize: 18,
         fontWeight: '500',
@@ -134,14 +123,14 @@ const styles = StyleSheet.create({
     CDOTeventNameText: {
         fontSize: 18,
         fontWeight: '500',
-        color: '#fff',
+        color: COLORS.white,
     },
     postChipDark: {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
-        backgroundColor: '#000',
-        color: '#fff',
+        backgroundColor: COLORS.black,
+        color: COLORS.white,
         height: 22,
         width: 65,
     },
@@ -149,15 +138,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
-        backgroundColor: '#fff',
-        color: '#000',
+        backgroundColor: COLORS.white,
+        color: COLORS.black,
         height: 22,
         width: 65,
-    },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
     },
 })

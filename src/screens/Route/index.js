@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import RouteInput from '../../components/Inputs/RouteInput'
-
+import { TYPOGRAPHY, COLORS } from '../../styles'
 import LocationFlatlist from '../../components/RouteLocation/LocationFlatlist'
 
 const locations = [
@@ -21,11 +21,11 @@ export default function RouteScreen({ navigation }) {
     // If there is another object in array, next location = true
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ marginHorizontal: 20 }}>
-                <RouteInput />
-            </View>
-
             <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ marginHorizontal: 20 }}>
+                    <RouteInput />
+                </View>
+
                 <View style={styles.content}>
                     <Text style={styles.eventCounter}>9 events</Text>
 
@@ -55,15 +55,14 @@ export default function RouteScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.white,
     },
     content: {
         marginLeft: 20,
     },
     eventCounter: {
-        color: '#FF7A01',
+        ...TYPOGRAPHY.primaryText,
         marginVertical: 10,
-        fontWeight: '500',
     },
     locationContainer: {
         paddingBottom: 10,

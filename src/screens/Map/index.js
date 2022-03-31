@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontSize: 12,
         fontWeight: '600',
+        fontFamily: 'IBMPlexSans-Regular',
         textAlign: 'center',
     },
     locationInput: {

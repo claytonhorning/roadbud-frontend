@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react'
 import RouteInput from '../../components/Inputs/RouteInput'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { TYPOGRAPHY } from '../../styles'
 
 export default function AddNotificationModal({ visible, onClosePress }) {
     const [selectedChips, setSelectedChips] = useState([])
@@ -75,7 +76,7 @@ export default function AddNotificationModal({ visible, onClosePress }) {
                                     justifyContent: 'space-between',
                                 }}
                             >
-                                <Text style={styles.header}>
+                                <Text style={TYPOGRAPHY.header}>
                                     New Notification
                                 </Text>
                                 <TouchableOpacity onPress={onClosePress}>
@@ -89,8 +90,8 @@ export default function AddNotificationModal({ visible, onClosePress }) {
                                     />
                                 </TouchableOpacity>
                             </View>
-                            <Text style={{ opacity: 0.5, marginTop: 10 }}>
-                                Receive alerts when an event is posted along
+                            <Text style={styles.paragraph}>
+                                Receive alerts whenever an event is posted along
                                 this route.
                             </Text>
                             <RouteInput />
@@ -99,13 +100,7 @@ export default function AddNotificationModal({ visible, onClosePress }) {
                                     <DeleteChip key={chip} name={chip} />
                                 ))}
                             </View>
-                            <Text
-                                style={{
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    marginTop: 5,
-                                }}
-                            >
+                            <Text style={styles.section}>
                                 Click to add or remove
                             </Text>
 
@@ -121,6 +116,7 @@ export default function AddNotificationModal({ visible, onClosePress }) {
                                         fontSize: 18,
                                         fontWeight: '600',
                                         color: '#fff',
+                                        fontFamily: 'Montserrat-Regular',
                                     }}
                                 >
                                     Add
@@ -149,10 +145,15 @@ const styles = StyleSheet.create({
     content: {
         margin: 20,
     },
-    header: {
-        fontSize: 22,
-        fontWeight: '600',
+    paragraph: {
+        ...TYPOGRAPHY.paragraph,
+        marginTop: 10,
     },
+    section: {
+        ...TYPOGRAPHY.section,
+        marginTop: 5,
+    },
+
     addButton: {
         height: 55,
         alignItems: 'center',

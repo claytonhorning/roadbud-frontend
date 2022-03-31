@@ -4,9 +4,9 @@ export const COLORS = {
     primary: '#FD7A22',
     secondary: '#047FE8',
     tertiary: '#001970',
-    lightGray: '#F0F0F0',
-    mediumGray: '#EBEBEB',
-    darkGray: '#3d3d3d',
+    lightGray: 'rgba(0,0,0,.4)',
+    mediumGray: 'rgba(0,0,0,.6)',
+    darkGray: 'rgba(0,0,0,.8)',
     warning: '#F50000',
     success: '#2ABC2E',
 }

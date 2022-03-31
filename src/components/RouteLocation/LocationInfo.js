@@ -1,21 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { COLORS, TYPOGRAPHY } from '../../styles'
 
 export default function LocationInfo({ location, numEvents }) {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <Text style={styles.header}>{location}</Text>
-                <Icon
-                    name="video"
-                    style={{ fontSize: 20, color: '#047FE8', marginLeft: 15 }}
-                />
+                <Text style={TYPOGRAPHY.subheader}>{location}</Text>
+                <Icon name="video" style={styles.iconStyle} />
                 <Text style={styles.descriptionText}>Video</Text>
-                <Icon
-                    name="white-balance-sunny"
-                    style={{ fontSize: 20, color: '#047FE8', marginLeft: 15 }}
-                />
+                <Icon name="white-balance-sunny" style={styles.iconStyle} />
                 <Text style={styles.descriptionText}>Weather</Text>
             </View>
             <Text style={{ opacity: 0.5 }}>{numEvents} events</Text>
@@ -38,8 +33,14 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     descriptionText: {
+        fontFamily: 'IBMPlexSans-Regular',
         marginLeft: 5,
         fontSize: 14,
-        color: '#047FE8',
+        color: COLORS.secondary,
+    },
+    iconStyle: {
+        fontSize: 20,
+        color: COLORS.secondary,
+        marginLeft: 15,
     },
 })

@@ -10,6 +10,7 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import Post from '../../components/Post/Post'
+import { COLORS, TYPOGRAPHY } from '../../styles'
 
 const eventData = [
     {
@@ -64,13 +65,13 @@ export default function EventScreen({ route }) {
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.content}>
                 <View style={styles.descriptionContainer}>
-                    <Text style={styles.descriptionText}>
+                    <Text style={TYPOGRAPHY.detailsLargeLight}>
                         11:14 AM, March 17
                     </Text>
-                    <Text style={styles.descriptionText}>John Smith</Text>
+                    <Text style={TYPOGRAPHY.detailsLargeLight}>John Smith</Text>
                 </View>
                 <Text style={styles.header}>
-                    Landslide in Glenwood Springs Canyon
+                    Landslide in Glenwood Springs Canyon I-70
                 </Text>
                 <View style={styles.optionsContainer}>
                     <View style={styles.buttonsContainer}>
@@ -104,7 +105,9 @@ export default function EventScreen({ route }) {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.otherInfoContainer}>
-                        <Text style={styles.descriptionText}>3 Posts</Text>
+                        <Text style={TYPOGRAPHY.detailsLargeLight}>
+                            3 Posts
+                        </Text>
                         <IconMaterial
                             name="dots-horizontal"
                             style={{ fontSize: 35, marginLeft: 5 }}
@@ -141,13 +144,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    descriptionText: {
-        fontSize: 16,
-        opacity: 0.5,
-    },
     header: {
         marginVertical: 10,
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: '700',
     },
     optionsContainer: {
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
-        backgroundColor: '#FF7A01',
+        backgroundColor: COLORS.primary,
         height: 35,
         width: 115,
     },
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5,
-        backgroundColor: '#047FE8',
+        backgroundColor: COLORS.secondary,
         height: 35,
         width: 100,
         marginHorizontal: 10,
