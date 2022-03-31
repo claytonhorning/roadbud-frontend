@@ -5,7 +5,6 @@ import {
     Modal,
     TouchableOpacity,
     KeyboardAvoidingView,
-    ScrollView,
 } from 'react-native'
 import React, { useState } from 'react'
 import RouteInput from '../../components/Inputs/RouteInput'

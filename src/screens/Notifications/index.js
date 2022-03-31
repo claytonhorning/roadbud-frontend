@@ -10,6 +10,7 @@ import React, { useState } from 'react'
 import NotificationToggler from '../../components/Notification/NotificationToggler'
 import AddNotificationModal from '../../components/Notification/AddNotificationModal'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { TYPOGRAPHY } from '../../styles'
 
 const NotificationsScreen = () => {
     const [modalVisible, setModalVisible] = useState(false)
@@ -23,7 +24,7 @@ const NotificationsScreen = () => {
             />
             <ScrollView style={styles.content}>
                 <View style={styles.topContainer}>
-                    <Text style={styles.header}>Notifications</Text>
+                    <Text style={TYPOGRAPHY.header}>Notifications</Text>
                     <View style={styles.buttonsContainer}>
                         <TouchableOpacity
                             onPress={() => setEditToggled(!editToggled)}
