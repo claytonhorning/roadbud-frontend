@@ -5,7 +5,7 @@ import MapScreen from '../../screens/Map'
 import AccountScreen from '../../screens/Account'
 import NotificationsScreen from '../../screens/Notifications'
 import PostScreen from '../../screens/Post'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from '../../components/Icon'
 import RouteScreenNavigator from '../RouteScreenNavigator'
 import PostScreenNavigator from '../PostScreenNavigator'
 
@@ -36,7 +36,7 @@ export default function BottomNavbar() {
                     headerShown: false,
                     tabBarActiveTintColor: '#fff',
                     tabBarIcon: ({ color }) => (
-                        <Icon color={color} name="map-pin" size={25} />
+                        <Icon color={color} name="map" size={25} />
                     ),
                 }}
             />
@@ -47,7 +47,7 @@ export default function BottomNavbar() {
                     headerShown: false,
                     tabBarActiveTintColor: '#fff',
                     tabBarIcon: ({ color }) => (
-                        <Icon color={color} name="plus-circle" size={25} />
+                        <Icon color={color} name="post" size={25} />
                     ),
                 }}
             />
@@ -58,7 +58,7 @@ export default function BottomNavbar() {
                     headerShown: false,
                     tabBarActiveTintColor: '#fff',
                     tabBarIcon: ({ color }) => (
-                        <Icon color={color} name="concierge-bell" size={25} />
+                        <Icon color={color} name="bell" size={25} />
                     ),
                 }}
             />
@@ -69,7 +69,7 @@ export default function BottomNavbar() {
                     headerShown: false,
                     tabBarActiveTintColor: '#fff',
                     tabBarIcon: ({ color }) => (
-                        <Icon color={color} name="user-alt" size={25} />
+                        <Icon color={color} name="user" size={25} />
                     ),
                 }}
             />

@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { COLORS, TYPOGRAPHY } from '../../styles'
+import Icon from '../../components/Icon'
 
 export default function LocationInfo({ location, numEvents }) {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <Text style={TYPOGRAPHY.subheader}>{location}</Text>
-                <Icon name="video" style={styles.iconStyle} />
+
+                <Icon name="video-camera" style={styles.iconStyle} />
                 <Text style={styles.descriptionText}>Video</Text>
-                <Icon name="white-balance-sunny" style={styles.iconStyle} />
+                <Icon name="cloudy" style={styles.iconStyle} />
                 <Text style={styles.descriptionText}>Weather</Text>
             </View>
             <Text style={{ opacity: 0.5 }}>{numEvents} events</Text>

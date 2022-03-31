@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import RouteInput from '../../components/Inputs/RouteInput'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from '../Icon'
 import { TYPOGRAPHY } from '../../styles'
 
 export default function AddNotificationModal({ visible, onClosePress }) {
@@ -42,7 +42,7 @@ export default function AddNotificationModal({ visible, onClosePress }) {
                     fontSize: 16,
                     marginLeft: 5,
                 }}
-                name="plus-circle"
+                name="plus"
             />
             <View style={styles.backgroundCircle} />
         </TouchableOpacity>
@@ -55,8 +55,8 @@ export default function AddNotificationModal({ visible, onClosePress }) {
         >
             <Text style={{ color: '#fff', fontWeight: '600' }}>{name}</Text>
             <Icon
-                style={{ color: '#F50000', fontSize: 16, marginLeft: 5 }}
-                name="minus-circle"
+                style={{ color: '#F50000', fontSize: 17, marginLeft: 5 }}
+                name="minus"
             />
             <View style={styles.backgroundCircle} />
         </TouchableOpacity>
@@ -83,7 +83,7 @@ export default function AddNotificationModal({ visible, onClosePress }) {
                                     <Icon
                                         style={{
                                             color: '#3d3d3d',
-                                            fontSize: 25,
+                                            fontSize: 18,
                                             marginLeft: 5,
                                         }}
                                         name="close"
