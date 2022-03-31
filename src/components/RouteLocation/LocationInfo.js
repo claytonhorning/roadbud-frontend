@@ -1,21 +1,43 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
+import React, { useState } from 'react'
 import { COLORS, TYPOGRAPHY } from '../../styles'
 import Icon from '../../components/Icon'
+import BottomSheet from '../BottomSheet'
+import Video from '../Video'
 
 export default function LocationInfo({ location, numEvents }) {
+    const [openModal, setopenModal] = useState(false)
+
+    const onOpen = () => {
+        setopenModal(true)
+    }
+
+    const onDismiss = () => {
+        setopenModal(false)
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <Text style={TYPOGRAPHY.subheader}>{location}</Text>
 
-                <Icon name="video-camera" style={styles.iconStyle} />
-                <Text style={styles.descriptionText}>Video</Text>
+                <TouchableOpacity
+                    style={{ flexDirection: 'row' }}
+                    onPress={onOpen}
+                >
+                    {openModal && (
+                        <BottomSheet onDismiss={onDismiss}>
+                            <Video location={location} />
+                        </BottomSheet>
+                    )}
+                    <Icon name="video-camera" style={styles.iconStyle} />
+                    <Text style={styles.descriptionText}>Video</Text>
+                </TouchableOpacity>
+
                 <Icon name="cloudy" style={styles.iconStyle} />
                 <Text style={styles.descriptionText}>Weather</Text>
             </View>
-            <Text style={{ opacity: 0.5 }}>{numEvents} events</Text>
+            <Text style={{ opacity: 0.5 }}>{numEvents} Events</Text>
         </View>
     )
 }
@@ -29,10 +51,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 5,
-    },
-    header: {
-        fontSize: 18,
-        fontWeight: '700',
     },
     descriptionText: {
         fontFamily: 'IBMPlexSans-Regular',
