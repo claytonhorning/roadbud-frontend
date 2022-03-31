@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Switch } from 'react-native'
 import React, { useState } from 'react'
+import { SHADOWS } from '../../styles'
 
 export default function NotificationToggler({
     cdotNotifications,
@@ -9,7 +10,7 @@ export default function NotificationToggler({
     const [isEnabled, setIsEnabled] = useState(false)
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
     return (
-        <View style={[styles.container, styles.shadowProp]}>
+        <View style={styles.container}>
             <View>
                 <Text style={styles.routeName}>{routeName}</Text>
                 <View style={styles.chipsContainer}>
@@ -49,12 +50,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 20,
-    },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+        ...SHADOWS.shadowProp,
     },
     routeName: {
         fontSize: 16,

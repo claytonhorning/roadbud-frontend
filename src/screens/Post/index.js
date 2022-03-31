@@ -7,20 +7,21 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
+import { TYPOGRAPHY, SHADOWS } from '../../styles'
 const PostScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.content}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('ReportEventScreen')}
-                    style={[styles.reportEventButton, styles.shadowProp]}
+                    style={styles.reportEventButton}
                 >
                     <Text
                         style={{
                             color: '#fff',
                             fontSize: 16,
                             fontWeight: '600',
+                            fontFamily: 'Montserrat-Regular',
                         }}
                     >
                         Report new event
@@ -28,25 +29,27 @@ const PostScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('PostToEventScreen')}
-                    style={[styles.postToEventButton, styles.shadowProp]}
+                    style={styles.postToEventButton}
                 >
                     <Text
                         style={{
                             color: '#FF7A01',
                             fontSize: 16,
                             fontWeight: '600',
+                            fontFamily: 'Montserrat-Regular',
                         }}
                     >
                         Add to existing event
                     </Text>
                 </TouchableOpacity>
-                <View style={[styles.eventNearContainer, styles.shadowProp]}>
+                <View style={styles.eventNearContainer}>
                     <View style={styles.postToHeader}>
                         <Text
                             style={{
                                 fontSize: 16,
                                 fontWeight: '600',
                                 marginLeft: 20,
+                                fontFamily: 'Montserrat-Regular',
                             }}
                         >
                             Post to an event near you
@@ -63,7 +66,7 @@ const PostScreen = ({ navigation }) => {
                                 style={{ fontSize: 18, marginRight: 3 }}
                                 name="location-pin"
                             />
-                            <Text>3.1 mi.</Text>
+                            <Text style={TYPOGRAPHY.paragraph}>3.1 mi.</Text>
                         </View>
                         <Text
                             style={{
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 5,
         width: '70%',
+        ...SHADOWS.shadowProp,
     },
     postToEventButton: {
         alignItems: 'center',
@@ -179,11 +183,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: '70%',
         marginVertical: 40,
+        ...SHADOWS.shadowProp,
     },
     eventNearContainer: {
         width: '95%',
         backgroundColor: '#fff',
         borderRadius: 5,
+        ...SHADOWS.shadowProp,
     },
     postToHeader: {
         backgroundColor: '#F0F0F0',
@@ -199,6 +205,7 @@ const styles = StyleSheet.create({
     },
     specificEventContainer: {
         flexDirection: 'row',
+        alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 15,
         borderBottomWidth: 2,

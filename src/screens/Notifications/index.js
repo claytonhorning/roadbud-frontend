@@ -10,7 +10,7 @@ import React, { useState } from 'react'
 import NotificationToggler from '../../components/Notification/NotificationToggler'
 import AddNotificationModal from '../../components/Notification/AddNotificationModal'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { TYPOGRAPHY } from '../../styles'
+import { COLORS, TYPOGRAPHY } from '../../styles'
 
 const NotificationsScreen = () => {
     const [modalVisible, setModalVisible] = useState(false)
@@ -30,17 +30,13 @@ const NotificationsScreen = () => {
                             onPress={() => setEditToggled(!editToggled)}
                             style={styles.editButton}
                         >
-                            <Text style={{ color: '#fff', fontWeight: '600' }}>
-                                Edit
-                            </Text>
+                            <Text style={styles.buttonText}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => setModalVisible(!modalVisible)}
                             style={styles.addButton}
                         >
-                            <Text style={{ color: '#fff', fontWeight: '600' }}>
-                                Add
-                            </Text>
+                            <Text style={styles.buttonText}>Add</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -89,15 +85,11 @@ const NotificationsScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.white,
     },
     content: {
         paddingHorizontal: 20,
         paddingTop: 20,
-    },
-    header: {
-        fontSize: 22,
-        fontWeight: '600',
     },
     topContainer: {
         flexDirection: 'row',
@@ -109,17 +101,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     editButton: {
-        backgroundColor: '#047FE8',
+        backgroundColor: COLORS.secondary,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 5,
         marginRight: 10,
     },
     addButton: {
-        backgroundColor: '#FD7A22',
+        backgroundColor: COLORS.primary,
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderRadius: 5,
+    },
+    buttonText: {
+        color: COLORS.white,
+        fontWeight: '600',
+        fontFamily: 'Montserrat-Regular',
     },
 })
 

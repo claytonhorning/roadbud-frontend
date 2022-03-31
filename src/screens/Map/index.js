@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from '../../components/Icon'
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const eventData = [
@@ -140,11 +140,11 @@ const MapScreen = () => {
 
             <View style={styles.bottomButtonsContainer}>
                 <View style={styles.iconWrapper}>
-                    <Icon style={styles.iconButton} name="cloud-rain" />
+                    <Icon style={styles.iconButton} name="water-drop" />
                 </View>
                 <Text style={styles.iconButtonText}>Conditions</Text>
                 <View style={styles.iconWrapper}>
-                    <Icon style={styles.iconButton} name="location-arrow" />
+                    <Icon style={styles.iconButton} name="locator" />
                 </View>
                 <Text style={styles.iconButtonText}>My Location</Text>
             </View>
@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontSize: 12,
         fontWeight: '600',
+        fontFamily: 'IBMPlexSans-Regular',
         textAlign: 'center',
     },
     locationInput: {
