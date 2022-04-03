@@ -47,7 +47,7 @@ const MapScreen = () => {
     const [videoToggled, setVideoToggled] = useState(true)
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
             <MapView
                 style={styles.container}
                 initialRegion={{
@@ -159,7 +159,7 @@ const MapScreen = () => {
                 </View>
                 <Text style={styles.iconButtonText}>My Location</Text>
             </View>
-        </SafeAreaView>
+        </View>
     )
 }
 
