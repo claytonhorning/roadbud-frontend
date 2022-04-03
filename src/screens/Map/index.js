@@ -5,6 +5,7 @@ import {
     TextInput,
     Platform,
     TouchableOpacity,
+    SafeAreaView,
 } from 'react-native'
 import React, { useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
@@ -46,7 +47,7 @@ const MapScreen = () => {
     const [videoToggled, setVideoToggled] = useState(true)
 
     return (
-        <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1 }}>
             <MapView
                 style={styles.container}
                 initialRegion={{
@@ -89,7 +90,7 @@ const MapScreen = () => {
                             opacity: 0.5,
                         }}
                     >
-                        Location:
+                        To:
                     </Text>
                     <TextInput
                         autoCorrect={false}
@@ -118,7 +119,9 @@ const MapScreen = () => {
                         }
                     >
                         <Text
-                            style={{ color: roadbudToggled ? '#fff' : '#000' }}
+                            style={{
+                                color: roadbudToggled ? '#fff' : '#000',
+                            }}
                         >
                             Roadbud
                         </Text>
@@ -131,7 +134,11 @@ const MapScreen = () => {
                                 : styles.unfilledChip
                         }
                     >
-                        <Text style={{ color: videoToggled ? '#fff' : '#000' }}>
+                        <Text
+                            style={{
+                                color: videoToggled ? '#fff' : '#000',
+                            }}
+                        >
                             Video
                         </Text>
                     </TouchableOpacity>
@@ -148,7 +155,7 @@ const MapScreen = () => {
                 </View>
                 <Text style={styles.iconButtonText}>My Location</Text>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -163,7 +170,6 @@ const styles = StyleSheet.create({
         width: '90%',
         marginHorizontal: 20,
         flexDirection: 'column',
-        top: 40,
     },
     inputContainer: {
         flexDirection: 'row',
