@@ -1,22 +1,22 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React from 'react'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from '../Icon'
 
 export default function RouteInput({ ...props }) {
     return (
         <View style={styles.inputContainer}>
             <View style={styles.topInputContainer}>
                 <Icon
-                    name="magnify"
-                    style={{ fontSize: 25, marginRight: 10, color: '#4B4B4B' }}
+                    name="search"
+                    style={{ fontSize: 18, marginRight: 10, color: '#4B4B4B' }}
                 />
                 <Text style={{ marginRight: 5 }}>From:</Text>
                 <TextInput placeholder="Glenwood Springs, CO" />
             </View>
             <View style={styles.bottomInputContainer}>
                 <Icon
-                    name="magnify"
-                    style={{ fontSize: 25, marginRight: 10, color: '#4B4B4B' }}
+                    name="search"
+                    style={{ fontSize: 18, marginRight: 10, color: '#4B4B4B' }}
                 />
                 <Text style={{ marginRight: 5 }}>To:</Text>
                 <TextInput placeholder="Denver, CO" />

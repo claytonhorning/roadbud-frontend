@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Icon from '../../components/Icon'
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { COLORS } from '../../styles'
 
 const eventData = [
     {
@@ -70,15 +70,19 @@ const MapScreen = () => {
                             uri: `cdot-marker`,
                         }}
                         style={{ height: 50, width: 50 }}
-                    />
+                    >
+                        <View style={styles.postCountCircle}>
+                            <Text style={styles.postCountCircleText}>2</Text>
+                        </View>
+                    </Marker>
                 ))}
             </MapView>
             <View style={styles.topContainer}>
                 <View style={styles.inputContainer}>
-                    <MaterialIcon
-                        name="magnify"
+                    <Icon
+                        name="search"
                         style={{
-                            fontSize: 25,
+                            fontSize: 18,
                             marginRight: 10,
                             color: '#4B4B4B',
                         }}
@@ -235,6 +239,20 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         borderRadius: 20,
         marginRight: 10,
+    },
+    postCountCircle: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        right: 0,
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+        backgroundColor: COLORS.secondary,
+    },
+    postCountCircleText: {
+        color: COLORS.white,
+        fontWeight: '500',
     },
 })
 
