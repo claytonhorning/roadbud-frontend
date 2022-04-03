@@ -3,10 +3,15 @@ import React from 'react'
 
 export default function Video() {
     return (
-        <View>
-            <Text>VIDEO bitch</Text>
+        <View style={styles.container}>
+            <Text>hello</Text>
         </View>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        margin: 20,
+    },
+})
