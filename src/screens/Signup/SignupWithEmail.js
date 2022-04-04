@@ -10,9 +10,9 @@ import {
     Keyboard,
 } from 'react-native'
 import React, { useState } from 'react'
-import Input from 'components/Input'
+import Input from 'components/Inputs/Input'
 import Logo from 'assets/img/logo/dark.png'
-import Button from '../../components/Button'
+import Button from '../../components/Buttons/Button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const { height, width } = Dimensions.get('window')
