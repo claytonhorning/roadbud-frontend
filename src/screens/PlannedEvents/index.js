@@ -6,39 +6,51 @@ import {
     TouchableOpacity,
     ScrollView,
     Image,
+    FlatList,
 } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Icon from '../../components/Icon'
 import { COLORS, TYPOGRAPHY, SHADOWS } from '../../styles'
-
-const plannedEventsData = [
-    {
-        id: 1,
-        name: 'Curb Ramp Work-9073',
-        start: '4/7/22',
-        end: '6/21/22',
-        description:
-            'Between CO 391 (Wheat Ridge) and Exit 263: Colorado Mills Parkway (Lakewood) from Mile Point 266 to Mile Point 263. Bridge construction.',
-    },
-    {
-        id: 2,
-        name: 'Bridge Replacement I-70 over 32nd Avenue-8962',
-        start: '4/7/22',
-        end: '6/21/22',
-        description:
-            'Between County Road X and Pomeroy Street (near Burlington) from Mile Point 190 to Mile Point 188. Right lane closed due to road work. Alternating traffic.',
-    },
-    {
-        id: 2,
-        name: 'Bridge Replacement I-70 over 32nd Avenue-8962',
-        start: '4/7/22',
-        end: '6/21/22',
-        description:
-            'Between County Road X and Pomeroy Street (near Burlington) from Mile Point 190 to Mile Point 188. Right lane closed due to road work. Alternating traffic.',
-    },
-]
+import { userReducer } from '../../redux/reducers'
+import { getPlannedEvents } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function PlannedEvents() {
+    //TODO: Get number of events after the data is available
+    const { plannedEventsRecieved } = useSelector((state) => state.userReducer)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getPlannedEvents())
+    }, [])
+
+    const formatDate = (date) => {
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }
+        const formattedDate = new Date(date).toLocaleDateString(
+            'en-US',
+            options
+        )
+        return formattedDate
+    }
+
+    // Only do this when plannedEventsRecieved has been populated with data and create variable for num of events
+
+    const plannedEvents = plannedEventsRecieved.features.map((event) => ({
+        name: event.properties.name,
+        description: event.properties.travelerInformationMessage,
+        startDate: formatDate(event.properties.schedule[0].startTime),
+        endDate: formatDate(event.properties.schedule[0].endTime),
+    }))
+
+    const sortedPlannedEvents = plannedEvents.sort((a, b) => {
+        //Sorted by newest start dates first
+        return new Date(b.startDate) - new Date(a.startDate)
+    })
+
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -65,19 +77,16 @@ export default function PlannedEvents() {
                         placeholder="Glenwood Springs, CO"
                     />
                 </View>
-                <Text style={{ opacity: 0.5, marginVertical: 5 }}>
-                    8 Events
-                </Text>
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.plannedEventsContainer}
-                >
-                    {plannedEventsData.map((event) => (
+                <Text style={{ opacity: 0.5, marginVertical: 5 }}>Events</Text>
+                <FlatList
+                    data={sortedPlannedEvents}
+                    renderItem={({ item }) => (
                         <View style={styles.plannedEvent}>
                             <View style={styles.plannedEventContent}>
                                 <Text style={styles.plannedEventHeader}>
-                                    {event.name}
+                                    {item.name}
                                 </Text>
+
                                 <View
                                     style={{
                                         flexDirection: 'row',
@@ -91,33 +100,23 @@ export default function PlannedEvents() {
                                     >
                                         Start:{' '}
                                         <Text style={TYPOGRAPHY.primaryText}>
-                                            {event.start}
+                                            {item.startDate}
                                         </Text>
                                     </Text>
                                     <Text>
                                         End:{' '}
                                         <Text style={styles.blueText}>
-                                            {event.end}
+                                            {item.endDate}
                                         </Text>
                                     </Text>
                                 </View>
                                 <Text style={styles.plannedEventDescription}>
-                                    {event.description}
+                                    {item.description}
                                 </Text>
                             </View>
-                            <Image
-                                source={{
-                                    height: 200,
-                                    uri: 'https://i.stack.imgur.com/RdkOb.jpg',
-                                }}
-                                style={{
-                                    borderBottomLeftRadius: 5,
-                                    borderBottomRightRadius: 5,
-                                }}
-                            />
                         </View>
-                    ))}
-                </ScrollView>
+                    )}
+                />
             </View>
         </View>
     )
@@ -145,7 +144,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        padding: 5,
     },
     plannedEvent: {
         width: '100%',
