@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export default function SocialButtons({ login = false }) {
+export default function SocialButtons({ login = false, navigation }) {
     return (
         <>
             <TouchableOpacity style={[styles.signupOption, styles.shadowProp]}>
@@ -26,6 +26,7 @@ export default function SocialButtons({ login = false }) {
             {login ? null : (
                 <TouchableOpacity
                     style={[styles.signupEmail, styles.shadowProp]}
+                    onPress={() => navigation.navigate('SignUpWithEmailScreen')}
                 >
                     <Icon
                         name="email"

@@ -10,9 +10,11 @@ import {
 import React, { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Logo from 'assets/img/logo/dark.png'
-import Input from '../../components/Input'
-import SocialButtons from '../../components/SocialButtons'
-import Button from '../../components/Button'
+import Input from '../../components/Inputs/Input'
+import SocialButtons from '../../components/Buttons/SocialButtons'
+import Button from '../../components/Buttons/Button'
+// import { useSelector, useDispatch } from 'react-redux'
+// import { setLoggedIn } from '../../redux/actions'
 
 const { height, width } = Dimensions.get('window')
 
@@ -21,6 +23,10 @@ export default function Login() {
         email: '',
         password: '',
     })
+
+    // const { username, password } = useSelector((state) => state.authentication)
+    // const dispatch = useDispatch()
+
     const [errors, setErrors] = useState({})
 
     const validate = () => {

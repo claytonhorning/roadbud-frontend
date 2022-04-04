@@ -1,15 +1,17 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-
 import BottomNavbar from './navigation/BottomNavbar/BottomNavbar'
+import { Provider } from 'react-redux'
+import { Store } from './redux/store'
+import AuthStack from './navigation/AuthNavigation'
 
 export default function App() {
+    const isSignedIn = 1
     return (
-        <NavigationContainer>
-            {/* One navigation for when users aren't logged in */}
-
-            <BottomNavbar />
-            {/* Allow access to bottom navbar when users are logged in */}
-        </NavigationContainer>
+        <Provider store={Store}>
+            <NavigationContainer>
+                {isSignedIn ? <BottomNavbar /> : <AuthStack />}
+            </NavigationContainer>
+        </Provider>
     )
 }
