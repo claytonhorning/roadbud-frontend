@@ -17,7 +17,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 const { height, width } = Dimensions.get('window')
 
-export default function SignUpWithEmail() {
+export default function SignUpWithEmail({navigation}) {
     const [inputs, setInputs] = useState({
         fullName: '',
         email: '',
