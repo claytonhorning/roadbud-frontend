@@ -20,6 +20,8 @@ export default function PlannedEvents() {
     const { plannedEventsRecieved } = useSelector((state) => state.userReducer)
     const dispatch = useDispatch()
 
+    const [numEvents, setNumEvents] = useState()
+
     useEffect(() => {
         dispatch(getPlannedEvents())
     }, [])
@@ -38,18 +40,17 @@ export default function PlannedEvents() {
     }
 
     // Only do this when plannedEventsRecieved has been populated with data and create variable for num of events
+    // const plannedEvents = plannedEventsRecieved.features.map((event) => ({
+    //     name: event.properties.name,
+    //     description: event.properties.travelerInformationMessage,
+    //     startDate: formatDate(event.properties.schedule[0].startTime),
+    //     endDate: formatDate(event.properties.schedule[0].endTime),
+    // }))
 
-    const plannedEvents = plannedEventsRecieved.features.map((event) => ({
-        name: event.properties.name,
-        description: event.properties.travelerInformationMessage,
-        startDate: formatDate(event.properties.schedule[0].startTime),
-        endDate: formatDate(event.properties.schedule[0].endTime),
-    }))
-
-    const sortedPlannedEvents = plannedEvents.sort((a, b) => {
-        //Sorted by newest start dates first
-        return new Date(b.startDate) - new Date(a.startDate)
-    })
+    // const sortedPlannedEvents = plannedEvents.sort((a, b) => {
+    //     //Sorted by newest start dates first
+    //     return new Date(b.startDate) - new Date(a.startDate)
+    // })
 
     return (
         <View style={styles.container}>
@@ -77,9 +78,11 @@ export default function PlannedEvents() {
                         placeholder="Glenwood Springs, CO"
                     />
                 </View>
-                <Text style={{ opacity: 0.5, marginVertical: 5 }}>Events</Text>
+                <Text style={{ opacity: 0.5, marginVertical: 5 }}>
+                    {numEvents} Events
+                </Text>
                 <FlatList
-                    data={sortedPlannedEvents}
+                    data={plannedEventsRecieved}
                     renderItem={({ item }) => (
                         <View style={styles.plannedEvent}>
                             <View style={styles.plannedEventContent}>

@@ -13,6 +13,8 @@ export const getPlannedEvents = () => {
                     'Content-Type': 'application/json',
                 },
             })
+                .then((res) => res)
+                .catch((err) => err)
             const json = await result.json()
             if (json) {
                 dispatch({
