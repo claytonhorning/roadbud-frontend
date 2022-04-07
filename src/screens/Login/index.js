@@ -6,6 +6,7 @@ import {
     Dimensions,
     Image,
     Keyboard,
+    Pressable,
 } from 'react-native'
 import React, { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -13,21 +14,29 @@ import Logo from 'assets/img/logo/dark.png'
 import Input from '../../components/Inputs/Input'
 import SocialButtons from '../../components/Buttons/SocialButtons'
 import Button from '../../components/Buttons/Button'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { setLoggedIn } from '../../redux/actions'
+import { signIn } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
 
 const { height, width } = Dimensions.get('window')
 
-export default function Login() {
+export default function Login({ navigation }) {
     const [inputs, setInputs] = useState({
         email: '',
         password: '',
     })
 
-    // const { username, password } = useSelector((state) => state.authentication)
-    // const dispatch = useDispatch()
-
     const [errors, setErrors] = useState({})
+
+    dispatch = useDispatch()
+
+    const login = (email, password) => {
+        try {
+            dispatch(signIn(email, password))
+        } catch (error) {
+            console.log(error.message)
+            console.log('here')
+        }
+    }
 
     const validate = () => {
         Keyboard.dismiss()
@@ -49,7 +58,7 @@ export default function Login() {
         }
 
         if (isValid) {
-            register()
+            login(inputs.email, inputs.password)
         }
     }
 
@@ -67,7 +76,7 @@ export default function Login() {
                 <Input
                     onChangeText={(text) => handleOnchange(text, 'email')}
                     onFocus={() => handleError(null, 'email')}
-                    iconName="email-outline"
+                    iconName="mail"
                     label="Email"
                     placeholder="Enter your email address"
                     error={errors.email}
@@ -75,16 +84,23 @@ export default function Login() {
                 <Input
                     onChangeText={(text) => handleOnchange(text, 'password')}
                     onFocus={() => handleError(null, 'password')}
-                    iconName="lock-outline"
+                    iconName="lock"
                     label="Password"
                     placeholder="Enter your password"
                     error={errors.password}
                 />
                 <Button title="Login" onPress={validate} />
-                <Text style={styles.signUpText}>
-                    Don't have an account?{' '}
-                    <Text style={styles.signUpTextFlare}>Sign Up</Text>
-                </Text>
+                <View style={styles.signupTextRow}>
+                    <Text style={styles.signupText}>
+                        Already have an account?{' '}
+                    </Text>
+                    <Pressable
+                        onPress={() => navigation.navigate('SignUpScreen')}
+                    >
+                        <Text style={styles.signupTextFlare}>Sign Up</Text>
+                    </Pressable>
+                </View>
+
                 <View>
                     <View style={styles.seperator} />
                     <Text style={styles.orText}>OR</Text>
@@ -132,12 +148,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginBottom: 10,
     },
-    signUpText: {
-        alignSelf: 'center',
-        marginBottom: 20,
+    signupTextRow: {
+        flex: 1,
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        marginBottom: 10,
+        justifyContent: 'center',
     },
-    signUpTextFlare: {
+    signupText: {
+        fontSize: 16,
+        color: '#000',
+    },
+    signupTextFlare: {
+        fontSize: 16,
         color: '#FF7A01',
-        fontWeight: '600',
     },
 })

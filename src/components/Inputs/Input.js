@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import React, { useState } from 'react'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from '../Icon'
 
 const Input = ({
     label,
@@ -39,7 +39,7 @@ const Input = ({
             >
                 <Icon
                     name={iconName}
-                    style={{ fontSize: 22, color: '#FF7A01', marginRight: 15 }}
+                    style={{ fontSize: 18, color: '#FF7A01', marginRight: 15 }}
                 />
                 <TextInput
                     secureTextEntry={hidePassword}
@@ -54,13 +54,13 @@ const Input = ({
                     }}
                     {...props}
                 />
-                {password && (
+                {/* {password && (
                     <Icon
                         onPress={() => setHidePassword(!hidePassword)}
                         style={{ fontSize: 22 }}
-                        name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
+                        name={hidePassword ? 'eye' : 'eye-off'}
                     />
-                )}
+                )} */}
                 {rightButton && (
                     <TouchableOpacity style={styles.rightButton}>
                         <Text style={{ color: '#fff', fontWeight: '600' }}>
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 0.5,
+        paddingHorizontal: 20,
     },
     largeInputContainer: {
         height: 110,

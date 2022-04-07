@@ -9,10 +9,30 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { signOut } from '../../redux/actions'
 
 const AccountScreen = () => {
+    const { token, fullName, email } = useSelector((state) => state.userReducer)
+
+    const [errors, setErrors] = useState({})
+    const handleError = (error, input) => {
+        setErrors((prevState) => ({ ...prevState, [input]: error }))
+    }
+
     const [isEnabled, setIsEnabled] = useState(false)
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
+
+    dispatch = useDispatch()
+
+    const handleLogout = () => {
+        try {
+            dispatch(signOut())
+        } catch (error) {
+            handleError(error, 'logout')
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.content}>
@@ -24,7 +44,7 @@ const AccountScreen = () => {
                         }}
                     />
                     <View>
-                        <Text style={styles.header}>John Smith</Text>
+                        <Text style={styles.header}>{fullName}</Text>
                         <Text style={styles.subheader}>
                             johnsmith@gmail.com
                         </Text>
@@ -113,7 +133,10 @@ const AccountScreen = () => {
                         <Text style={{ marginLeft: 10 }}>Email marketing</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.logoutButton}>
+                <TouchableOpacity
+                    onPress={handleLogout}
+                    style={styles.logoutButton}
+                >
                     <Text
                         style={{
                             fontSize: 18,
