@@ -24,6 +24,7 @@ export default function PlannedEvents() {
 
     useEffect(() => {
         dispatch(getPlannedEvents())
+        setNumEvents(plannedEventsRecieved?.features?.length)
     }, [])
 
     const formatDate = (date) => {
@@ -40,17 +41,17 @@ export default function PlannedEvents() {
     }
 
     // Only do this when plannedEventsRecieved has been populated with data and create variable for num of events
-    // const plannedEvents = plannedEventsRecieved.features.map((event) => ({
-    //     name: event.properties.name,
-    //     description: event.properties.travelerInformationMessage,
-    //     startDate: formatDate(event.properties.schedule[0].startTime),
-    //     endDate: formatDate(event.properties.schedule[0].endTime),
-    // }))
+    const plannedEvents = plannedEventsRecieved?.features?.map((event) => ({
+        name: event.properties.name,
+        description: event.properties.travelerInformationMessage,
+        startDate: formatDate(event.properties.schedule[0].startTime),
+        endDate: formatDate(event.properties.schedule[0].endTime),
+    }))
 
-    // const sortedPlannedEvents = plannedEvents.sort((a, b) => {
-    //     //Sorted by newest start dates first
-    //     return new Date(b.startDate) - new Date(a.startDate)
-    // })
+    const sortedPlannedEvents = plannedEvents?.sort((a, b) => {
+        //Sorted by newest start dates first
+        return new Date(b.startDate) - new Date(a.startDate)
+    })
 
     return (
         <View style={styles.container}>
@@ -82,7 +83,7 @@ export default function PlannedEvents() {
                     {numEvents} Events
                 </Text>
                 <FlatList
-                    data={plannedEventsRecieved}
+                    data={sortedPlannedEvents}
                     renderItem={({ item }) => (
                         <View style={styles.plannedEvent}>
                             <View style={styles.plannedEventContent}>

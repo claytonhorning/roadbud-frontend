@@ -1,4 +1,11 @@
-export const SET_LOGGED_IN = 'SET_LOGGED_IN'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+//TYPES
+export const SIGN_UP = 'SIGN_UP'
+export const SIGN_OUT = 'SIGN_OUT'
+export const SIGN_IN = 'SIGN_IN'
+export const LOAD_USER = 'LOAD_USER'
 export const GET_PLANNED_EVENTS = 'GET_PLANNED_EVENTS'
 
 const CDOT_API_URL =
@@ -30,9 +37,62 @@ export const getPlannedEvents = () => {
     }
 }
 
-export const setLoggedIn = (username, password) => (dispatch) => {
-    dispatch({
-        type: SET_LOGGED_IN,
-        payload: (username, password),
-    })
+export const signUp = (user) => {
+    return async (dispatch) => {
+        axios
+            .post(
+                'https://3ee6-2601-280-8100-14d0-4555-dfcd-3e49-a244.ngrok.io/auth',
+                user
+            )
+            .then((token) => {
+                AsyncStorage.setItem('token', token.data.token)
+                dispatch({
+                    type: SIGN_UP,
+                    token: token.data.token,
+                })
+            })
+            .catch((err) => {
+                console.log(err.response?.data)
+            })
+    }
+}
+
+export const signIn = (email, password) => {
+    return (dispatch) => {
+        axios
+            .post(
+                'https://3ee6-2601-280-8100-14d0-4555-dfcd-3e49-a244.ngrok.io/auth/login',
+                { email: email, password: password }
+            )
+            .then((token) => {
+                AsyncStorage.setItem('token', token.data.token)
+                dispatch({
+                    type: SIGN_IN,
+                    token: token.data.token,
+                })
+            })
+            .catch((err) => {
+                console.log(err.response?.data)
+            })
+    }
+}
+
+export const signOut = () => {
+    return (dispatch) => {
+        dispatch({
+            type: SIGN_OUT,
+        })
+    }
+}
+
+export const loadUser = () => {
+    return async (dispatch) => {
+        let token = await AsyncStorage.getItem('token')
+        if (token !== null) {
+            dispatch({
+                type: LOAD_USER,
+                token: token,
+            })
+        }
+    }
 }

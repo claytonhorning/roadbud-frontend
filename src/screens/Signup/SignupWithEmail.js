@@ -3,21 +3,21 @@ import {
     Text,
     StyleSheet,
     SafeAreaView,
-    KeyboardAvoidingView,
-    ScrollView,
     Image,
     Dimensions,
     Keyboard,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from 'components/Inputs/Input'
 import Logo from 'assets/img/logo/dark.png'
 import Button from '../../components/Buttons/Button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useDispatch, useSelector } from 'react-redux'
+import { signUp } from '../../redux/actions'
 
 const { height, width } = Dimensions.get('window')
 
-export default function SignUpWithEmail({navigation}) {
+export default function SignUpWithEmail({ navigation }) {
     const [inputs, setInputs] = useState({
         fullName: '',
         email: '',
@@ -25,25 +25,39 @@ export default function SignUpWithEmail({navigation}) {
         confirmPassword: '',
     })
     const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(false)
+
+    const dispatch = useDispatch()
+
+    const register = () => {
+        const user = {
+            fullName: inputs.fullName,
+            email: inputs.email,
+            password: inputs.password,
+        }
+
+        try {
+            dispatch(signUp(user))
+        } catch (error) {
+            handleError(error, 'signupButton')
+            console.log('There was an error in the frontend')
+        }
+    }
 
     const validate = () => {
         Keyboard.dismiss()
         let isValid = true
-
-        if (!inputs.email) {
-            handleError('Please input email', 'email')
-            isValid = false
-        } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-            handleError('Please input a valid email', 'email')
-            isValid = false
-        }
-
         if (!inputs.fullName) {
             handleError('Please input full name', 'fullName')
             isValid = false
         } else if (inputs.fullName.length < 5) {
             handleError('Minimum 5 characters', 'fullName')
+            isValid = false
+        }
+        if (!inputs.email) {
+            handleError('Please input email', 'email')
+            isValid = false
+        } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+            handleError('Please input a valid email', 'email')
             isValid = false
         }
 
@@ -68,19 +82,6 @@ export default function SignUpWithEmail({navigation}) {
         }
     }
 
-    const register = () => {
-        setLoading(true)
-        setTimeout(() => {
-            try {
-                setLoading(false)
-                AsyncStorage.setItem('userData', JSON.stringify(inputs))
-                navigation.navigate('LoginScreen')
-            } catch (error) {
-                Alert.alert('Error', 'Something went wrong')
-            }
-        }, 3000)
-    }
-
     const handleOnchange = (text, input) => {
         setInputs((prevState) => ({ ...prevState, [input]: text }))
     }
@@ -98,7 +99,7 @@ export default function SignUpWithEmail({navigation}) {
                             handleOnchange(text, 'fullName')
                         }
                         onFocus={() => handleError(null, 'fullName')}
-                        iconName="account-outline"
+                        iconName="user"
                         label="Full Name"
                         placeholder="Enter your full name"
                         error={errors.fullName}
@@ -106,7 +107,7 @@ export default function SignUpWithEmail({navigation}) {
                     <Input
                         onChangeText={(text) => handleOnchange(text, 'email')}
                         onFocus={() => handleError(null, 'email')}
-                        iconName="email-outline"
+                        iconName="mail"
                         label="Email"
                         placeholder="Enter your email address"
                         error={errors.email}
@@ -116,7 +117,7 @@ export default function SignUpWithEmail({navigation}) {
                             handleOnchange(text, 'password')
                         }
                         onFocus={() => handleError(null, 'password')}
-                        iconName="lock-outline"
+                        iconName="lock"
                         label="Password"
                         placeholder="Enter your password"
                         error={errors.password}
@@ -126,7 +127,7 @@ export default function SignUpWithEmail({navigation}) {
                             handleOnchange(text, 'confirmPassword')
                         }
                         onFocus={() => handleError(null, 'confirmPassword')}
-                        iconName="lock-outline"
+                        iconName="lock"
                         label="Confirm Password"
                         placeholder="Confirm your password"
                         error={errors.confirmPassword}
