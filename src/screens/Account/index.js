@@ -45,9 +45,7 @@ const AccountScreen = () => {
                     />
                     <View>
                         <Text style={styles.header}>{fullName}</Text>
-                        <Text style={styles.subheader}>
-                            johnsmith@gmail.com
-                        </Text>
+                        <Text style={styles.subheader}>{email}</Text>
                     </View>
                 </View>
                 <Text

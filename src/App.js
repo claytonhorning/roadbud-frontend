@@ -15,8 +15,9 @@ export default function ReduxProvider() {
 }
 
 const App = () => {
-    const { token } = useSelector((state) => state.userReducer)
+    const { token, fullName } = useSelector((state) => state.userReducer)
     dispatch = useDispatch()
+    console.log(token)
 
     useEffect(() => {
         dispatch(loadUser())

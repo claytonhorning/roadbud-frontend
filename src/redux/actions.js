@@ -41,7 +41,7 @@ export const signUp = (user) => {
     return async (dispatch) => {
         axios
             .post(
-                'https://42d9-2601-280-8100-14d0-59c4-3566-1259-539d.ngrok.io/auth',
+                'https://3ee6-2601-280-8100-14d0-4555-dfcd-3e49-a244.ngrok.io/auth',
                 user
             )
             .then((token) => {
@@ -61,7 +61,7 @@ export const signIn = (email, password) => {
     return (dispatch) => {
         axios
             .post(
-                'https://42d9-2601-280-8100-14d0-59c4-3566-1259-539d.ngrok.io/auth/login',
+                'https://3ee6-2601-280-8100-14d0-4555-dfcd-3e49-a244.ngrok.io/auth/login',
                 { email: email, password: password }
             )
             .then((token) => {
