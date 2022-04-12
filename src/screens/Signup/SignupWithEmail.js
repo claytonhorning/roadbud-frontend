@@ -12,12 +12,13 @@ import Input from 'components/Inputs/Input'
 import Logo from 'assets/img/logo/dark.png'
 import Button from '../../components/Buttons/Button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useDispatch, useSelector } from 'react-redux'
-import { signUp } from '../../redux/actions'
+import { useSignUpUserMutation } from '../../services/authApi'
 
 const { height, width } = Dimensions.get('window')
 
 export default function SignUpWithEmail({ navigation }) {
+    const [signUpUser, result] = useSignUpUserMutation()
+
     const [inputs, setInputs] = useState({
         fullName: '',
         email: '',
@@ -26,21 +27,13 @@ export default function SignUpWithEmail({ navigation }) {
     })
     const [errors, setErrors] = useState({})
 
-    const dispatch = useDispatch()
-
-    const register = () => {
-        const user = {
+    handleAddUser = async () => {
+        let user = {
             fullName: inputs.fullName,
             email: inputs.email,
             password: inputs.password,
         }
-
-        try {
-            dispatch(signUp(user))
-        } catch (error) {
-            handleError(error, 'signupButton')
-            console.log('There was an error in the frontend')
-        }
+        await signUpUser(user)
     }
 
     const validate = () => {
@@ -78,7 +71,7 @@ export default function SignUpWithEmail({ navigation }) {
         }
 
         if (isValid) {
-            register()
+            handleAddUser()
         }
     }
 

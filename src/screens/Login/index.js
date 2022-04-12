@@ -14,8 +14,8 @@ import Logo from 'assets/img/logo/dark.png'
 import Input from '../../components/Inputs/Input'
 import SocialButtons from '../../components/Buttons/SocialButtons'
 import Button from '../../components/Buttons/Button'
-import { signIn } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
+import { useLoginUserMutation } from '../../services/authApi'
 
 const { height, width } = Dimensions.get('window')
 
@@ -27,15 +27,14 @@ export default function Login({ navigation }) {
 
     const [errors, setErrors] = useState({})
 
-    dispatch = useDispatch()
+    const [signInUser, result] = useLoginUserMutation()
 
-    const login = (email, password) => {
-        try {
-            dispatch(signIn(email, password))
-        } catch (error) {
-            console.log(error.message)
-            console.log('here')
+    const loginUser = async () => {
+        let user = {
+            email: inputs.email,
+            password: inputs.password,
         }
+        await signInUser(user)
     }
 
     const validate = () => {
@@ -58,7 +57,7 @@ export default function Login({ navigation }) {
         }
 
         if (isValid) {
-            login(inputs.email, inputs.password)
+            loginUser()
         }
     }
 

@@ -39,7 +39,11 @@ const Input = ({
             >
                 <Icon
                     name={iconName}
-                    style={{ fontSize: 18, color: '#FF7A01', marginRight: 15 }}
+                    style={{
+                        fontSize: 18,
+                        color: '#FF7A01',
+                        marginRight: 15,
+                    }}
                 />
                 <TextInput
                     secureTextEntry={hidePassword}
@@ -86,7 +90,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 0.5,
-        paddingHorizontal: 20,
     },
     largeInputContainer: {
         height: 110,
