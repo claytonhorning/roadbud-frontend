@@ -1,18 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-const API_URL = 'https://0b2e-24-9-207-248.ngrok.io'
+import { DB_HOST } from '@env'
 
 export const postsApi = createApi({
     reducerPath: 'postsApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: API_URL,
+        baseUrl: DB_HOST,
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.token
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`)
                 headers.set(
                     'Content-Type',
-                    'multipart/form-data; charset="UTF-8"; boundary=MyBoundary'
+                    'multipart/form-data; charset="UTF-8"; boundary=---'
                 )
             }
             return headers

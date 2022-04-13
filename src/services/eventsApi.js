@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-const API_URL = 'https://0b2e-24-9-207-248.ngrok.io'
+import { DB_HOST } from '@env'
 
 export const eventsApi = createApi({
     reducerPath: 'eventsApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: API_URL,
+        baseUrl: DB_HOST,
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.token
             if (token) {
