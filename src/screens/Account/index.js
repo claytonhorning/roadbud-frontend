@@ -21,7 +21,7 @@ const AccountScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false)
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
 
-    const { fullName, email } = useSelector((state) => state.auth.user)
+    const { user } = useSelector((state) => state.auth)
 
     dispatch = useDispatch()
 
@@ -44,8 +44,8 @@ const AccountScreen = () => {
                         }}
                     />
                     <View>
-                        <Text style={styles.header}>{fullName}</Text>
-                        <Text style={styles.subheader}>{email}</Text>
+                        <Text style={styles.header}>{user.fullName}</Text>
+                        <Text style={styles.subheader}>{user.email}</Text>
                     </View>
                 </View>
                 <Text

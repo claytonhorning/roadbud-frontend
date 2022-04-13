@@ -5,6 +5,9 @@ import { Provider, useDispatch, useSelector } from 'react-redux'
 import store from './store'
 import AuthStack from './navigation/AuthNavigation'
 import { loadUser } from './store/authSlice'
+import SplashScreen from 'react-native-splash-screen'
+import { View, Text } from 'react-native'
+import LoadingScreen from './screens/Loading'
 
 export default function ReduxProvider() {
     return (
@@ -13,17 +16,17 @@ export default function ReduxProvider() {
         </Provider>
     )
 }
-
 const App = () => {
-    const { token } = useSelector((state) => state.auth)
-
+    const { token, loading } = useSelector((state) => state.auth)
     dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(loadUser())
     }, [])
 
-    console.log(token)
+    if (loading) {
+        return <LoadingScreen />
+    }
 
     return (
         <NavigationContainer>
