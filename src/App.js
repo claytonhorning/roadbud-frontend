@@ -2,26 +2,28 @@ import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import BottomNavbar from './navigation/BottomNavbar/BottomNavbar'
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { Store } from './redux/store'
-import { loadUser } from './redux/actions'
+import store from './store'
 import AuthStack from './navigation/AuthNavigation'
+import { loadUser } from './store/authSlice'
 
 export default function ReduxProvider() {
     return (
-        <Provider store={Store}>
+        <Provider store={store}>
             <App />
         </Provider>
     )
 }
 
 const App = () => {
-    const { token, fullName } = useSelector((state) => state.userReducer)
+    const { token } = useSelector((state) => state.auth)
+
     dispatch = useDispatch()
-    console.log(token)
 
     useEffect(() => {
         dispatch(loadUser())
     }, [])
+
+    console.log(token)
 
     return (
         <NavigationContainer>

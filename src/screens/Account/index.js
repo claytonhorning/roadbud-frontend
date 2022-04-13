@@ -10,11 +10,9 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { signOut } from '../../redux/actions'
+import { logoutUser } from '../../store/authSlice'
 
 const AccountScreen = () => {
-    const { token, fullName, email } = useSelector((state) => state.userReducer)
-
     const [errors, setErrors] = useState({})
     const handleError = (error, input) => {
         setErrors((prevState) => ({ ...prevState, [input]: error }))
@@ -23,11 +21,13 @@ const AccountScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false)
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
 
+    const { fullName, email } = useSelector((state) => state.auth.user)
+
     dispatch = useDispatch()
 
     const handleLogout = () => {
         try {
-            dispatch(signOut())
+            dispatch(logoutUser())
         } catch (error) {
             handleError(error, 'logout')
         }

@@ -11,9 +11,8 @@ import {
 import React, { useEffect, useState } from 'react'
 import Icon from '../../components/Icon'
 import { COLORS, TYPOGRAPHY, SHADOWS } from '../../styles'
-import { userReducer } from '../../redux/reducers'
-import { getPlannedEvents } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import { formatDate } from '../../utils'
 
 export default function PlannedEvents() {
     //TODO: Get number of events after the data is available
@@ -26,19 +25,6 @@ export default function PlannedEvents() {
         dispatch(getPlannedEvents())
         setNumEvents(plannedEventsRecieved?.features?.length)
     }, [])
-
-    const formatDate = (date) => {
-        const options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        }
-        const formattedDate = new Date(date).toLocaleDateString(
-            'en-US',
-            options
-        )
-        return formattedDate
-    }
 
     // Only do this when plannedEventsRecieved has been populated with data and create variable for num of events
     const plannedEvents = plannedEventsRecieved?.features?.map((event) => ({

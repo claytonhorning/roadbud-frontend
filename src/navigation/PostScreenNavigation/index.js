@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import PostScreen from '../../screens/Post'
 import ReportEventScreen from '../../screens/Post/ReportEventScreen'
 import PostToEventScreen from '../../screens/Post/PostToEventScreen'
+import ViewCreatedEvent from '../../screens/Event'
 
 const PostStack = createNativeStackNavigator()
 
@@ -31,6 +32,14 @@ export default function PostScreenNavigator() {
                 }}
                 name="PostToEventScreen"
                 component={PostToEventScreen}
+            />
+            <PostStack.Screen
+                options={{
+                    headerBackTitle: 'Back to add post',
+                    headerTitle: '',
+                }}
+                name="ViewCreatedEvent"
+                component={ViewCreatedEvent}
             />
         </PostStack.Navigator>
     )
