@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { DB_HOST } from '@env'
 
-API_URL = 'https://0b2e-24-9-207-248.ngrok.io'
+API_URL = 'http://localhost:3000'
 
 export const authApi = createApi({
     reducerPath: 'authApi',

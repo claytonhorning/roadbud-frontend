@@ -20,6 +20,7 @@ export default function ReportEventScreen({ navigation }) {
         postDescription: '',
         postImageUrl: '',
     })
+
     const [errors, setErrors] = useState({})
 
     const validate = () => {
@@ -55,15 +56,13 @@ export default function ReportEventScreen({ navigation }) {
         }
         await createEvent(event).then((res) => {
             const handleCreatePost = async () => {
-                let post = {
-                    title: 'Hello world',
-                    description: inputs.postDescription,
-                    // eventId: res?.data?.id,
-                }
-                console.log(post)
-                await createPost(post).then((res) => {
+                const postFormData = new FormData()
+                postFormData.append('description', inputs.postDescription)
+                // postFormData.append('imageUrl', inputs.postImageUrl)
+                // Set res.data._id to eventID param
+
+                await createPost(postFormData).then((res) => {
                     console.log(res)
-                    console.log(postResult)
                 })
             }
             handleCreatePost()
