@@ -15,31 +15,37 @@ export const locationSlice = createSlice({
             state.loading = true
         }),
             builder.addCase(getLocation.fulfilled, (state, { payload }) => {
+                state.location = payload
                 state.loading = false
-                console.log(payload)
-                state.location = payload.location
             }),
             builder.addCase(getLocation.rejected, (state, action) => {
-                state.loading = true
+                state.loading = false
             })
     },
 })
 
+const setLocation = async (auth) =>
+    new Promise((resolve, reject) => {
+        if (auth === 'granted') {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    location = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    }
+
+                    resolve(location)
+                },
+                (error) => {
+                    console.log('Error here' + error.message)
+                }
+            )
+        }
+    })
+
 export const getLocation = createAsyncThunk('getLocation', async (thunkAPI) => {
-    let location = {}
     const auth = await Geolocation.requestAuthorization('whenInUse')
 
-    if (auth === 'granted') {
-        Geolocation.getCurrentPosition((position) => {
-            const location = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-            }
-            console.log(location)
-        }),
-            (error) => {
-                console.log(error.message)
-            }
-    }
-    return location
+    const result = await setLocation(auth)
+    return result
 })

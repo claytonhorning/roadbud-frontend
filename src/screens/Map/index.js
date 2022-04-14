@@ -13,6 +13,7 @@ import Icon from '../../components/Icon'
 import { COLORS } from '../../styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocation } from '../../store/locationSlice'
+import { useGetEventsQuery } from '../../services/eventsApi'
 
 const eventData = [
     {
@@ -44,12 +45,19 @@ const eventData = [
 //TODO: Setup my location redux, clickable event markers, toggle event types under input
 
 const MapScreen = () => {
-    const { location, loading } = useSelector((state) => state.location)
-    dispatch = useDispatch()
-
     const [cdotToggled, setCdotToggled] = useState(true)
     const [roadbudToggled, setRoadbudToggled] = useState(true)
     const [videoToggled, setVideoToggled] = useState(true)
+    const [events, setEvents] = useState({})
+
+    const { location, loading } = useSelector((state) => state.location)
+    dispatch = useDispatch()
+
+    const { data, error, isLoading } = useGetEventsQuery()
+
+    // if (data) {
+    //     setEvents((prevState)=>{(...prevstate, })
+    // }
 
     useEffect(() => {
         dispatch(getLocation())
@@ -57,35 +65,41 @@ const MapScreen = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <MapView
-                style={styles.container}
-                initialRegion={{
-                    latitude: -107.308161,
-                    longitude: -107.308161,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
-                showsCompass={false}
-            >
-                {eventData.map((event) => (
-                    <Marker
-                        key={event.id}
-                        coordinate={{
-                            longitude: event.longitude,
-                            latitude: event.latitude,
-                        }}
-                        title={event.name}
-                        image={{
-                            uri: `cdot-marker`,
-                        }}
-                        style={{ height: 50, width: 50 }}
-                    >
-                        <View style={styles.postCountCircle}>
-                            <Text style={styles.postCountCircleText}>2</Text>
-                        </View>
-                    </Marker>
-                ))}
-            </MapView>
+            {location && (
+                <MapView
+                    style={styles.container}
+                    initialRegion={{
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                    showsCompass={false}
+                >
+                    {data &&
+                        data.map((event) => (
+                            <Marker
+                                key={event._id}
+                                coordinate={{
+                                    longitude: event.location.longitude,
+                                    latitude: event.location.latitude,
+                                }}
+                                title={event.name}
+                                image={{
+                                    uri: `cdot-marker`,
+                                }}
+                                style={{ height: 50, width: 50 }}
+                            >
+                                <View style={styles.postCountCircle}>
+                                    <Text style={styles.postCountCircleText}>
+                                        2
+                                    </Text>
+                                </View>
+                            </Marker>
+                        ))}
+                </MapView>
+            )}
+
             <View style={styles.topContainer}>
                 <View style={styles.inputContainer}>
                     <Icon

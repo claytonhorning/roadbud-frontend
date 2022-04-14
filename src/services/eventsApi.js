@@ -24,7 +24,11 @@ export const eventsApi = createApi({
         getEvent: build.query({
             query: (id) => `/event/${id}`,
         }),
+        getEvents: build.query({
+            query: () => '/event',
+        }),
     }),
 })
 
-export const { useCreateEventMutation, useGetEventQuery } = eventsApi
+export const { useCreateEventMutation, useGetEventQuery, useGetEventsQuery } =
+    eventsApi

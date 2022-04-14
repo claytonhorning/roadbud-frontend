@@ -30,7 +30,7 @@ export default function EventScreen({ route }) {
                             {formatDateWithTime(data.startsAt)}
                         </Text>
                         <Text style={TYPOGRAPHY.detailsLargeLight}>
-                            John Smith
+                            {data.createdBy.fullName}
                         </Text>
                     </View>
                     <Text style={styles.header}>{data.name}</Text>

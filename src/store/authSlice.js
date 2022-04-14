@@ -52,6 +52,7 @@ export const authSlice = createSlice({
 
 export const loadUser = createAsyncThunk('loadUser', async (thunkAPI) => {
     const token = await AsyncStorage.getItem('token')
+    console.log('Token' + token)
     return token
 })
 

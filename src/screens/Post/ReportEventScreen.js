@@ -6,12 +6,14 @@ import {
     ScrollView,
     Keyboard,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../../components/Inputs/Input'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { TYPOGRAPHY } from '../../styles'
 import { useCreateEventMutation } from '../../services/eventsApi'
 import { useCreatePostMutation } from '../../services/postsApi'
+import { getLocation } from '../../store/locationSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function ReportEventScreen({ navigation }) {
     const [inputs, setInputs] = useState({
@@ -20,6 +22,14 @@ export default function ReportEventScreen({ navigation }) {
         postDescription: '',
         postImageUrl: '',
     })
+
+    const dispatch = useDispatch()
+    const { location } = useSelector((state) => state.location)
+
+    useEffect(() => {
+        dispatch(getLocation())
+        console.log(location)
+    }, [])
 
     const [errors, setErrors] = useState({})
 
@@ -52,14 +62,16 @@ export default function ReportEventScreen({ navigation }) {
     const handleCreateEvent = async () => {
         let event = {
             name: inputs.eventName,
-            location: inputs.eventLocation,
+            location: {
+                longitude: location.longitude,
+                latitude: location.latitude,
+            },
         }
         await createEvent(event).then((res) => {
             const handleCreatePost = async () => {
                 const postFormData = new FormData()
                 postFormData.append('description', inputs.postDescription)
-                // postFormData.append('imageUrl', inputs.postImageUrl)
-                // Set res.data._id to eventID param
+                postFormData.append('event', res?.data?._id)
 
                 await createPost(postFormData).then((res) => {
                     console.log(res)

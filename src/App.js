@@ -22,9 +22,9 @@ const App = () => {
         dispatch(loadUser())
     }, [])
 
-    if (loading) {
-        return <LoadingScreen />
-    }
+    // if (loading) {
+    //     return <LoadingScreen />
+    // }
 
     return (
         <NavigationContainer>
