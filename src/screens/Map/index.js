@@ -7,10 +7,12 @@ import {
     TouchableOpacity,
     SafeAreaView,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Icon from '../../components/Icon'
 import { COLORS } from '../../styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { getLocation } from '../../store/locationSlice'
 
 const eventData = [
     {
@@ -42,16 +44,23 @@ const eventData = [
 //TODO: Setup my location redux, clickable event markers, toggle event types under input
 
 const MapScreen = () => {
+    const { location, loading } = useSelector((state) => state.location)
+    dispatch = useDispatch()
+
     const [cdotToggled, setCdotToggled] = useState(true)
     const [roadbudToggled, setRoadbudToggled] = useState(true)
     const [videoToggled, setVideoToggled] = useState(true)
+
+    useEffect(() => {
+        dispatch(getLocation())
+    }, [])
 
     return (
         <View style={{ flex: 1 }}>
             <MapView
                 style={styles.container}
                 initialRegion={{
-                    latitude: 39.530717,
+                    latitude: -107.308161,
                     longitude: -107.308161,
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
