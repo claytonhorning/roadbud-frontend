@@ -5,15 +5,17 @@ export const roadbudApi = createApi({
     reducerPath: 'roadbudApi',
     baseQuery: fetchBaseQuery({
         baseUrl: DB_HOST,
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: (headers, { getState, endpoint }) => {
             const token = getState().auth.token
             //Add endpoints which shouldnt have the auth header
             if (token !== null) {
                 headers.set('Authorization', `Bearer ${token}`)
-                headers.set(
-                    'Content-Type',
-                    'multipart/form-data; charset="UTF-8"; boundary=---'
-                )
+                if (endpoint === 'createPost') {
+                    headers.set(
+                        'Content-Type',
+                        'multipart/form-data; charset="UTF-8"; boundary=---'
+                    )
+                }
             }
             return headers
         },
@@ -37,6 +39,7 @@ export const roadbudApi = createApi({
         }),
         getUserData: build.query({
             query: () => '/auth/me',
+            providesTags: ['User'],
         }),
 
         // EVENT ENDPOINTS
@@ -54,7 +57,7 @@ export const roadbudApi = createApi({
                 method: 'POST',
                 body: event,
             }),
-            invalidatesTags: ['Event'],
+            invalidatesTags: ['Event', 'User'],
         }),
 
         //POST ENDPOINTS
@@ -64,7 +67,7 @@ export const roadbudApi = createApi({
                 method: 'POST',
                 body: post,
             }),
-            invalidatesTags: ['Event'],
+            invalidatesTags: ['Event', 'User'],
         }),
     }),
 })

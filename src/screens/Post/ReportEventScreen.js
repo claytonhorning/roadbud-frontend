@@ -57,11 +57,11 @@ export default function ReportEventScreen({ navigation }) {
 
         if (isValid) {
             handleCreateEvent()
-            setInputs({
-                eventName: '',
-                eventLocation: '',
-                postDescription: '',
-            })
+            // setInputs({
+            //     eventName: '',
+            //     eventLocation: '',
+            //     postDescription: '',
+            // })
         }
     }
 
@@ -103,6 +103,10 @@ export default function ReportEventScreen({ navigation }) {
 
     const [createEvent, eventResult] = useCreateEventMutation()
     const [createPost, postResult] = useCreatePostMutation()
+
+    useEffect(() => {
+        console.log(eventResult)
+    })
 
     const handleCreateEvent = async () => {
         let event = {
