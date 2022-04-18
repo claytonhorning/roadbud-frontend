@@ -12,10 +12,10 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import Post from '../../components/Post/Post'
 import { COLORS, TYPOGRAPHY } from '../../styles'
-import { useGetEventQuery } from '../../services/eventsApi'
+import { useGetEventQuery } from '../../services/roadbudApi'
 import { formatDateWithTime } from '../../utils/index'
 import { useDispatch } from 'react-redux'
-import { eventsApi } from '../../services/eventsApi'
+import { roadbudApi } from '../../services/roadbudApi'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
@@ -30,7 +30,7 @@ export default function EventScreen({ route, navigation }) {
 
     const dispatch = useDispatch()
 
-    dispatch(eventsApi.util.invalidateTags([{ type: 'Event', id: eventId }]))
+    dispatch(roadbudApi.util.invalidateTags([{ type: 'Event', id: eventId }]))
 
     const handleAddPost = () => {
         navigation.navigate('PostToEventScreen', {

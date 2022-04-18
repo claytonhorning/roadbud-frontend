@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/authSlice'
-import { useGetUserDataQuery } from '../../services/authApi'
+import { useGetUserDataQuery } from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
 

@@ -11,7 +11,7 @@ import {
 import React, { useState } from 'react'
 import Input from '../../components/Inputs/Input'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { useCreatePostMutation } from '../../services/postsApi'
+import { useCreatePostMutation } from '../../services/roadbudApi'
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'
 
 export default function PostToEventScreen({ route, navigation }) {
