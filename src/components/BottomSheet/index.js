@@ -7,6 +7,7 @@ import {
     Dimensions,
     PanResponder,
     TouchableWithoutFeedback,
+    ScrollView,
 } from 'react-native'
 import React, { useRef, useEffect, useState } from 'react'
 
@@ -74,7 +75,7 @@ export default function BottomSheet(props) {
                         <View style={styles.sliderIndicatorRow}>
                             <View style={styles.sliderIndicator} />
                         </View>
-                        {props.children}
+                        <ScrollView>{props.children}</ScrollView>
                     </Animated.View>
                 </View>
             </TouchableWithoutFeedback>

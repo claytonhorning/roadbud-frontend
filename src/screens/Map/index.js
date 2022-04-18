@@ -3,80 +3,95 @@ import {
     Text,
     StyleSheet,
     TextInput,
-    Platform,
     TouchableOpacity,
-    SafeAreaView,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState, createContext, useContext } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import Icon from '../../components/Icon'
 import { COLORS } from '../../styles'
+import { useDispatch, useSelector } from 'react-redux'
+import { getLocation } from '../../store/locationSlice'
+import { useGetEventsQuery } from '../../services/eventsApi'
+import BottomSheet from '../../components/BottomSheet'
+import Event from '../../components/Event'
+import { ModalContext } from '../../utils/modalContext'
 
-const eventData = [
-    {
-        id: 1,
-        name: 'Landslide in Glenwood Springs Canyon',
-        latitude: 39.4780483,
-        longitude: -107.27061,
-        eventCount: 3,
-        isCDOT: false,
-    },
-    {
-        id: 2,
-        name: 'Road work on HWY 82 in Glenwood',
-        latitude: 39.580483,
-        longitude: -107.27061,
-        eventCount: 3,
-        isCDOT: false,
-    },
-    {
-        id: 3,
-        name: 'Crash in Glenwood Canyon no Estimated time of re-opening',
-        latitude: 39.5940023,
-        longitude: -107.1745141,
-        eventCount: 3,
-        isCDOT: false,
-    },
-]
-
-//TODO: Setup my location redux, clickable event markers, toggle event types under input
-
-const MapScreen = () => {
+const MapScreen = ({ navigation }) => {
     const [cdotToggled, setCdotToggled] = useState(true)
     const [roadbudToggled, setRoadbudToggled] = useState(true)
     const [videoToggled, setVideoToggled] = useState(true)
+    const [region, setRegion] = useState({ ...location })
+    const [openModal, setOpenModal] = useState(false)
+    const [eventPressed, setEventPressed] = useState('')
+
+    const onDismiss = () => {
+        setOpenModal(false)
+    }
+
+    const { location, loading } = useSelector((state) => state.location)
+    dispatch = useDispatch()
+
+    const { data, error, isLoading } = useGetEventsQuery()
+
+    const resetUserRegion = () => {
+        setRegion((prevState) => ({ ...prevState, ...location }))
+    }
+
+    const handleEventPressed = (eventId) => {
+        setOpenModal(true)
+        setEventPressed(eventId)
+    }
+
+    useEffect(() => {
+        dispatch(getLocation())
+    }, [])
 
     return (
         <View style={{ flex: 1 }}>
-            <MapView
-                style={styles.container}
-                initialRegion={{
-                    latitude: 39.530717,
-                    longitude: -107.308161,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
-                showsCompass={false}
-            >
-                {eventData.map((event) => (
-                    <Marker
-                        key={event.id}
-                        coordinate={{
-                            longitude: event.longitude,
-                            latitude: event.latitude,
-                        }}
-                        title={event.name}
-                        image={{
-                            uri: `cdot-marker`,
-                        }}
-                        style={{ height: 50, width: 50 }}
-                    >
-                        <View style={styles.postCountCircle}>
-                            <Text style={styles.postCountCircleText}>2</Text>
-                        </View>
-                    </Marker>
-                ))}
-            </MapView>
+            {location && (
+                <MapView
+                    style={styles.container}
+                    initialRegion={{
+                        ...location,
+                        latitudeDelta: 0.09,
+                        longitudeDelta: 0.09,
+                    }}
+                    showsCompass={false}
+                    region={{
+                        ...location,
+                        latitudeDelta: 0.09,
+                        longitudeDelta: 0.09,
+                    }}
+                >
+                    {data &&
+                        data.map((event) => (
+                            <Marker
+                                key={event._id}
+                                coordinate={{
+                                    longitude: event?.location?.longitude,
+                                    latitude: event?.location?.latitude,
+                                }}
+                                title={event.name}
+                                image={
+                                    event.isCDOT
+                                        ? { uri: 'cdot-marker' }
+                                        : {
+                                              uri: 'roadbud-marker',
+                                          }
+                                }
+                                style={{ height: 50, width: 50 }}
+                                onSelect={() => handleEventPressed(event._id)}
+                            >
+                                <View style={styles.postCountCircle}>
+                                    <Text style={styles.postCountCircleText}>
+                                        {event.posts.length}
+                                    </Text>
+                                </View>
+                            </Marker>
+                        ))}
+                </MapView>
+            )}
+
             <View style={styles.topContainer}>
                 <View style={styles.inputContainer}>
                     <Icon
@@ -154,11 +169,20 @@ const MapScreen = () => {
                     <Icon style={styles.iconButton} name="water-drop" />
                 </View>
                 <Text style={styles.iconButtonText}>Conditions</Text>
-                <View style={styles.iconWrapper}>
-                    <Icon style={styles.iconButton} name="locator" />
-                </View>
+                <TouchableOpacity onPress={resetUserRegion}>
+                    <View style={styles.iconWrapper}>
+                        <Icon style={styles.iconButton} name="locator" />
+                    </View>
+                </TouchableOpacity>
                 <Text style={styles.iconButtonText}>My Location</Text>
             </View>
+            {openModal && (
+                <ModalContext.Provider value={{ openModal, setOpenModal }}>
+                    <BottomSheet onDismiss={onDismiss}>
+                        <Event navigation={navigation} eventId={eventPressed} />
+                    </BottomSheet>
+                </ModalContext.Provider>
+            )}
         </View>
     )
 }
@@ -197,11 +221,11 @@ const styles = StyleSheet.create({
         width: 60,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000',
+        backgroundColor: COLORS.black,
         borderRadius: 30,
     },
     iconButton: {
-        color: '#fff',
+        color: COLORS.white,
         fontSize: 20,
     },
     iconButtonText: {
@@ -210,6 +234,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontFamily: 'IBMPlexSans-Regular',
         textAlign: 'center',
+        color: COLORS.white,
     },
     locationInput: {
         height: 50,

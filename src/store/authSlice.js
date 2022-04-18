@@ -4,15 +4,13 @@ import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import { authApi } from '../services/authApi'
 
-API_URL = 'https://b0c9-2601-280-8100-14d0-4517-f1dd-42cf-a4f.ngrok.io'
-
 const initialState = {
     user: null,
     token: null,
     loading: false,
 }
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -28,7 +26,11 @@ const authSlice = createSlice({
             builder.addCase(loadUser.fulfilled, (state, { payload }) => {
                 state.loading = false
                 state.token = payload
-                state.user = jwtDecode(payload)
+                try {
+                    state.user = jwtDecode(payload)
+                } catch {
+                    console.log('couldnt')
+                }
             }),
             builder.addCase(loadUser.rejected, (state, action) => {
                 state.loading = false
@@ -44,6 +46,7 @@ const authSlice = createSlice({
             builder.addMatcher(
                 authApi.endpoints.loginUser.matchFulfilled,
                 (state, { payload }) => {
+                    console.log('here')
                     AsyncStorage.setItem('token', payload.token)
                     state.token = payload.token
                     state.user = jwtDecode(payload.token)
@@ -54,10 +57,7 @@ const authSlice = createSlice({
 
 export const loadUser = createAsyncThunk('loadUser', async (thunkAPI) => {
     const token = await AsyncStorage.getItem('token')
-    console.log(token)
     return token
 })
 
 export const { logoutUser } = authSlice.actions
-
-export default authSlice

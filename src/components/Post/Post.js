@@ -21,9 +21,11 @@ export default function Post({ description, imageURI, time, date, user }) {
                 </View>
             </View>
             <Text style={styles.header}>{description}</Text>
-            <View style={{ height: 235, width: '100%' }}>
-                <Image style={styles.image} source={{ uri: imageURI }} />
-            </View>
+            {imageURI !== '' && (
+                <View style={{ height: 235, width: '100%' }}>
+                    <Image style={styles.image} source={{ uri: imageURI }} />
+                </View>
+            )}
         </View>
     )
 }

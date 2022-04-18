@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authSlice from './authSlice'
+import { authSlice } from './authSlice'
+import { locationSlice } from './locationSlice'
 import { authApi } from '../services/authApi'
 import { eventsApi } from '../services/eventsApi'
 import { postsApi } from '../services/postsApi'
@@ -12,7 +13,9 @@ const store = configureStore({
         [postsApi.reducerPath]: postsApi.reducer,
         [cdotApi.reducerPath]: cdotApi.reducer,
         auth: authSlice.reducer,
+        location: locationSlice.reducer,
     },
+    devTools: true,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
             authApi.middleware,

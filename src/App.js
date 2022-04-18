@@ -5,9 +5,8 @@ import { Provider, useDispatch, useSelector } from 'react-redux'
 import store from './store'
 import AuthStack from './navigation/AuthNavigation'
 import { loadUser } from './store/authSlice'
-import SplashScreen from 'react-native-splash-screen'
-import { View, Text } from 'react-native'
 import LoadingScreen from './screens/Loading'
+import { StatusBar } from 'react-native'
 
 export default function ReduxProvider() {
     return (
@@ -28,8 +27,11 @@ const App = () => {
         return <LoadingScreen />
     }
 
+    console.log(token)
+
     return (
         <NavigationContainer>
+            <StatusBar barStyle="dark-content" />
             {token == null ? <AuthStack /> : <BottomNavbar />}
         </NavigationContainer>
     )

@@ -5,22 +5,19 @@ import {
     SafeAreaView,
     TouchableOpacity,
     ScrollView,
-    FlatList,
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import Post from '../../components/Post/Post'
 import { COLORS, TYPOGRAPHY } from '../../styles'
 import { useGetEventQuery } from '../../services/eventsApi'
 import { formatDateWithTime } from '../../utils/index'
-import { useDispatch } from 'react-redux'
-import { eventsApi } from '../../services/eventsApi'
+import { ModalContext } from '../../utils/modalContext'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
-export default function EventScreen({ route, navigation }) {
-    const { eventId } = route.params
+export default function Event({ eventId, navigation }) {
     const {
         data: eventData,
         error: eventError,
@@ -28,25 +25,18 @@ export default function EventScreen({ route, navigation }) {
         isSuccess: eventSuccess,
     } = useGetEventQuery(eventId)
 
-    const dispatch = useDispatch()
-
-    dispatch(eventsApi.util.invalidateTags([{ type: 'Event', id: eventId }]))
+    const { openModal, setOpenModal } = useContext(ModalContext)
 
     const handleAddPost = () => {
         navigation.navigate('PostToEventScreen', {
             eventId,
             name: eventData.name,
         })
+        setOpenModal(false)
     }
 
-    useEffect(() => {
-        if (eventData) {
-            console.log(eventData, eventError)
-        }
-    })
-
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {eventLoading && <Text>Event is loading</Text>}
             {eventSuccess && (
                 <ScrollView style={styles.content}>
@@ -125,7 +115,7 @@ export default function EventScreen({ route, navigation }) {
                     <View style={{ paddingTop: 50 }} />
                 </ScrollView>
             )}
-        </SafeAreaView>
+        </View>
     )
 }
 
