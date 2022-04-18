@@ -47,7 +47,7 @@ export default function Video() {
                 <Text style={{ opacity: 0.5, marginVertical: 5 }}>8 Feeds</Text>
                 <ScrollView contentContainerStyle={styles.videoContainer}>
                     {videoData.map((video) => (
-                        <TouchableOpacity style={styles.video}>
+                        <TouchableOpacity key={video.id} style={styles.video}>
                             <Text style={styles.videoNameText}>
                                 {video.name}
                             </Text>

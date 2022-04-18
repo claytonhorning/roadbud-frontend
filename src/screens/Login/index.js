@@ -34,9 +34,15 @@ export default function Login({ navigation }) {
             email: inputs.email,
             password: inputs.password,
         }
-        await signInUser(user)
-    }
 
+        signInUser(user)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error.response)
+            })
+    }
     const validate = () => {
         Keyboard.dismiss()
         let isValid = true
@@ -57,6 +63,7 @@ export default function Login({ navigation }) {
         }
 
         if (isValid) {
+            console.log('everything valid')
             loginUser()
         }
     }
@@ -91,7 +98,7 @@ export default function Login({ navigation }) {
                 <Button title="Login" onPress={validate} />
                 <View style={styles.signupTextRow}>
                     <Text style={styles.signupText}>
-                        Already have an account?{' '}
+                        Don't have an account?{' '}
                     </Text>
                     <Pressable
                         onPress={() => navigation.navigate('SignUpScreen')}

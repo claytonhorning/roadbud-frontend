@@ -15,6 +15,7 @@ const store = configureStore({
         auth: authSlice.reducer,
         location: locationSlice.reducer,
     },
+    devTools: true,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
             authApi.middleware,

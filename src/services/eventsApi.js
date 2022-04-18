@@ -13,6 +13,7 @@ export const eventsApi = createApi({
             return headers
         },
     }),
+    tagTypes: ['Event'],
     endpoints: (build) => ({
         createEvent: build.mutation({
             query: (event) => ({
@@ -23,6 +24,7 @@ export const eventsApi = createApi({
         }),
         getEvent: build.query({
             query: (id) => `/event/${id}`,
+            invalidatesTags: ['Event'],
         }),
         getEvents: build.query({
             query: () => '/event',

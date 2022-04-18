@@ -87,7 +87,7 @@ const PostScreen = ({ navigation }) => {
                         >
                             <Icon
                                 style={{ fontSize: 18, marginRight: 3 }}
-                                name="location-pin"
+                                name="pin"
                             />
                             <Text>3.1 mi.</Text>
                         </View>
@@ -110,7 +110,7 @@ const PostScreen = ({ navigation }) => {
                         >
                             <Icon
                                 style={{ fontSize: 18, marginRight: 3 }}
-                                name="location-pin"
+                                name="pin"
                             />
                             <Text>3.1 mi.</Text>
                         </View>
@@ -133,7 +133,7 @@ const PostScreen = ({ navigation }) => {
                         >
                             <Icon
                                 style={{ fontSize: 18, marginRight: 3 }}
-                                name="location-pin"
+                                name="pin"
                             />
                             <Text>3.1 mi.</Text>
                         </View>

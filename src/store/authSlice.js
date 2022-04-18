@@ -26,7 +26,11 @@ export const authSlice = createSlice({
             builder.addCase(loadUser.fulfilled, (state, { payload }) => {
                 state.loading = false
                 state.token = payload
-                state.user = jwtDecode(payload)
+                try {
+                    state.user = jwtDecode(payload)
+                } catch {
+                    console.log('couldnt')
+                }
             }),
             builder.addCase(loadUser.rejected, (state, action) => {
                 state.loading = false
@@ -42,6 +46,7 @@ export const authSlice = createSlice({
             builder.addMatcher(
                 authApi.endpoints.loginUser.matchFulfilled,
                 (state, { payload }) => {
+                    console.log('here')
                     AsyncStorage.setItem('token', payload.token)
                     state.token = payload.token
                     state.user = jwtDecode(payload.token)
@@ -52,7 +57,6 @@ export const authSlice = createSlice({
 
 export const loadUser = createAsyncThunk('loadUser', async (thunkAPI) => {
     const token = await AsyncStorage.getItem('token')
-    console.log('Token' + token)
     return token
 })
 

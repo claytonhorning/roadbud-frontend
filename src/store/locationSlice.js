@@ -29,7 +29,7 @@ const setLocation = async (auth) =>
         if (auth === 'granted') {
             Geolocation.getCurrentPosition(
                 (position) => {
-                    location = {
+                    let location = {
                         latitude: position.coords.latitude,
                         longitude: position.coords.longitude,
                     }

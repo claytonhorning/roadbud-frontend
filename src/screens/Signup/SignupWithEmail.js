@@ -33,6 +33,7 @@ export default function SignUpWithEmail({ navigation }) {
             email: inputs.email,
             password: inputs.password,
         }
+        console.log(result)
         await signUpUser(user)
     }
 
@@ -71,6 +72,7 @@ export default function SignUpWithEmail({ navigation }) {
         }
 
         if (isValid) {
+            console.log('pressed')
             handleAddUser()
         }
     }

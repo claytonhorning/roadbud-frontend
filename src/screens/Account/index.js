@@ -8,9 +8,12 @@ import {
     Switch,
     TouchableOpacity,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/authSlice'
+import { useGetUserDataQuery } from '../../services/authApi'
+import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
+import { formatDateWithTime } from '../../utils'
 
 const AccountScreen = () => {
     const [errors, setErrors] = useState({})
@@ -33,6 +36,8 @@ const AccountScreen = () => {
         }
     }
 
+    const { data, isLoading, error } = useGetUserDataQuery()
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.content}>
@@ -48,28 +53,93 @@ const AccountScreen = () => {
                         <Text style={styles.subheader}>{user.email}</Text>
                     </View>
                 </View>
-                <Text
-                    style={{ fontSize: 16, fontWeight: '600', marginLeft: 20 }}
-                >
-                    My Contributions
-                </Text>
-                <ScrollView
-                    style={{ paddingLeft: 20, paddingVertical: 10 }}
-                    horizontal={true}
-                >
-                    <View style={[styles.post, styles.shadowProp]}>
-                        <Text>
-                            HWY 82 traffic backed up. Not going to clear up for
-                            a while.
+                {data && (
+                    <>
+                        <Text
+                            style={{
+                                fontSize: 16,
+                                fontWeight: '600',
+                                marginLeft: 20,
+                            }}
+                        >
+                            My Contributions
                         </Text>
-                    </View>
-                    <View style={[styles.post, styles.shadowProp]}>
-                        <Text>
-                            HWY 82 traffic backed up. Not going to clear up for
-                            a while.
+                        <Text
+                            style={{
+                                marginLeft: 20,
+                                opacity: 0.5,
+                                marginTop: 5,
+                            }}
+                        >
+                            {data.events.length} Events
                         </Text>
-                    </View>
-                </ScrollView>
+                        <ScrollView
+                            style={{ paddingLeft: 20, paddingVertical: 10 }}
+                            horizontal={true}
+                        >
+                            {data.events.map((event) => (
+                                <View style={styles.event}>
+                                    <Text
+                                        style={{
+                                            ...TYPOGRAPHY.detailsLight,
+                                            marginBottom: 8,
+                                        }}
+                                    >
+                                        {formatDateWithTime(event.createdAt)}
+                                    </Text>
+                                    <Text>{event.name}</Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+                        <Text
+                            style={{
+                                marginLeft: 20,
+                                opacity: 0.5,
+                                marginTop: 5,
+                            }}
+                        >
+                            {data.posts.length} Posts
+                        </Text>
+                        <ScrollView
+                            style={{ paddingLeft: 20, paddingVertical: 10 }}
+                            horizontal={true}
+                        >
+                            {data.posts.map((post) => (
+                                <View style={styles.post}>
+                                    <View style={styles.postTextContent}>
+                                        <Text
+                                            style={{
+                                                ...TYPOGRAPHY.detailsLight,
+                                                marginBottom: 8,
+                                            }}
+                                        >
+                                            {formatDateWithTime(post.createdAt)}
+                                        </Text>
+                                        <Text>{post.description}</Text>
+                                    </View>
+
+                                    {post.imageUrl !== '' ? (
+                                        <Image
+                                            style={styles.postImage}
+                                            source={{ uri: post.imageUrl }}
+                                        />
+                                    ) : (
+                                        <Text
+                                            style={{
+                                                alignSelf: 'center',
+                                                justifyContent: 'center',
+                                                marginTop: 50,
+                                                opacity: 0.5,
+                                            }}
+                                        >
+                                            No image
+                                        </Text>
+                                    )}
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </>
+                )}
                 <Text
                     style={{
                         fontSize: 16,
@@ -186,18 +256,34 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginRight: 15,
     },
-    post: {
-        height: 120,
+    event: {
         width: 200,
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.white,
         padding: 20,
         borderRadius: 5,
+        marginRight: 15,
+        ...SHADOWS.shadowProp,
     },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+    post: {
+        height: 250,
+        width: 200,
+        backgroundColor: COLORS.white,
+        borderRadius: 5,
+        marginRight: 15,
+        ...SHADOWS.shadowProp,
+    },
+    postTextContent: {
+        paddingHorizontal: 20,
+        paddingTop: 20,
+        paddingBottom: 10,
+    },
+    postImage: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
     },
     logoutButton: {
         marginTop: 40,
