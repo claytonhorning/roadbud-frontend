@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { DB_HOST } from '@env'
 
-export const postsApi = createApi({
-    reducerPath: 'postsApi',
+export const roadbudApi = createApi({
+    reducerPath: 'roadbudApi',
     baseQuery: fetchBaseQuery({
         baseUrl: DB_HOST,
         prepareHeaders: (headers, { getState }) => {
@@ -31,4 +31,4 @@ export const postsApi = createApi({
     }),
 })
 
-export const { useCreatePostMutation, useGetPostsQuery } = postsApi
+export const { useCreatePostMutation, useGetPostsQuery } = roadbudApi

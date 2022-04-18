@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
-import { authApi } from '../services/authApi'
+import { roadbudApi } from '../services/roadbudApi'
 
 const initialState = {
     user: null,
@@ -36,7 +36,7 @@ export const authSlice = createSlice({
                 state.loading = false
             }),
             builder.addMatcher(
-                authApi.endpoints.signUpUser.matchFulfilled,
+                roadbudApi.endpoints.signUpUser.matchFulfilled,
                 (state, { payload }) => {
                     AsyncStorage.setItem('token', payload.token)
                     state.token = payload.token
@@ -44,7 +44,7 @@ export const authSlice = createSlice({
                 }
             ),
             builder.addMatcher(
-                authApi.endpoints.loginUser.matchFulfilled,
+                roadbudApi.endpoints.loginUser.matchFulfilled,
                 (state, { payload }) => {
                     console.log('here')
                     AsyncStorage.setItem('token', payload.token)

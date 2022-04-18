@@ -1,16 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { authSlice } from './authSlice'
 import { locationSlice } from './locationSlice'
-import { authApi } from '../services/authApi'
-import { eventsApi } from '../services/eventsApi'
-import { postsApi } from '../services/postsApi'
 import { cdotApi } from '../services/cdotApi'
+import { roadbudApi } from '../services/roadbudApi'
 
 const store = configureStore({
     reducer: {
-        [authApi.reducerPath]: authApi.reducer,
-        [eventsApi.reducerPath]: eventsApi.reducer,
-        [postsApi.reducerPath]: postsApi.reducer,
+        [roadbudApi.reducerPath]: roadbudApi.reducer,
         [cdotApi.reducerPath]: cdotApi.reducer,
         auth: authSlice.reducer,
         location: locationSlice.reducer,
@@ -18,9 +14,7 @@ const store = configureStore({
     devTools: true,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
-            authApi.middleware,
-            eventsApi.middleware,
-            postsApi.middleware,
+            roadbudApi.middleware,
             cdotApi.middleware
         ),
 })

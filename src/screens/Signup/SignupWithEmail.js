@@ -12,7 +12,7 @@ import Input from 'components/Inputs/Input'
 import Logo from 'assets/img/logo/dark.png'
 import Button from '../../components/Buttons/Button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useSignUpUserMutation } from '../../services/authApi'
+import { useSignUpUserMutation } from '../../services/roadbudApi'
 
 const { height, width } = Dimensions.get('window')
 

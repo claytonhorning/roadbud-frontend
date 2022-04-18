@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import Post from '../../components/Post/Post'
 import { COLORS, TYPOGRAPHY } from '../../styles'
-import { useGetEventQuery } from '../../services/eventsApi'
+import { useGetEventQuery } from '../../services/roadbudApi'
 import { formatDateWithTime } from '../../utils/index'
 import { ModalContext } from '../../utils/modalContext'
 

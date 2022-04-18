@@ -15,7 +15,7 @@ import Input from '../../components/Inputs/Input'
 import SocialButtons from '../../components/Buttons/SocialButtons'
 import Button from '../../components/Buttons/Button'
 import { useDispatch } from 'react-redux'
-import { useLoginUserMutation } from '../../services/authApi'
+import { useLoginUserMutation } from '../../services/roadbudApi'
 
 const { height, width } = Dimensions.get('window')
 
