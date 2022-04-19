@@ -41,6 +41,14 @@ export const roadbudApi = createApi({
             query: () => '/auth/me',
             providesTags: ['User'],
         }),
+        updateUserDataSettings: build.mutation({
+            query: (settings) => ({
+                url: '/auth/me',
+                method: 'PATCH',
+                body: settings,
+            }),
+            invalidatesTags: ['User'],
+        }),
 
         // EVENT ENDPOINTS
         getEvents: build.query({
@@ -80,4 +88,5 @@ export const {
     useGetEventQuery,
     useGetEventsQuery,
     useCreatePostMutation,
+    useUpdateUserDataSettingsMutation,
 } = roadbudApi
