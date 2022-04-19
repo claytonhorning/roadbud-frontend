@@ -16,7 +16,7 @@ import { COLORS, TYPOGRAPHY } from '../../styles'
 import { useGetEventQuery } from '../../services/roadbudApi'
 import { formatDateWithTime } from '../../utils/index'
 import { ModalContext } from '../../utils/modalContext'
-import UpdateEvent from '../ActionSheets/UpdateEvent'
+import { UpdateEventFromComponent } from '../ActionSheets/UpdateEvent'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
@@ -43,8 +43,8 @@ export default function Event({ eventId, navigation }) {
         isUpdateOpen(false)
     }, [update])
 
-    if (eventError) {
-        return
+    if (eventError || eventData == null) {
+        return null
     }
 
     return (
@@ -126,7 +126,7 @@ export default function Event({ eventId, navigation }) {
                                 />
                             </TouchableOpacity>
                             {update && (
-                                <UpdateEvent
+                                <UpdateEventFromComponent
                                     navigation={navigation}
                                     eventId={eventId}
                                 />
