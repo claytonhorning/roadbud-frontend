@@ -67,6 +67,21 @@ export const roadbudApi = createApi({
             }),
             invalidatesTags: ['Event', 'User'],
         }),
+        updateEvent: build.mutation({
+            query: (id, ...rest) => ({
+                url: `/event/${id}`,
+                method: 'PATCH',
+                body: rest,
+            }),
+            invalidatesTags: ['Event', 'User'],
+        }),
+        deleteEvent: build.mutation({
+            query: (id) => ({
+                url: `/event/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Event', 'User'],
+        }),
 
         //POST ENDPOINTS
         createPost: build.mutation({
@@ -89,4 +104,6 @@ export const {
     useGetEventsQuery,
     useCreatePostMutation,
     useUpdateUserDataSettingsMutation,
+    useUpdateEventMutation,
+    useDeleteEventMutation,
 } = roadbudApi

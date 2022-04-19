@@ -5,6 +5,8 @@ import {
     SafeAreaView,
     TouchableOpacity,
     ScrollView,
+    TouchableWithoutFeedback,
+    Pressable,
 } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -14,6 +16,7 @@ import { COLORS, TYPOGRAPHY } from '../../styles'
 import { useGetEventQuery } from '../../services/roadbudApi'
 import { formatDateWithTime } from '../../utils/index'
 import { ModalContext } from '../../utils/modalContext'
+import UpdateEvent from '../ActionSheets/UpdateEvent'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
@@ -25,6 +28,7 @@ export default function Event({ eventId, navigation }) {
         isSuccess: eventSuccess,
     } = useGetEventQuery(eventId)
 
+    const [update, isUpdateOpen] = useState(false)
     const { openModal, setOpenModal } = useContext(ModalContext)
 
     const handleAddPost = () => {
@@ -33,6 +37,14 @@ export default function Event({ eventId, navigation }) {
             name: eventData.name,
         })
         setOpenModal(false)
+    }
+
+    useEffect(() => {
+        isUpdateOpen(false)
+    }, [update])
+
+    if (eventError) {
+        return
     }
 
     return (
@@ -48,6 +60,7 @@ export default function Event({ eventId, navigation }) {
                             {eventData.createdBy.fullName}
                         </Text>
                     </View>
+
                     <Text style={styles.header}>{eventData.name}</Text>
                     <View style={styles.optionsContainer}>
                         <View style={styles.buttonsContainer}>
@@ -66,7 +79,10 @@ export default function Event({ eventId, navigation }) {
                                     }}
                                 />
                                 <Text
-                                    style={{ color: '#fff', fontWeight: '600' }}
+                                    style={{
+                                        color: '#fff',
+                                        fontWeight: '600',
+                                    }}
                                 >
                                     Add Post
                                 </Text>
@@ -82,7 +98,10 @@ export default function Event({ eventId, navigation }) {
                                     }}
                                 />
                                 <Text
-                                    style={{ color: '#fff', fontWeight: '600' }}
+                                    style={{
+                                        color: '#fff',
+                                        fontWeight: '600',
+                                    }}
                                 >
                                     Follow
                                 </Text>
@@ -95,10 +114,23 @@ export default function Event({ eventId, navigation }) {
                                     ? 'Post'
                                     : 'Posts'}
                             </Text>
-                            <IconMaterial
-                                name="dots-horizontal"
-                                style={{ fontSize: 35, marginLeft: 5 }}
-                            />
+                            <TouchableOpacity
+                                onPress={() => isUpdateOpen(true)}
+                            >
+                                <IconMaterial
+                                    name="dots-horizontal"
+                                    style={{
+                                        fontSize: 35,
+                                        marginLeft: 5,
+                                    }}
+                                />
+                            </TouchableOpacity>
+                            {update && (
+                                <UpdateEvent
+                                    navigation={navigation}
+                                    eventId={eventId}
+                                />
+                            )}
                         </View>
                     </View>
                     {eventData &&

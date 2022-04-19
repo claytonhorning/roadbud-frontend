@@ -26,9 +26,6 @@ const App = () => {
     if (loading) {
         return <LoadingScreen />
     }
-
-    console.log(token)
-
     return (
         <NavigationContainer>
             <StatusBar barStyle="dark-content" />
