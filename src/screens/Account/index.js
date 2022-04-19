@@ -8,10 +8,13 @@ import {
     Switch,
     TouchableOpacity,
 } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/authSlice'
-import { useGetUserDataQuery } from '../../services/roadbudApi'
+import {
+    useGetUserDataQuery,
+    useUpdateUserDataSettingsMutation,
+} from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
 
@@ -20,10 +23,11 @@ const AccountScreen = () => {
     const handleError = (error, input) => {
         setErrors((prevState) => ({ ...prevState, [input]: error }))
     }
-
-    const [isEnabled, setIsEnabled] = useState(false)
-    const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
-
+    const [settings, setSettings] = useState({
+        hasPushNotifications: null,
+        hasLocationServices: null,
+        hasEmailMarketing: null,
+    })
     const { user } = useSelector((state) => state.auth)
 
     dispatch = useDispatch()
@@ -37,6 +41,34 @@ const AccountScreen = () => {
     }
 
     const { data, isLoading, error } = useGetUserDataQuery()
+    const [setUserSettings, result] = useUpdateUserDataSettingsMutation()
+
+    useEffect(() => {
+        if (data) {
+            setSettings((prevState) => ({
+                ...prevState,
+                hasEmailMarketing: data.settings.hasEmailMarketing,
+                hasLocationServices: data.settings.hasLocationServices,
+                hasPushNotifications: data.settings.hasPushNotifications,
+            }))
+        }
+    }, [data])
+
+    const handleToggleSwitch = (settingType, value) => {
+        setSettings((prevState) => ({
+            ...prevState,
+            [settingType]: !value,
+        }))
+    }
+
+    const firstUpdate = useRef(true)
+    useEffect(() => {
+        if (firstUpdate.current) {
+            firstUpdate.current = false
+            return
+        }
+        setUserSettings({ settings: { ...settings } })
+    }, [settings])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -150,57 +182,86 @@ const AccountScreen = () => {
                 >
                     Settings
                 </Text>
-                <View style={{ marginLeft: 20 }}>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginTop: 15,
-                        }}
-                    >
-                        <Switch
-                            trackColor={{ false: '#767577', true: '#047FE8' }}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        />
-                        <Text style={{ marginLeft: 10 }}>
-                            Push notifications
-                        </Text>
+
+                {data && (
+                    <View style={{ marginLeft: 20 }}>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginTop: 15,
+                            }}
+                        >
+                            <Switch
+                                trackColor={{
+                                    false: '#767577',
+                                    true: '#047FE8',
+                                }}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={() => {
+                                    handleToggleSwitch(
+                                        'hasPushNotifications',
+                                        settings.hasPushNotifications
+                                    )
+                                }}
+                                value={settings.hasPushNotifications}
+                            />
+                            <Text style={{ marginLeft: 10 }}>
+                                Push notifications
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginTop: 15,
+                            }}
+                        >
+                            <Switch
+                                trackColor={{
+                                    false: '#767577',
+                                    true: '#047FE8',
+                                }}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={() => {
+                                    handleToggleSwitch(
+                                        'hasLocationServices',
+                                        settings.hasLocationServices
+                                    )
+                                }}
+                                value={settings.hasLocationServices}
+                            />
+                            <Text style={{ marginLeft: 10 }}>
+                                Location services
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginTop: 15,
+                            }}
+                        >
+                            <Switch
+                                trackColor={{
+                                    false: '#767577',
+                                    true: '#047FE8',
+                                }}
+                                ios_backgroundColor="#3e3e3e"
+                                onValueChange={() => {
+                                    handleToggleSwitch(
+                                        'hasEmailMarketing',
+                                        settings.hasEmailMarketing
+                                    )
+                                }}
+                                value={settings.hasEmailMarketing}
+                            />
+                            <Text style={{ marginLeft: 10 }}>
+                                Email marketing
+                            </Text>
+                        </View>
                     </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginTop: 15,
-                        }}
-                    >
-                        <Switch
-                            trackColor={{ false: '#767577', true: '#047FE8' }}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        />
-                        <Text style={{ marginLeft: 10 }}>
-                            Location services
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginTop: 15,
-                        }}
-                    >
-                        <Switch
-                            trackColor={{ false: '#767577', true: '#047FE8' }}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        />
-                        <Text style={{ marginLeft: 10 }}>Email marketing</Text>
-                    </View>
-                </View>
+                )}
                 <TouchableOpacity
                     onPress={handleLogout}
                     style={styles.logoutButton}
