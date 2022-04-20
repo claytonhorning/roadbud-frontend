@@ -16,6 +16,7 @@ import { useGetEventQuery } from '../../services/roadbudApi'
 import { formatDateWithTime } from '../../utils/index'
 import { useDispatch } from 'react-redux'
 import { roadbudApi } from '../../services/roadbudApi'
+import { UpdateEventFromScreen } from '../../components/ActionSheets/UpdateEvent'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
@@ -27,10 +28,7 @@ export default function EventScreen({ route, navigation }) {
         isLoading: eventLoading,
         isSuccess: eventSuccess,
     } = useGetEventQuery(eventId)
-
-    const dispatch = useDispatch()
-
-    dispatch(roadbudApi.util.invalidateTags([{ type: 'Event', id: eventId }]))
+    const [update, isUpdateOpen] = useState(false)
 
     const handleAddPost = () => {
         navigation.navigate('PostToEventScreen', {
@@ -40,10 +38,12 @@ export default function EventScreen({ route, navigation }) {
     }
 
     useEffect(() => {
-        if (eventData) {
-            console.log(eventData, eventError)
-        }
-    })
+        isUpdateOpen(false)
+    }, [update])
+
+    if (eventError || eventData == null) {
+        return null
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -105,10 +105,23 @@ export default function EventScreen({ route, navigation }) {
                                     ? 'Post'
                                     : 'Posts'}
                             </Text>
-                            <IconMaterial
-                                name="dots-horizontal"
-                                style={{ fontSize: 35, marginLeft: 5 }}
-                            />
+                            <TouchableOpacity
+                                onPress={() => isUpdateOpen(true)}
+                            >
+                                <IconMaterial
+                                    name="dots-horizontal"
+                                    style={{
+                                        fontSize: 35,
+                                        marginLeft: 5,
+                                    }}
+                                />
+                            </TouchableOpacity>
+                            {update && (
+                                <UpdateEventFromScreen
+                                    navigation={navigation}
+                                    eventId={eventId}
+                                />
+                            )}
                         </View>
                     </View>
                     {eventData &&

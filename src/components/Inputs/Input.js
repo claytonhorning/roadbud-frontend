@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import Icon from '../Icon'
+import { COLORS } from '../../styles'
 
 const Input = ({
     label,
@@ -14,6 +15,8 @@ const Input = ({
     error,
     password,
     rightButton,
+    highlight,
+    onPress = () => {},
     largeInput,
     onFocus = () => {},
     ...props
@@ -48,7 +51,11 @@ const Input = ({
                 <TextInput
                     secureTextEntry={hidePassword}
                     autoCorrect={false}
-                    style={{ color: 'black', flex: 1 }}
+                    style={
+                        highlight
+                            ? { color: COLORS.secondary, flex: 1 }
+                            : { color: 'black', flex: 1 }
+                    }
                     onFocus={() => {
                         onFocus()
                         setIsFocused(true)
@@ -66,7 +73,10 @@ const Input = ({
                     />
                 )} */}
                 {rightButton && (
-                    <TouchableOpacity style={styles.rightButton}>
+                    <TouchableOpacity
+                        onPress={onPress}
+                        style={styles.rightButton}
+                    >
                         <Text style={{ color: '#fff', fontWeight: '600' }}>
                             {rightButton}
                         </Text>
