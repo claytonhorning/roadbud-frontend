@@ -18,6 +18,9 @@ import { useCreatePostMutation } from '../../services/roadbudApi'
 import { getLocation } from '../../store/locationSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'
+import PinLocation from '../../components/PinLocationModal'
+import { LocationContext } from '../../utils/locationContext'
+import { formatLatLonString } from '../../utils'
 
 export default function ReportEventScreen({ navigation }) {
     const [inputs, setInputs] = useState({
@@ -27,9 +30,11 @@ export default function ReportEventScreen({ navigation }) {
     })
     const [photo, setPhoto] = useState()
     const [isLoadingModal, setIsLoadingModal] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
 
     const dispatch = useDispatch()
     const { location } = useSelector((state) => state.location)
+    const [eventLocation, setEventLocation] = useState(location)
 
     useEffect(() => {
         dispatch(getLocation())
@@ -57,11 +62,11 @@ export default function ReportEventScreen({ navigation }) {
 
         if (isValid) {
             handleCreateEvent()
-            // setInputs({
-            //     eventName: '',
-            //     eventLocation: '',
-            //     postDescription: '',
-            // })
+            setInputs({
+                eventName: '',
+                eventLocation: '',
+                postDescription: '',
+            })
         }
     }
 
@@ -104,17 +109,10 @@ export default function ReportEventScreen({ navigation }) {
     const [createEvent, eventResult] = useCreateEventMutation()
     const [createPost, postResult] = useCreatePostMutation()
 
-    useEffect(() => {
-        console.log(eventResult)
-    })
-
     const handleCreateEvent = async () => {
         let event = {
             name: inputs.eventName,
-            location: {
-                longitude: location.longitude,
-                latitude: location.latitude,
-            },
+            location: { ...eventLocation },
         }
         await createEvent(event).then(async (res) => {
             setIsLoadingModal(true)
@@ -143,6 +141,10 @@ export default function ReportEventScreen({ navigation }) {
         })
     }
 
+    const handlePinLocation = () => {
+        setModalVisible(!modalVisible)
+    }
+
     if (isLoadingModal) {
         return (
             <View style={styles.overlay}>
@@ -158,6 +160,7 @@ export default function ReportEventScreen({ navigation }) {
         <ScrollView style={styles.container}>
             <View style={styles.content}>
                 <Text style={styles.subheader}>Report New Event</Text>
+
                 <Input
                     label="Event Title"
                     placeholder="Landslide in Glenwood Canyon"
@@ -170,14 +173,28 @@ export default function ReportEventScreen({ navigation }) {
                 />
                 <Input
                     label="Location"
-                    defaultValue="My current location"
+                    value={
+                        JSON.stringify(eventLocation) !==
+                        JSON.stringify(location)
+                            ? formatLatLonString(eventLocation)
+                            : 'My current location'
+                    }
                     rightButton={'Find on map'}
+                    onPress={handlePinLocation}
                     onChangeText={(text) => {
                         handleOnChange(text, 'eventLocation')
                     }}
                     onFocus={() => handleError(null, 'eventLocation')}
                     error={errors.eventLocation}
+                    highlight
                 />
+                {modalVisible && (
+                    <LocationContext.Provider
+                        value={{ eventLocation, setEventLocation }}
+                    >
+                        <PinLocation onClosePress={handlePinLocation} />
+                    </LocationContext.Provider>
+                )}
                 <Text style={styles.subheader}>Post to the New Event</Text>
                 <Text style={styles.paragraph}>
                     Events need at least one post to describe what's currently

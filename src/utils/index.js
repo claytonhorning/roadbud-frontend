@@ -18,3 +18,10 @@ export const formatDateWithTime = (date) => {
     const formattedDate = new Date(date).toLocaleDateString('en-US', options)
     return formattedDate
 }
+
+export const formatLatLonString = (location) => {
+    const shortLon = location.longitude.toPrecision(5)
+    const shortLat = location.latitude.toPrecision(5)
+
+    return `Lon: ${shortLon}, Lat: ${shortLat}`
+}
