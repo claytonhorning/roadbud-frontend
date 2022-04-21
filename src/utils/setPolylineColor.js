@@ -1,25 +1,24 @@
-export const setPolylineColor = (condition) => {
-    let color = '#000'
-    switch (condition) {
-        case '3 - dry':
-            color = 'grey'
-            return color
-        case '4 - wet':
-            color = 'blue'
-            return color
-        // case '5 - ':
-        //     color = 'green'
-        //     return color
-        // case '6 - ':
-        //     color = 'green'
-        //     return color
-        // case '7 - ':
-        //     color = 'green'
-        //     return color
-        // case '8 - ':
-        //     color = 'green'
-        //     return color
-        default:
-            break
+const HIGH_WIND = '1 - high wind'
+const DRY = '3 - dry'
+const WET = '4 - wet'
+const SLUSHY = '7 - slushy'
+
+export const setPolylineColor = (conditions) => {
+    let color = 'black'
+
+    if (conditions.includes(DRY)) {
+        color = 'grey'
+        return color
+    } else if (conditions.includes(WET)) {
+        color = 'green'
+        return color
+    } else if (conditions.includes(HIGH_WIND)) {
+        color = 'pink'
+        return color
+    } else if (conditions.includes(SLUSHY)) {
+        color = 'indigo'
+        return color
+    } else {
+        return color
     }
 }

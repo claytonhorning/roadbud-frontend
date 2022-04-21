@@ -4,6 +4,7 @@ import {
     StyleSheet,
     TextInput,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native'
 import React, { useEffect, useState, createContext, useContext } from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
@@ -57,6 +58,11 @@ const MapScreen = ({ navigation }) => {
     useEffect(() => {
         dispatch(getLocation())
     }, [])
+
+    if (isLoading) {
+        return <ActivityIndicator />
+    }
+
     return (
         <View style={{ flex: 1 }}>
             {location && (
@@ -107,7 +113,14 @@ const MapScreen = ({ navigation }) => {
                         conditions &&
                         roadConditionsData.features.map((roadConditionsObj) => {
                             let roadConditionsCoordsArray = []
-                            const polylineColor = setPolylineColor('3 - dry') // Find the right key to set the polyline color
+                            let conditions = [
+                                roadConditionsObj?.properties
+                                    ?.currentConditions[0].conditionDescription,
+                                roadConditionsObj?.properties
+                                    ?.currentConditions[0].conditionDescription,
+                            ]
+
+                            const polylineColor = setPolylineColor(conditions) // Find the right key to set the polyline color
 
                             roadConditionsObj.geometry.coordinates.map(
                                 (roadCoordinates) => {
