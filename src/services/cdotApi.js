@@ -10,7 +10,10 @@ export const cdotApi = createApi({
         getPlannedEvents: build.query({
             query: () => `/plannedEvents?apiKey=${CDOT_API_KEY}`,
         }),
+        getRoadConditions: build.query({
+            query: () => `/roadConditions?apiKey=${CDOT_API_KEY}`,
+        }),
     }),
 })
 
-export const { useGetPlannedEventsQuery } = cdotApi
+export const { useGetPlannedEventsQuery, useGetRoadConditionsQuery } = cdotApi

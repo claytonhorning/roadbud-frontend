@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import React, { useEffect, useState, createContext, useContext } from 'react'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, Polyline } from 'react-native-maps'
 import Icon from '../../components/Icon'
 import { COLORS } from '../../styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +15,8 @@ import { useGetEventsQuery } from '../../services/roadbudApi'
 import BottomSheet from '../../components/BottomSheet'
 import Event from '../../components/Event'
 import { ModalContext } from '../../utils/modalContext'
+import { useGetRoadConditionsQuery } from '../../services/cdotApi'
+import { setPolylineColor } from '../../utils/setPolylineColor'
 
 const MapScreen = ({ navigation }) => {
     const [cdotToggled, setCdotToggled] = useState(true)
@@ -23,6 +25,7 @@ const MapScreen = ({ navigation }) => {
     const [region, setRegion] = useState({ ...location })
     const [openModal, setOpenModal] = useState(false)
     const [eventPressed, setEventPressed] = useState('')
+    const [conditions, setConditions] = useState(false)
 
     const onDismiss = () => {
         setOpenModal(false)
@@ -32,6 +35,11 @@ const MapScreen = ({ navigation }) => {
     dispatch = useDispatch()
 
     const { data, error, isLoading } = useGetEventsQuery()
+    const {
+        data: roadConditionsData,
+        error: roadConditionsError,
+        isLoading: roadConditionsisLoading,
+    } = useGetRoadConditionsQuery()
 
     const resetUserRegion = () => {
         setRegion((prevState) => ({ ...prevState, ...location }))
@@ -42,10 +50,13 @@ const MapScreen = ({ navigation }) => {
         setEventPressed(eventId)
     }
 
+    const handleConditionsPressed = () => {
+        setConditions(!conditions)
+    }
+
     useEffect(() => {
         dispatch(getLocation())
     }, [])
-
     return (
         <View style={{ flex: 1 }}>
             {location && (
@@ -58,7 +69,9 @@ const MapScreen = ({ navigation }) => {
                     }}
                     showsCompass={false}
                     region={{
-                        ...location,
+                        // ...location,
+                        longitude: -108.033497795996,
+                        latitude: 37.6824748841698,
                         latitudeDelta: 0.09,
                         longitudeDelta: 0.09,
                     }}
@@ -89,6 +102,32 @@ const MapScreen = ({ navigation }) => {
                                 </View>
                             </Marker>
                         ))}
+
+                    {roadConditionsData &&
+                        conditions &&
+                        roadConditionsData.features.map((roadConditionsObj) => {
+                            let roadConditionsCoordsArray = []
+                            const polylineColor = setPolylineColor('3 - dry') // Find the right key to set the polyline color
+
+                            roadConditionsObj.geometry.coordinates.map(
+                                (roadCoordinates) => {
+                                    let roadConditionsCoords = {
+                                        latitude: roadCoordinates[1],
+                                        longitude: roadCoordinates[0],
+                                    }
+                                    roadConditionsCoordsArray.push(
+                                        roadConditionsCoords
+                                    )
+                                }
+                            )
+                            return (
+                                <Polyline
+                                    coordinates={roadConditionsCoordsArray}
+                                    strokeColor={polylineColor}
+                                    strokeWidth={3}
+                                />
+                            )
+                        })}
                 </MapView>
             )}
 
@@ -165,9 +204,11 @@ const MapScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.bottomButtonsContainer}>
-                <View style={styles.iconWrapper}>
-                    <Icon style={styles.iconButton} name="water-drop" />
-                </View>
+                <TouchableOpacity onPress={handleConditionsPressed}>
+                    <View style={styles.iconWrapper}>
+                        <Icon style={styles.iconButton} name="water-drop" />
+                    </View>
+                </TouchableOpacity>
                 <Text style={styles.iconButtonText}>Conditions</Text>
                 <TouchableOpacity onPress={resetUserRegion}>
                     <View style={styles.iconWrapper}>
