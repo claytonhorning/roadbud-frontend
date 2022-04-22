@@ -6,12 +6,14 @@ export const cdotApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: CDOT_BASE,
     }),
+    tagTypes: ['Conditions'],
     endpoints: (build) => ({
         getPlannedEvents: build.query({
             query: () => `/plannedEvents?apiKey=${CDOT_API_KEY}`,
         }),
         getRoadConditions: build.query({
             query: () => `/roadConditions?apiKey=${CDOT_API_KEY}`,
+            providesTags: ['Conditions'],
         }),
     }),
 })

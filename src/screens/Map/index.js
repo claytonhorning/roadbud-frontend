@@ -18,6 +18,7 @@ import Event from '../../components/Event'
 import { ModalContext } from '../../utils/modalContext'
 import { useGetRoadConditionsQuery } from '../../services/cdotApi'
 import { setPolylineColor } from '../../utils/setPolylineColor'
+import ConditionsKey from '../../components/ConditionsKey'
 
 const MapScreen = ({ navigation }) => {
     const [cdotToggled, setCdotToggled] = useState(true)
@@ -75,9 +76,7 @@ const MapScreen = ({ navigation }) => {
                     }}
                     showsCompass={false}
                     region={{
-                        // ...location,
-                        longitude: -108.033497795996,
-                        latitude: 37.6824748841698,
+                        ...location,
                         latitudeDelta: 0.09,
                         longitudeDelta: 0.09,
                     }}
@@ -108,7 +107,6 @@ const MapScreen = ({ navigation }) => {
                                 </View>
                             </Marker>
                         ))}
-
                     {roadConditionsData &&
                         conditions &&
                         roadConditionsData.features.map((roadConditionsObj) => {
@@ -117,8 +115,10 @@ const MapScreen = ({ navigation }) => {
                                 roadConditionsObj?.properties
                                     ?.currentConditions[0].conditionDescription,
                                 roadConditionsObj?.properties
-                                    ?.currentConditions[0].conditionDescription,
+                                    ?.currentConditions[1].conditionDescription,
                             ]
+
+                            console.log(conditions)
 
                             const polylineColor = setPolylineColor(conditions) // Find the right key to set the polyline color
 
@@ -237,6 +237,7 @@ const MapScreen = ({ navigation }) => {
                     </BottomSheet>
                 </ModalContext.Provider>
             )}
+            {conditions && <ConditionsKey />}
         </View>
     )
 }

@@ -2,6 +2,7 @@ const HIGH_WIND = '1 - high wind'
 const DRY = '3 - dry'
 const WET = '4 - wet'
 const SLUSHY = '7 - slushy'
+const ADVERSE_CONDITIONS = '25 - adverse conditions'
 
 export const setPolylineColor = (conditions) => {
     let color = 'black'
@@ -10,13 +11,16 @@ export const setPolylineColor = (conditions) => {
         color = 'grey'
         return color
     } else if (conditions.includes(WET)) {
-        color = 'green'
+        color = 'blue'
         return color
     } else if (conditions.includes(HIGH_WIND)) {
-        color = 'pink'
+        color = 'orange'
         return color
     } else if (conditions.includes(SLUSHY)) {
-        color = 'indigo'
+        color = 'green'
+        return color
+    } else if (conditions.includes(ADVERSE_CONDITIONS)) {
+        color = 'yellow'
         return color
     } else {
         return color
