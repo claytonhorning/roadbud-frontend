@@ -6,10 +6,16 @@ import {
     TouchableOpacity,
     ActivityIndicator,
 } from 'react-native'
-import React, { useEffect, useState, createContext, useContext } from 'react'
+import React, {
+    useEffect,
+    useState,
+    createContext,
+    useContext,
+    useRef,
+} from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
 import Icon from '../../components/Icon'
-import { COLORS } from '../../styles'
+import { COLORS, TYPOGRAPHY } from '../../styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocation } from '../../store/locationSlice'
 import { useGetEventsQuery } from '../../services/roadbudApi'
@@ -19,15 +25,17 @@ import { ModalContext } from '../../utils/modalContext'
 import { useGetRoadConditionsQuery } from '../../services/cdotApi'
 import { setPolylineColor } from '../../utils/setPolylineColor'
 import ConditionsKey from '../../components/ConditionsKey'
+import { formatUnixTimeString } from '../../utils'
 
 const MapScreen = ({ navigation }) => {
     const [cdotToggled, setCdotToggled] = useState(true)
     const [roadbudToggled, setRoadbudToggled] = useState(true)
     const [videoToggled, setVideoToggled] = useState(true)
-    const [region, setRegion] = useState({ ...location })
     const [openModal, setOpenModal] = useState(false)
     const [eventPressed, setEventPressed] = useState('')
     const [conditions, setConditions] = useState(false)
+    const [roadDetails, setRoadDetails] = useState({})
+    const mapRef = useRef(null)
 
     const onDismiss = () => {
         setOpenModal(false)
@@ -36,15 +44,20 @@ const MapScreen = ({ navigation }) => {
     const { location, loading } = useSelector((state) => state.location)
     dispatch = useDispatch()
 
-    const { data, error, isLoading } = useGetEventsQuery()
+    const {
+        data: eventsData,
+        error: eventsError,
+        isLoading: eventsLoading,
+    } = useGetEventsQuery()
+
     const {
         data: roadConditionsData,
         error: roadConditionsError,
-        isLoading: roadConditionsisLoading,
+        isLoading: roadConditionsLoading,
     } = useGetRoadConditionsQuery()
 
-    const resetUserRegion = () => {
-        setRegion((prevState) => ({ ...prevState, ...location }))
+    const goToLocation = () => {
+        mapRef.current.animateToRegion(location)
     }
 
     const handleEventPressed = (eventId) => {
@@ -56,11 +69,38 @@ const MapScreen = ({ navigation }) => {
         setConditions(!conditions)
     }
 
+    const handleRoadLinePressed = (
+        primaryLat,
+        primaryLon,
+        secondaryLat,
+        secondaryLon,
+        name,
+        nameId,
+        startTime
+    ) => {
+        let roadLineMarkers = [
+            {
+                latitude: primaryLat,
+                longitude: primaryLon,
+            },
+            {
+                latitude: secondaryLat,
+                longitude: secondaryLon,
+            },
+        ]
+
+        mapRef.current.fitToCoordinates(roadLineMarkers, {
+            edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+        })
+        setRoadDetails({ name, nameId, startTime })
+    }
+
     useEffect(() => {
         dispatch(getLocation())
+        console.log(roadDetails.nameId)
     }, [])
 
-    if (isLoading) {
+    if (eventsLoading || roadConditionsLoading) {
         return <ActivityIndicator />
     }
 
@@ -68,21 +108,18 @@ const MapScreen = ({ navigation }) => {
         <View style={{ flex: 1 }}>
             {location && (
                 <MapView
+                    ref={mapRef}
                     style={styles.container}
+                    showsCompass={false}
                     initialRegion={{
                         ...location,
-                        latitudeDelta: 0.09,
-                        longitudeDelta: 0.09,
-                    }}
-                    showsCompass={false}
-                    region={{
-                        ...location,
-                        latitudeDelta: 0.09,
-                        longitudeDelta: 0.09,
+                        latitudeDelta: 0.2,
+                        longitudeDelta: 0.2,
                     }}
                 >
-                    {data &&
-                        data.map((event) => (
+                    {eventsData &&
+                        !conditions &&
+                        eventsData.map((event) => (
                             <Marker
                                 key={event._id}
                                 coordinate={{
@@ -110,17 +147,34 @@ const MapScreen = ({ navigation }) => {
                     {roadConditionsData &&
                         conditions &&
                         roadConditionsData.features.map((roadConditionsObj) => {
+                            let name = roadConditionsObj?.properties?.name
+                            let nameId = roadConditionsObj?.properties?.nameId
+
+                            let mostRecentCondition =
+                                roadConditionsObj?.properties?.currentConditions
+                                    .length - 2
+                            let startTime =
+                                roadConditionsObj?.properties
+                                    ?.currentConditions[mostRecentCondition]
+                                    ?.startTime
+
                             let roadConditionsCoordsArray = []
-                            let conditions = [
+                            let condition =
                                 roadConditionsObj?.properties
-                                    ?.currentConditions[0].conditionDescription,
+                                    ?.currentConditions[mostRecentCondition]
+                                    ?.conditionId
+
+                            let primaryLon =
+                                roadConditionsObj?.properties?.primaryLongitude
+                            let primaryLat =
+                                roadConditionsObj?.properties?.primaryLatitude
+                            let secondaryLon =
                                 roadConditionsObj?.properties
-                                    ?.currentConditions[1].conditionDescription,
-                            ]
+                                    ?.secondaryLongitude
+                            let secondaryLat =
+                                roadConditionsObj?.properties?.secondaryLatitude
 
-                            console.log(conditions)
-
-                            const polylineColor = setPolylineColor(conditions) // Find the right key to set the polyline color
+                            const polylineColor = setPolylineColor(condition) // Find the right key to set the polyline color
 
                             roadConditionsObj.geometry.coordinates.map(
                                 (roadCoordinates) => {
@@ -138,6 +192,17 @@ const MapScreen = ({ navigation }) => {
                                     coordinates={roadConditionsCoordsArray}
                                     strokeColor={polylineColor}
                                     strokeWidth={3}
+                                    onPress={() =>
+                                        handleRoadLinePressed(
+                                            primaryLat,
+                                            primaryLon,
+                                            secondaryLat,
+                                            secondaryLon,
+                                            name,
+                                            nameId,
+                                            startTime
+                                        )
+                                    }
                                 />
                             )
                         })}
@@ -145,75 +210,110 @@ const MapScreen = ({ navigation }) => {
             )}
 
             <View style={styles.topContainer}>
-                <View style={styles.inputContainer}>
-                    <Icon
-                        name="search"
-                        style={{
-                            fontSize: 18,
-                            marginRight: 10,
-                            color: '#4B4B4B',
-                        }}
-                    />
-                    <Text
-                        style={{
-                            marginRight: 5,
-                            fontWeight: '500',
-                            opacity: 0.5,
-                        }}
-                    >
-                        To:
-                    </Text>
-                    <TextInput
-                        autoCorrect={false}
-                        placeholder="Glenwood Springs, CO"
-                    />
-                </View>
-                <View style={styles.chipsContainer}>
-                    <TouchableOpacity
-                        onPress={() => setCdotToggled(!cdotToggled)}
-                        style={
-                            cdotToggled
-                                ? styles.filledChip
-                                : styles.unfilledChip
-                        }
-                    >
-                        <Text style={{ color: cdotToggled ? '#fff' : '#000' }}>
-                            CDOT
+                {!conditions ? (
+                    <>
+                        <View style={styles.inputContainer}>
+                            <Icon
+                                name="search"
+                                style={{
+                                    fontSize: 18,
+                                    marginRight: 10,
+                                    color: '#4B4B4B',
+                                }}
+                            />
+                            <Text
+                                style={{
+                                    marginRight: 5,
+                                    fontWeight: '500',
+                                    opacity: 0.5,
+                                }}
+                            >
+                                To:
+                            </Text>
+                            <TextInput
+                                autoCorrect={false}
+                                placeholder="Glenwood Springs, CO"
+                            />
+                        </View>
+                        <View style={styles.chipsContainer}>
+                            <TouchableOpacity
+                                onPress={() => setCdotToggled(!cdotToggled)}
+                                style={
+                                    cdotToggled
+                                        ? styles.filledChip
+                                        : styles.unfilledChip
+                                }
+                            >
+                                <Text
+                                    style={{
+                                        color: cdotToggled ? '#fff' : '#000',
+                                    }}
+                                >
+                                    CDOT
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    setRoadbudToggled(!roadbudToggled)
+                                }
+                                style={
+                                    roadbudToggled
+                                        ? styles.filledChip
+                                        : styles.unfilledChip
+                                }
+                            >
+                                <Text
+                                    style={{
+                                        color: roadbudToggled ? '#fff' : '#000',
+                                    }}
+                                >
+                                    Roadbud
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => setVideoToggled(!videoToggled)}
+                                style={
+                                    videoToggled
+                                        ? styles.filledChip
+                                        : styles.unfilledChip
+                                }
+                            >
+                                <Text
+                                    style={{
+                                        color: videoToggled ? '#fff' : '#000',
+                                    }}
+                                >
+                                    Video
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                ) : (
+                    <View style={styles.roadDescriptionContainer}>
+                        <Text style={TYPOGRAPHY.subheader}>
+                            {roadDetails.nameId !== undefined
+                                ? roadDetails.nameId
+                                : 'Tap the road to see more info'}
                         </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => setRoadbudToggled(!roadbudToggled)}
-                        style={
-                            roadbudToggled
-                                ? styles.filledChip
-                                : styles.unfilledChip
-                        }
-                    >
-                        <Text
-                            style={{
-                                color: roadbudToggled ? '#fff' : '#000',
-                            }}
-                        >
-                            Roadbud
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => setVideoToggled(!videoToggled)}
-                        style={
-                            videoToggled
-                                ? styles.filledChip
-                                : styles.unfilledChip
-                        }
-                    >
-                        <Text
-                            style={{
-                                color: videoToggled ? '#fff' : '#000',
-                            }}
-                        >
-                            Video
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                        {roadDetails.name !== undefined && (
+                            <Text
+                                style={[
+                                    TYPOGRAPHY.paragraph,
+                                    { marginVertical: 10 },
+                                ]}
+                            >
+                                {roadDetails.name}
+                            </Text>
+                        )}
+
+                        {roadDetails.startTime !== undefined && (
+                            <Text style={TYPOGRAPHY.secondaryText}>
+                                Last updated:{' '}
+                                {formatUnixTimeString(roadDetails.startTime)}
+                            </Text>
+                        )}
+                    </View>
+                )}
             </View>
 
             <View style={styles.bottomButtonsContainer}>
@@ -223,7 +323,7 @@ const MapScreen = ({ navigation }) => {
                     </View>
                 </TouchableOpacity>
                 <Text style={styles.iconButtonText}>Conditions</Text>
-                <TouchableOpacity onPress={resetUserRegion}>
+                <TouchableOpacity onPress={goToLocation}>
                     <View style={styles.iconWrapper}>
                         <Icon style={styles.iconButton} name="locator" />
                     </View>
@@ -333,6 +433,12 @@ const styles = StyleSheet.create({
     postCountCircleText: {
         color: COLORS.white,
         fontWeight: '500',
+    },
+    roadDescriptionContainer: {
+        backgroundColor: COLORS.white,
+        padding: 15,
+        marginTop: 20,
+        borderRadius: 5,
     },
 })
 

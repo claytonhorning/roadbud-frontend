@@ -1,38 +1,33 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-
-//Need to establish colors for all conditions
-
-const WET = 'blue'
-const DRY = 'grey'
-const HIGH_WIND = 'orange'
-const SLUSHY = 'green'
-const ADVERSE_CONDITIONS = 'yellow'
+import { CONDITION_COLORS } from '../../utils/setPolylineColor'
 
 export default function ConditionsKey() {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
                 <View style={styles.dryCircle} />
-                <Text style={{ color: DRY }}>Dry</Text>
+                <Text style={{ color: CONDITION_COLORS.DRY }}>Dry</Text>
             </View>
             <View style={styles.row}>
                 <View style={styles.wetCircle} />
-                <Text style={{ color: WET }}>Wet</Text>
+                <Text style={{ color: CONDITION_COLORS.WET }}>Wet</Text>
             </View>
             <View style={styles.row}>
                 <View style={styles.windCircle} />
-                <Text style={{ color: HIGH_WIND }}>High wind</Text>
+                <Text style={{ color: CONDITION_COLORS.WINDY }}>Windy</Text>
             </View>
             <View style={styles.row}>
                 <View style={styles.slushyCircle} />
-                <Text style={{ color: SLUSHY }}>Slushy</Text>
+                <Text style={{ color: CONDITION_COLORS.SLUSHY }}>Slushy</Text>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.icyCircle} />
+                <Text style={{ color: CONDITION_COLORS.ICY }}>Icy</Text>
             </View>
             <View style={styles.row}>
                 <View style={styles.adverseCircle} />
-                <Text style={{ color: ADVERSE_CONDITIONS }}>
-                    Adverse Conditions
-                </Text>
+                <Text style={{ color: CONDITION_COLORS.ADVERSE }}>Adverse</Text>
             </View>
         </View>
     )
@@ -58,22 +53,26 @@ const styles = StyleSheet.create({
     },
     dryCircle: {
         ...circle,
-        backgroundColor: DRY,
+        backgroundColor: CONDITION_COLORS.DRY,
     },
     wetCircle: {
         ...circle,
-        backgroundColor: WET,
+        backgroundColor: CONDITION_COLORS.WET,
     },
     windCircle: {
         ...circle,
-        backgroundColor: HIGH_WIND,
+        backgroundColor: CONDITION_COLORS.WINDY,
     },
     slushyCircle: {
         ...circle,
-        backgroundColor: SLUSHY,
+        backgroundColor: CONDITION_COLORS.SLUSHY,
+    },
+    icyCircle: {
+        ...circle,
+        backgroundColor: CONDITION_COLORS.ICY,
     },
     adverseCircle: {
         ...circle,
-        backgroundColor: ADVERSE_CONDITIONS,
+        backgroundColor: CONDITION_COLORS.ADVERSE,
     },
 })

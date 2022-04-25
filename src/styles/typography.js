@@ -54,6 +54,11 @@ export const TYPOGRAPHY = {
         color: COLORS.primary,
         fontWeight: '500',
     },
+    secondaryText: {
+        fontSize: 14,
+        color: COLORS.secondary,
+        fontWeight: '500',
+    },
     errorText: {
         fontSize: 14,
         color: COLORS.warning,

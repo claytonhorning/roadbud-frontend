@@ -25,3 +25,16 @@ export const formatLatLonString = (location) => {
 
     return `Lon: ${shortLon}, Lat: ${shortLat}`
 }
+
+export const formatUnixTimeString = (date) => {
+    const options = {
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    }
+
+    const formattedDate = new Date(date).toLocaleDateString('en-US', options)
+
+    return formattedDate
+}
