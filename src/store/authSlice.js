@@ -18,6 +18,10 @@ export const authSlice = createSlice({
             AsyncStorage.removeItem('token')
             state.token = null
         },
+        loginOauth: (state, { payload }) => {
+            AsyncStorage.setItem('token', payload.idToken)
+            state.token = payload.idToken
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(loadUser.pending, (state, action) => {
@@ -59,4 +63,4 @@ export const loadUser = createAsyncThunk('loadUser', async (thunkAPI) => {
     return token
 })
 
-export const { logoutUser, loginWithGoogle } = authSlice.actions
+export const { logoutUser, loginOauth } = authSlice.actions

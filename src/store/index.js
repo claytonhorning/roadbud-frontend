@@ -11,6 +11,12 @@ const store = configureStore({
         auth: authSlice.reducer,
         location: locationSlice.reducer,
     },
+    devTools: true,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(
+            roadbudApi.middleware,
+            cdotApi.middleware
+        ),
 })
 
 export default store

@@ -12,6 +12,8 @@ import {
     useSignUpUserMutation,
 } from '../../services/roadbudApi'
 import { TYPOGRAPHY } from '../../styles'
+import { loginOauth } from '../../store/authSlice'
+import { LoginManager, Profile } from 'react-native-fbsdk-next'
 
 export default function SocialButtons({ login = false, navigation }) {
     const [errors, setErrors] = useState([])
@@ -39,6 +41,8 @@ export default function SocialButtons({ login = false, navigation }) {
 
                                     signUpUser(user).then((response) => {
                                         //Need to login user if they have an account
+                                        dispatch(loginOauth(userInfo))
+                                        //DOESNT WORK
                                     })
                                 })
                             }
@@ -57,7 +61,40 @@ export default function SocialButtons({ login = false, navigation }) {
                     {login ? 'Log in' : 'Sign up'} with Google
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.signupFB, styles.shadowProp]}>
+            <TouchableOpacity
+                onPress={() => {
+                    LoginManager.logInWithPermissions([
+                        'public_profile',
+                        'email',
+                    ]).then(
+                        function (result) {
+                            if (result.isCancelled) {
+                                setErrors([
+                                    'Sign up with Facebook was cancelled',
+                                ])
+                            } else {
+                                let user = {}
+                                Profile.getCurrentProfile().then((data) => {
+                                    user = {
+                                        fullName: data.name,
+                                        email: data.email,
+                                        // photoUrl: data.imageUrl
+                                    }
+
+                                    signUpUser(user).then((response) => {
+                                        // loginOauth()
+                                        console.log('user already stored')
+                                    })
+                                })
+                            }
+                        },
+                        function (error) {
+                            alert('Login failed with error: ' + error)
+                        }
+                    )
+                }}
+                style={[styles.signupFB, styles.shadowProp]}
+            >
                 <Image
                     style={styles.optionLogo}
                     source={require('assets/img/logo/fb-logo-white.png')}
@@ -66,6 +103,7 @@ export default function SocialButtons({ login = false, navigation }) {
                     {login ? 'Log in' : 'Sign up'} with Facebook
                 </Text>
             </TouchableOpacity>
+
             {login ? null : (
                 <TouchableOpacity
                     style={[styles.signupEmail, styles.shadowProp]}
