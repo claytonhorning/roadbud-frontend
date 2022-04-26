@@ -46,7 +46,6 @@ export const authSlice = createSlice({
             builder.addMatcher(
                 roadbudApi.endpoints.loginUser.matchFulfilled,
                 (state, { payload }) => {
-                    console.log('here')
                     AsyncStorage.setItem('token', payload.token)
                     state.token = payload.token
                     state.user = jwtDecode(payload.token)
@@ -60,4 +59,4 @@ export const loadUser = createAsyncThunk('loadUser', async (thunkAPI) => {
     return token
 })
 
-export const { logoutUser } = authSlice.actions
+export const { logoutUser, loginWithGoogle } = authSlice.actions

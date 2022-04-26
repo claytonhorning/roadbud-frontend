@@ -1,11 +1,54 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import {
+    GoogleSignin,
+    statusCodes,
+} from '@react-native-google-signin/google-signin'
+import { GOOGLE_IOS_CLIENT_ID } from '@env'
+import { useDispatch } from 'react-redux'
+import {
+    useLoginUserMutation,
+    useSignUpUserMutation,
+} from '../../services/roadbudApi'
+import { TYPOGRAPHY } from '../../styles'
 
 export default function SocialButtons({ login = false, navigation }) {
+    const [errors, setErrors] = useState([])
+
+    dispatch = useDispatch()
+    const [signUpUser, signUpResult] = useSignUpUserMutation()
+    const [loginUser, loginResult] = useLoginUserMutation()
+
     return (
         <>
-            <TouchableOpacity style={[styles.signupOption, styles.shadowProp]}>
+            <TouchableOpacity
+                onPress={() => {
+                    GoogleSignin.configure({
+                        iosClientId: GOOGLE_IOS_CLIENT_ID,
+                    })
+                    GoogleSignin.hasPlayServices()
+                        .then((hasPlayService) => {
+                            if (hasPlayService) {
+                                GoogleSignin.signIn().then((userInfo) => {
+                                    const user = {
+                                        fullName: userInfo.user.name,
+                                        email: userInfo.user.email,
+                                        // photoUrl: userInfo.user.photo,
+                                    }
+
+                                    signUpUser(user).then((response) => {
+                                        //Need to login user if they have an account
+                                    })
+                                })
+                            }
+                        })
+                        .catch((e) => {
+                            console.log('ERROR IS: ' + JSON.stringify(e))
+                        })
+                }}
+                style={[styles.signupOption, styles.shadowProp]}
+            >
                 <Image
                     style={styles.optionLogo}
                     source={require('assets/img/logo/google-logo.png')}
@@ -37,6 +80,9 @@ export default function SocialButtons({ login = false, navigation }) {
                     </Text>
                 </TouchableOpacity>
             )}
+            {errors.map((error) => (
+                <Text style={styles.errorText}>{error}</Text>
+            ))}
         </>
     )
 }
@@ -89,5 +135,9 @@ const styles = StyleSheet.create({
     optionLogo: {
         height: 34,
         width: 34,
+    },
+    errorText: {
+        ...TYPOGRAPHY.errorText,
+        textAlign: 'center',
     },
 })
