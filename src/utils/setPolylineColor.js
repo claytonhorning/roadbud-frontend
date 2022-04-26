@@ -11,35 +11,41 @@ export const CONDITION_COLORS = {
 export const setPolylineColor = (condition) => {
     let color = 'black'
 
+    //Need to handle cases where forecast text included is first in the array
+
     switch (condition) {
         case 17:
             //DRY
-            color = 'grey'
+            color = CONDITION_COLORS.DRY
             return color
         case 9:
         case 5:
         case 10:
             //WET
-            color = '#CE0FB8'
+            color = CONDITION_COLORS.WET
             return color
         case 13:
         case 20:
         case 22:
         case 12:
             //ICY
-            color = 'blue'
+            color = CONDITION_COLORS.ICY
             return color
         case 7:
             //SNOWY
-            color = '#1EB2E8'
+            color = CONDITION_COLORS.SNOWY
             return color
         case 11:
             //SLUSHY
-            color = '#0FCE9A'
+            color = CONDITION_COLORS.SLUSHY
             return color
         case 1:
             //ADVERSE CONDITIONS
-            color = '#CE0F0F'
+            color = CONDITION_COLORS.ADVERSE
+            return color
+        case 2:
+            //WINDY
+            color = CONDITION_COLORS.WINDY
             return color
     }
 }

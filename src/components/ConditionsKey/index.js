@@ -22,12 +22,20 @@ export default function ConditionsKey() {
                 <Text style={{ color: CONDITION_COLORS.SLUSHY }}>Slushy</Text>
             </View>
             <View style={styles.row}>
+                <View style={styles.snowyCircle} />
+                <Text style={{ color: CONDITION_COLORS.SNOWY }}>Snowy</Text>
+            </View>
+            <View style={styles.row}>
                 <View style={styles.icyCircle} />
                 <Text style={{ color: CONDITION_COLORS.ICY }}>Icy</Text>
             </View>
             <View style={styles.row}>
                 <View style={styles.adverseCircle} />
                 <Text style={{ color: CONDITION_COLORS.ADVERSE }}>Adverse</Text>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.noDataCircle} />
+                <Text style={{ color: 'black' }}>No data</Text>
             </View>
         </View>
     )
@@ -67,6 +75,10 @@ const styles = StyleSheet.create({
         ...circle,
         backgroundColor: CONDITION_COLORS.SLUSHY,
     },
+    snowyCircle: {
+        ...circle,
+        backgroundColor: CONDITION_COLORS.SNOWY,
+    },
     icyCircle: {
         ...circle,
         backgroundColor: CONDITION_COLORS.ICY,
@@ -74,5 +86,9 @@ const styles = StyleSheet.create({
     adverseCircle: {
         ...circle,
         backgroundColor: CONDITION_COLORS.ADVERSE,
+    },
+    noDataCircle: {
+        ...circle,
+        backgroundColor: 'black',
     },
 })

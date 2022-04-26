@@ -53,7 +53,7 @@ const MapScreen = ({ navigation }) => {
     const {
         data: roadConditionsData,
         error: roadConditionsError,
-        isLoading: roadConditionsLoading,
+        isLoading,
     } = useGetRoadConditionsQuery()
 
     const goToLocation = () => {
@@ -92,17 +92,15 @@ const MapScreen = ({ navigation }) => {
         mapRef.current.fitToCoordinates(roadLineMarkers, {
             edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
         })
+
         setRoadDetails({ name, nameId, startTime })
     }
 
     useEffect(() => {
         dispatch(getLocation())
-        console.log(roadDetails.nameId)
     }, [])
 
-    if (eventsLoading || roadConditionsLoading) {
-        return <ActivityIndicator />
-    }
+    console.log(isLoading)
 
     return (
         <View style={{ flex: 1 }}>
@@ -116,6 +114,7 @@ const MapScreen = ({ navigation }) => {
                         latitudeDelta: 0.2,
                         longitudeDelta: 0.2,
                     }}
+                    loadingEnabled={true}
                 >
                     {eventsData &&
                         !conditions &&
@@ -187,8 +186,10 @@ const MapScreen = ({ navigation }) => {
                                     )
                                 }
                             )
+
                             return (
                                 <Polyline
+                                    key={roadConditionsObj?.properties?.id}
                                     coordinates={roadConditionsCoordsArray}
                                     strokeColor={polylineColor}
                                     strokeWidth={3}
