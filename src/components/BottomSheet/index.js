@@ -92,10 +92,10 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         paddingTop: 12,
-        paddingHorizontal: 12,
         borderTopRightRadius: 12,
         borderTopLeftRadius: 12,
         minHeight: screenHeight / 2,
+        maxHeight: screenHeight * 0.8,
     },
     sliderIndicatorRow: {
         flexDirection: 'row',
@@ -107,5 +107,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#CECECE',
         height: 4,
         width: 45,
+        borderRadius: 20,
     },
 })

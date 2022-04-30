@@ -7,6 +7,7 @@ import {
     Pressable,
     Keyboard,
     ActivityIndicator,
+    Image,
 } from 'react-native'
 import React, { useState } from 'react'
 import Input from '../../components/Inputs/Input'
@@ -158,55 +159,66 @@ export default function PostToEventScreen({ route, navigation }) {
                     error={errors.postDescription}
                     onFocus={() => handleError(null, 'postDescription')}
                 />
-                <View style={styles.addPhotoContainer}>
-                    <TouchableOpacity
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginBottom: 15,
-                        }}
-                    >
-                        <Icon
-                            name="camera"
+                {photo == null ? (
+                    <View style={styles.addPhotoContainer}>
+                        <TouchableOpacity
                             style={{
-                                fontSize: 25,
-                                color: '#FF7A01',
-                                marginRight: 10,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginBottom: 15,
                             }}
-                        />
-                        <Pressable onPress={handleTakePhoto}>
-                            <Text style={{ color: '#047FE8' }}>
-                                Select from camera roll
-                            </Text>
-                        </Pressable>
-                    </TouchableOpacity>
-                    <View>
-                        <View style={styles.seperator} />
-                        <Text style={styles.orText}>OR</Text>
+                        >
+                            <Icon
+                                name="camera"
+                                style={{
+                                    fontSize: 25,
+                                    color: '#FF7A01',
+                                    marginRight: 10,
+                                }}
+                            />
+                            <Pressable onPress={handleTakePhoto}>
+                                <Text style={{ color: '#047FE8' }}>
+                                    Take a picture or video
+                                </Text>
+                            </Pressable>
+                        </TouchableOpacity>
+                        <View>
+                            <View style={styles.seperator} />
+                            <Text style={styles.orText}>OR</Text>
+                        </View>
+                        <TouchableOpacity
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <Icon
+                                name="picture-o"
+                                style={{
+                                    fontSize: 25,
+                                    color: '#FF7A01',
+                                    marginRight: 10,
+                                }}
+                            />
+                            <Pressable onPress={handleChoosePhoto}>
+                                <Text style={{ color: '#047FE8' }}>
+                                    Select from camera roll
+                                </Text>
+                            </Pressable>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
-                    >
-                        <Icon
-                            name="picture-o"
-                            style={{
-                                fontSize: 25,
-                                color: '#FF7A01',
-                                marginRight: 10,
+                ) : (
+                    <View>
+                        <Image
+                            style={styles.uploadedImage}
+                            source={{
+                                uri: photo.assets[0].uri,
                             }}
                         />
-                        <Pressable onPress={handleChoosePhoto}>
-                            <Text style={{ color: '#047FE8' }}>
-                                Select from camera roll
-                            </Text>
-                        </Pressable>
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                )}
                 <TouchableOpacity onPress={validate} style={styles.postButton}>
                     <Text
                         style={{
@@ -277,5 +289,9 @@ const styles = StyleSheet.create({
     suggestionText: {
         color: '#047FE8',
         marginRight: 8,
+    },
+    uploadedImage: {
+        minWidth: 50,
+        minHeight: 200,
     },
 })

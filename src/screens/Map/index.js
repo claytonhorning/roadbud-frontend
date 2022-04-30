@@ -5,14 +5,9 @@ import {
     TextInput,
     TouchableOpacity,
     ActivityIndicator,
+    Button,
 } from 'react-native'
-import React, {
-    useEffect,
-    useState,
-    createContext,
-    useContext,
-    useRef,
-} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import MapView, { Marker, Polyline } from 'react-native-maps'
 import Icon from '../../components/Icon'
 import { COLORS, TYPOGRAPHY } from '../../styles'
@@ -26,6 +21,11 @@ import { useGetRoadConditionsQuery } from '../../services/cdotApi'
 import { setPolylineColor } from '../../utils/setPolylineColor'
 import ConditionsKey from '../../components/ConditionsKey'
 import { formatUnixTimeString } from '../../utils'
+import BottomSheetTest from '../../components/BottomSheetTest'
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet'
 
 const MapScreen = ({ navigation }) => {
     const [cdotToggled, setCdotToggled] = useState(true)
@@ -100,7 +100,7 @@ const MapScreen = ({ navigation }) => {
         dispatch(getLocation())
     }, [])
 
-    console.log(isLoading)
+    console.log('is modal open' + openModal)
 
     return (
         <View style={{ flex: 1 }}>
@@ -234,6 +234,7 @@ const MapScreen = ({ navigation }) => {
                             <TextInput
                                 autoCorrect={false}
                                 placeholder="Glenwood Springs, CO"
+                                placeholderTextColor={COLORS.lightGray}
                             />
                         </View>
                         <View style={styles.chipsContainer}>
@@ -440,6 +441,16 @@ const styles = StyleSheet.create({
         padding: 15,
         marginTop: 20,
         borderRadius: 5,
+    },
+    sheetContainer: {
+        flex: 1,
+        padding: 24,
+        justifyContent: 'center',
+        backgroundColor: 'grey',
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
     },
 })
 

@@ -125,15 +125,18 @@ export default function EventScreen({ route, navigation }) {
                         </View>
                     </View>
                     {eventData &&
-                        eventData.posts?.map((post) => (
-                            <Post
-                                key={post._id}
-                                description={post.description}
-                                imageURI={post.imageUrl}
-                                time={formatDateWithTime(post.createdAt)}
-                                user={post.createdBy.fullName}
-                            />
-                        ))}
+                        eventData.posts
+                            ?.slice(0)
+                            .reverse()
+                            .map((post) => (
+                                <Post
+                                    key={post._id}
+                                    description={post.description}
+                                    imageURI={post.imageUrl}
+                                    time={formatDateWithTime(post.createdAt)}
+                                    user={post.createdBy.fullName}
+                                />
+                            ))}
 
                     <View style={{ paddingTop: 50 }} />
                 </ScrollView>
