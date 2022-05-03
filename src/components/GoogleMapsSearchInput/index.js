@@ -3,6 +3,7 @@ import React from 'react'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import { COLORS, TYPOGRAPHY } from '../../styles'
 import Icon from '../Icon'
+import { GOOGLE_MAPS_KEY } from '@env'
 
 export default function GoogleMapsSearchInput({
     onPress,
@@ -24,7 +25,7 @@ export default function GoogleMapsSearchInput({
             placeholder={placeholder}
             onPress={onPress}
             query={{
-                key: 'AIzaSyBSckY8LZsdXRbY4hCd7YhGdsZaqLoLLR4',
+                key: GOOGLE_MAPS_KEY,
                 language: 'en',
             }}
             onChangeText={onChangeText}
