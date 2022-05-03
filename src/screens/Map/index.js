@@ -13,7 +13,11 @@ import Icon from '../../components/Icon'
 import { COLORS, TYPOGRAPHY } from '../../styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocation } from '../../store/locationSlice'
-import { useGetEventsQuery } from '../../services/roadbudApi'
+import {
+    useGetEventsQuery,
+    useGetDirectionsQuery,
+    useLazyGetDirectionsQuery,
+} from '../../services/roadbudApi'
 import BottomSheet from '../../components/BottomSheet'
 import Event from '../../components/Event'
 import { ModalContext } from '../../utils/modalContext'
@@ -21,28 +25,72 @@ import { useGetRoadConditionsQuery } from '../../services/cdotApi'
 import { setPolylineColor } from '../../utils/setPolylineColor'
 import ConditionsKey from '../../components/ConditionsKey'
 import { formatUnixTimeString } from '../../utils'
-import BottomSheetTest from '../../components/BottomSheetTest'
-import {
-    BottomSheetModal,
-    BottomSheetModalProvider,
-} from '@gorhom/bottom-sheet'
+import GoogleMapsSearchInput from '../../components/GoogleMapsSearchInput'
+import Geocoder from 'react-native-geocoding'
+import { cond } from 'react-native-reanimated'
+navigator.geolocation = require('@react-native-community/geolocation')
 
 const MapScreen = ({ navigation }) => {
-    const [cdotToggled, setCdotToggled] = useState(true)
-    const [roadbudToggled, setRoadbudToggled] = useState(true)
-    const [videoToggled, setVideoToggled] = useState(true)
+    dispatch = useDispatch()
+    const { location, loading } = useSelector((state) => state.location)
     const [openModal, setOpenModal] = useState(false)
     const [eventPressed, setEventPressed] = useState('')
     const [conditions, setConditions] = useState(false)
     const [roadDetails, setRoadDetails] = useState({})
     const mapRef = useRef(null)
+    const toFieldRef = useRef(null)
+    const fromFieldRef = useRef(null)
+    const [route, setRoute] = useState({
+        to: '',
+        from: '',
+        polyline: null,
+        events: null,
+    })
 
-    const onDismiss = () => {
-        setOpenModal(false)
+    const [getDirections] = useLazyGetDirectionsQuery()
+
+    const handleOnRouteSubmit = async (field, data) => {
+        // Geocode
+        Geocoder.init('AIzaSyBSckY8LZsdXRbY4hCd7YhGdsZaqLoLLR4')
+        Geocoder.from(data.description)
+            .then((json) => {
+                let location = json.results[0].geometry.location
+                setRoute((prevState) => ({
+                    ...prevState,
+                    [field]: `${location?.lat},${location?.lng}`,
+                }))
+            })
+            .catch((error) => console.warn(error))
     }
 
-    const { location, loading } = useSelector((state) => state.location)
-    dispatch = useDispatch()
+    useEffect(() => {
+        setRoute((prevState) => ({
+            ...prevState,
+            from: `${location?.latitude},${location?.longitude}`,
+        }))
+    }, [location])
+
+    useEffect(() => {
+        getDirections(route)
+            .unwrap()
+            .then((data) => {
+                setRoute((prevState) => ({
+                    ...prevState,
+                    polyline: data.polyline,
+                    events: data.events,
+                }))
+            })
+    }, [route.to, route.from])
+
+    const firstUpdate = useRef(true)
+
+    useEffect(() => {
+        if (route.polyline !== (null || undefined)) {
+            mapRef?.current?.fitToCoordinates(route.polyline, {
+                edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+            })
+        }
+    }, [route.polyline])
 
     const {
         data: eventsData,
@@ -56,17 +104,9 @@ const MapScreen = ({ navigation }) => {
         isLoading,
     } = useGetRoadConditionsQuery()
 
-    const goToLocation = () => {
-        mapRef.current.animateToRegion(location)
-    }
-
     const handleEventPressed = (eventId) => {
         setOpenModal(true)
         setEventPressed(eventId)
-    }
-
-    const handleConditionsPressed = () => {
-        setConditions(!conditions)
     }
 
     const handleRoadLinePressed = (
@@ -98,9 +138,8 @@ const MapScreen = ({ navigation }) => {
 
     useEffect(() => {
         dispatch(getLocation())
+        fromFieldRef.current?.setAddressText('Current Location')
     }, [])
-
-    console.log('is modal open' + openModal)
 
     return (
         <View style={{ flex: 1 }}>
@@ -117,8 +156,37 @@ const MapScreen = ({ navigation }) => {
                     loadingEnabled={true}
                 >
                     {eventsData &&
+                        route.events == null &&
                         !conditions &&
                         eventsData.map((event) => (
+                            <Marker
+                                key={event._id}
+                                coordinate={{
+                                    longitude: event?.location?.longitude,
+                                    latitude: event?.location?.latitude,
+                                }}
+                                title={event.name}
+                                image={
+                                    event.isCDOT
+                                        ? { uri: 'cdot-marker' }
+                                        : {
+                                              uri: 'roadbud-marker',
+                                          }
+                                }
+                                style={{ height: 50, width: 50 }}
+                                onSelect={() => handleEventPressed(event._id)}
+                            >
+                                <View style={styles.postCountCircle}>
+                                    <Text style={styles.postCountCircleText}>
+                                        {event.posts.length}
+                                    </Text>
+                                </View>
+                            </Marker>
+                        ))}
+
+                    {route.events !== null &&
+                        !conditions &&
+                        route?.events?.map((event) => (
                             <Marker
                                 key={event._id}
                                 coordinate={{
@@ -207,13 +275,38 @@ const MapScreen = ({ navigation }) => {
                                 />
                             )
                         })}
+                    {route.polyline !== null && (
+                        <Polyline
+                            coordinates={route.polyline}
+                            strokeColor={'#0076FF'}
+                            strokeWidth={5}
+                        />
+                    )}
                 </MapView>
             )}
 
             <View style={styles.topContainer}>
                 {!conditions ? (
                     <>
-                        <View style={styles.inputContainer}>
+                        <GoogleMapsSearchInput
+                            placeholder="Enter starting point"
+                            direction="From"
+                            onPress={(data, details = null) => {
+                                // 'details' is provided when fetchDetails = true
+
+                                handleOnRouteSubmit('from', data)
+                            }}
+                            fieldRef={fromFieldRef}
+                        />
+                        <GoogleMapsSearchInput
+                            placeholder="Enter your destination"
+                            onPress={(data, details = null) => {
+                                // 'details' is provided when fetchDetails = true
+
+                                handleOnRouteSubmit('to', data)
+                            }}
+                        />
+                        {/* <View style={styles.inputContainer}>
                             <Icon
                                 name="search"
                                 style={{
@@ -235,60 +328,12 @@ const MapScreen = ({ navigation }) => {
                                 autoCorrect={false}
                                 placeholder="Glenwood Springs, CO"
                                 placeholderTextColor={COLORS.lightGray}
+                                onChangeText={(text) => {
+                                    handleOnRouteChanged(text, 'to')
+                                }}
+                                onSubmitEditing={handleOnRouteSubmit}
                             />
-                        </View>
-                        <View style={styles.chipsContainer}>
-                            <TouchableOpacity
-                                onPress={() => setCdotToggled(!cdotToggled)}
-                                style={
-                                    cdotToggled
-                                        ? styles.filledChip
-                                        : styles.unfilledChip
-                                }
-                            >
-                                <Text
-                                    style={{
-                                        color: cdotToggled ? '#fff' : '#000',
-                                    }}
-                                >
-                                    CDOT
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() =>
-                                    setRoadbudToggled(!roadbudToggled)
-                                }
-                                style={
-                                    roadbudToggled
-                                        ? styles.filledChip
-                                        : styles.unfilledChip
-                                }
-                            >
-                                <Text
-                                    style={{
-                                        color: roadbudToggled ? '#fff' : '#000',
-                                    }}
-                                >
-                                    Roadbud
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => setVideoToggled(!videoToggled)}
-                                style={
-                                    videoToggled
-                                        ? styles.filledChip
-                                        : styles.unfilledChip
-                                }
-                            >
-                                <Text
-                                    style={{
-                                        color: videoToggled ? '#fff' : '#000',
-                                    }}
-                                >
-                                    Video
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        </View> */}
                     </>
                 ) : (
                     <View style={styles.roadDescriptionContainer}>
@@ -319,13 +364,21 @@ const MapScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.bottomButtonsContainer}>
-                <TouchableOpacity onPress={handleConditionsPressed}>
+                <TouchableOpacity
+                    onPress={() => {
+                        setConditions(!conditions)
+                    }}
+                >
                     <View style={styles.iconWrapper}>
                         <Icon style={styles.iconButton} name="water-drop" />
                     </View>
                 </TouchableOpacity>
                 <Text style={styles.iconButtonText}>Conditions</Text>
-                <TouchableOpacity onPress={goToLocation}>
+                <TouchableOpacity
+                    onPress={() => {
+                        mapRef.current.animateToRegion(location)
+                    }}
+                >
                     <View style={styles.iconWrapper}>
                         <Icon style={styles.iconButton} name="locator" />
                     </View>
@@ -334,7 +387,11 @@ const MapScreen = ({ navigation }) => {
             </View>
             {openModal && (
                 <ModalContext.Provider value={{ openModal, setOpenModal }}>
-                    <BottomSheet onDismiss={onDismiss}>
+                    <BottomSheet
+                        onDismiss={() => {
+                            setOpenModal(false)
+                        }}
+                    >
                         <Event navigation={navigation} eventId={eventPressed} />
                     </BottomSheet>
                 </ModalContext.Provider>
@@ -355,6 +412,7 @@ const styles = StyleSheet.create({
         width: '90%',
         marginHorizontal: 20,
         flexDirection: 'column',
+        marginTop: 15,
     },
     inputContainer: {
         flexDirection: 'row',
@@ -391,7 +449,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontFamily: 'IBMPlexSans-Regular',
         textAlign: 'center',
-        color: COLORS.white,
+        color: COLORS.black,
     },
     locationInput: {
         height: 50,

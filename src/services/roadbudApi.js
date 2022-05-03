@@ -20,7 +20,7 @@ export const roadbudApi = createApi({
             return headers
         },
     }),
-    tagTypes: ['Event', 'Post', 'User'],
+    tagTypes: ['Event', 'Post', 'User', 'Directions'],
     endpoints: (build) => ({
         // AUTH ENDPOINTS
         signUpUser: build.mutation({
@@ -92,6 +92,11 @@ export const roadbudApi = createApi({
             }),
             invalidatesTags: ['Event', 'User'],
         }),
+
+        //DIRECTIONS ENDPOINTS
+        getDirections: build.query({
+            query: (route) => `/directions/${route.to}&${route.from}`,
+        }),
     }),
 })
 
@@ -106,4 +111,6 @@ export const {
     useUpdateUserDataSettingsMutation,
     useUpdateEventMutation,
     useDeleteEventMutation,
+    useGetDirectionsQuery,
+    useLazyGetDirectionsQuery,
 } = roadbudApi

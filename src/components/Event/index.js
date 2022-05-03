@@ -57,7 +57,9 @@ export default function Event({ eventId, navigation }) {
                             {formatDateWithTime(eventData.startsAt)}
                         </Text>
                         <Text style={TYPOGRAPHY.detailsLargeLight}>
-                            {eventData.createdBy.fullName}
+                            {eventData.isCDOT == true
+                                ? 'CDOT'
+                                : eventData.createdBy.fullName}
                         </Text>
                     </View>
 
