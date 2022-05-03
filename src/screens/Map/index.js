@@ -29,6 +29,7 @@ import GoogleMapsSearchInput from '../../components/GoogleMapsSearchInput'
 import Geocoder from 'react-native-geocoding'
 import { cond } from 'react-native-reanimated'
 navigator.geolocation = require('@react-native-community/geolocation')
+import { GOOGLE_MAPS_KEY } from '@env'
 
 const MapScreen = ({ navigation }) => {
     dispatch = useDispatch()
@@ -51,7 +52,7 @@ const MapScreen = ({ navigation }) => {
 
     const handleOnRouteSubmit = async (field, data) => {
         // Geocode
-        Geocoder.init('AIzaSyBSckY8LZsdXRbY4hCd7YhGdsZaqLoLLR4')
+        Geocoder.init(GOOGLE_MAPS_KEY)
         Geocoder.from(data.description)
             .then((json) => {
                 let location = json.results[0].geometry.location
