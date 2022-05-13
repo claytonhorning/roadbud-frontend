@@ -130,7 +130,11 @@ export default function Event({ eventId, navigation }) {
                             {update && (
                                 <UpdateEventFromComponent
                                     navigation={navigation}
-                                    eventId={eventId}
+                                    createdByUserId={
+                                        !eventData.isCDOT &&
+                                        eventData.createdBy?._id
+                                    }
+                                    eventId={eventData._id}
                                 />
                             )}
                         </View>

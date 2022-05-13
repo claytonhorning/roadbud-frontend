@@ -81,8 +81,14 @@ export default function RouteScreen({ route, navigation }) {
                                                     event.createdAt
                                                 )}
                                                 dateCreated={event.date}
-                                                userCreated={event.createdBy}
                                                 isCDOT={event.isCDOT}
+                                                eventId={event._id}
+                                                userCreated={
+                                                    event.isCDOT
+                                                        ? 'CDOT'
+                                                        : event.createdBy
+                                                              ?.fullName
+                                                }
                                             />
                                         ))}
                                     </LocationFlatlist>

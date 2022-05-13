@@ -55,7 +55,9 @@ export default function EventScreen({ route, navigation }) {
                             {formatDateWithTime(eventData.startsAt)}
                         </Text>
                         <Text style={TYPOGRAPHY.detailsLargeLight}>
-                            {eventData.createdBy.fullName}
+                            {eventData.isCDOT
+                                ? 'CDOT'
+                                : eventData.createdBy?.fullName}
                         </Text>
                     </View>
                     <Text style={styles.header}>{eventData.name}</Text>
@@ -117,8 +119,12 @@ export default function EventScreen({ route, navigation }) {
                                 />
                             </TouchableOpacity>
                             {update && (
-                                <UpdateEventFromScreen
+                                <UpdateEventFromComponent
                                     navigation={navigation}
+                                    createdByUserId={
+                                        !eventData.isCDOT &&
+                                        eventData.createdBy?._id
+                                    }
                                     eventId={eventId}
                                 />
                             )}
@@ -134,7 +140,12 @@ export default function EventScreen({ route, navigation }) {
                                     description={post.description}
                                     imageURI={post.imageUrl}
                                     time={formatDateWithTime(post.createdAt)}
-                                    user={post.createdBy.fullName}
+                                    user={
+                                        post.createdBy?.fullName !==
+                                        (null || undefined)
+                                            ? post.createdBy.fullName
+                                            : 'CDOT'
+                                    }
                                 />
                             ))}
 
