@@ -1,4 +1,10 @@
-import React, { useCallback, useRef, useMemo, useEffect } from 'react'
+import React, {
+    useCallback,
+    useRef,
+    useMemo,
+    useEffect,
+    useContext,
+} from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native'
 import {
     BottomSheetModal,
@@ -7,26 +13,22 @@ import {
     BottomSheet,
     BottomSheetScrollView,
 } from '@gorhom/bottom-sheet'
-import { SHADOWS } from '../../styles'
+import { ModalContext } from '../../utils/modalContext'
 
-const BottomSheetTest = ({ children, onDismiss, isBottomSheetOpen }) => {
-    // ref
+const BottomSheetTest = ({ children, onDismiss }) => {
+    const { openModal, setOpenModal } = useContext(ModalContext)
     const bottomSheetModalRef = useRef(null)
 
-    // variables
     const snapPoints = useMemo(() => ['25%', '50%', '90%'], [])
-
-    // callbacks
     useEffect(() => {
-        if (isBottomSheetOpen) {
-            bottomSheetModalRef.current?.present()
-        } else {
-            bottomSheetModalRef.current?.dismiss()
-        }
-    }, [isBottomSheetOpen])
+        bottomSheetModalRef.current?.present()
+    }, [])
 
     const handleSheetChanges = useCallback((index) => {
         console.log('handleSheetChanges', index)
+        if (index === -1) {
+            setOpenModal(false)
+        }
     }, [])
 
     // renders

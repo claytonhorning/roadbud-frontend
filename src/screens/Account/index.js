@@ -18,7 +18,6 @@ import {
 } from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
-import BottomSheetTest from '../../components/BottomSheetTest'
 
 const AccountScreen = () => {
     const [errors, setErrors] = useState({})
@@ -44,11 +43,6 @@ const AccountScreen = () => {
 
     const { data, isLoading, error } = useGetUserDataQuery()
     const [setUserSettings, result] = useUpdateUserDataSettingsMutation()
-
-    const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
-    const onDismiss = () => {
-        setIsBottomSheetOpen(!isBottomSheetOpen)
-    }
 
     useEffect(() => {
         if (data) {
@@ -302,12 +296,6 @@ const AccountScreen = () => {
                     </Text>
                 </TouchableOpacity>
             </ScrollView>
-            <BottomSheetTest
-                isBottomSheetOpen={isBottomSheetOpen}
-                onDismiss={onDismiss}
-            >
-                <Text>hello</Text>
-            </BottomSheetTest>
         </SafeAreaView>
     )
 }
