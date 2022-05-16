@@ -4,6 +4,13 @@ import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons'
 import { TYPOGRAPHY, SHADOWS } from '../../styles'
 
 export default function Post({ description, imageURI, time, date, user }) {
+    console.log(typeof imageURI)
+    console.log(imageURI)
+    if (imageURI.includes('w_500')) {
+        console.log('landscape')
+    } else if (imageURI.includes('w_400')) {
+        console.log('portrait')
+    }
     return (
         <View style={styles.container}>
             <View style={styles.descriptionContainer}>
@@ -21,8 +28,13 @@ export default function Post({ description, imageURI, time, date, user }) {
                 </View>
             </View>
             <Text style={styles.header}>{description}</Text>
-            {imageURI !== '' && (
-                <View style={{ height: 235, width: '100%' }}>
+            {imageURI.includes('w_500') && (
+                <View style={{ height: 263, width: '100%' }}>
+                    <Image style={styles.image} source={{ uri: imageURI }} />
+                </View>
+            )}
+            {imageURI.includes('w_400') && (
+                <View style={{ height: 524, width: '100%' }}>
                     <Image style={styles.image} source={{ uri: imageURI }} />
                 </View>
             )}
@@ -52,10 +64,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     image: {
-        flex: 1,
         width: '100%',
         height: '100%',
-        resizeMode: 'contain',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
     },
