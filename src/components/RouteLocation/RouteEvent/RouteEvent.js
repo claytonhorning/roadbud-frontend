@@ -10,13 +10,14 @@ export default function RouteEvent({
     dateCreated,
     userCreated,
     navigation,
+    eventId,
 }) {
     const CDOTEvent = () => {
         return (
             <TouchableOpacity
                 onPress={() =>
                     navigation.navigate('EventScreen', {
-                        itemId: 1,
+                        eventId: eventId,
                         otherParam: 'anything you want here',
                     })
                 }
@@ -33,7 +34,7 @@ export default function RouteEvent({
                     <Text style={TYPOGRAPHY.detailsWhite}>CDOT</Text>
                     <View style={styles.postChipLight}>
                         <Text style={TYPOGRAPHY.detailsBlack}>
-                            {numPosts} posts
+                            {numPosts} {numPosts === 1 ? 'Post' : 'Posts'}
                         </Text>
                     </View>
                 </View>
@@ -45,7 +46,7 @@ export default function RouteEvent({
             <TouchableOpacity
                 onPress={() =>
                     navigation.navigate('EventScreen', {
-                        itemId: 1,
+                        eventId: eventId,
                     })
                 }
                 style={[styles.container, styles.shadowProp]}
@@ -58,7 +59,7 @@ export default function RouteEvent({
                     <Text style={styles.eventNameText}>{eventName}</Text>
                 </View>
                 <View style={styles.eventInfoContainer}>
-                    <Text style={TYPOGRAPHY.detailsBold}>John B.</Text>
+                    <Text style={TYPOGRAPHY.detailsBold}>{userCreated}</Text>
                     <View style={styles.postChipDark}>
                         <Text style={TYPOGRAPHY.detailsWhite}>
                             {numPosts} posts

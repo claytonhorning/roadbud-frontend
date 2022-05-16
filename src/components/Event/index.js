@@ -59,7 +59,7 @@ export default function Event({ eventId, navigation }) {
                         <Text style={TYPOGRAPHY.detailsLargeLight}>
                             {eventData.isCDOT == true
                                 ? 'CDOT'
-                                : eventData.createdBy.fullName}
+                                : eventData?.createdBy?.fullName}
                         </Text>
                     </View>
 
@@ -130,7 +130,11 @@ export default function Event({ eventId, navigation }) {
                             {update && (
                                 <UpdateEventFromComponent
                                     navigation={navigation}
-                                    eventId={eventId}
+                                    createdByUserId={
+                                        !eventData.isCDOT &&
+                                        eventData.createdBy?._id
+                                    }
+                                    eventId={eventData._id}
                                 />
                             )}
                         </View>
@@ -145,7 +149,11 @@ export default function Event({ eventId, navigation }) {
                                     description={post.description}
                                     imageURI={post.imageUrl}
                                     time={formatDateWithTime(post.createdAt)}
-                                    user={post.createdBy.fullName}
+                                    user={
+                                        post.createdBy
+                                            ? post.createdBy.fullName
+                                            : 'CDOT'
+                                    }
                                 />
                             ))}
 

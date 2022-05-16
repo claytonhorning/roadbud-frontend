@@ -27,9 +27,10 @@ import ConditionsKey from '../../components/ConditionsKey'
 import { formatUnixTimeString } from '../../utils'
 import GoogleMapsSearchInput from '../../components/GoogleMapsSearchInput'
 import Geocoder from 'react-native-geocoding'
-import { cond } from 'react-native-reanimated'
 navigator.geolocation = require('@react-native-community/geolocation')
 import { GOOGLE_MAPS_KEY } from '@env'
+import BottomSheetTest from '../../components/BottomSheetTest'
+import { setDirections } from '../../store/directionsSlice'
 
 const MapScreen = ({ navigation }) => {
     dispatch = useDispatch()
@@ -83,13 +84,18 @@ const MapScreen = ({ navigation }) => {
             })
     }, [route.to, route.from])
 
-    const firstUpdate = useRef(true)
-
     useEffect(() => {
         if (route.polyline !== (null || undefined)) {
-            mapRef?.current?.fitToCoordinates(route.polyline, {
+            mapRef?.current?.fitToCoordinates(route?.polyline, {
                 edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
             })
+
+            const directions = {
+                ...route,
+                fromText: fromFieldRef.current.getAddressText(),
+                toText: toFieldRef.current.getAddressText(),
+            }
+            dispatch(setDirections(directions))
         }
     }, [route.polyline])
 
@@ -285,7 +291,6 @@ const MapScreen = ({ navigation }) => {
                     )}
                 </MapView>
             )}
-
             <View style={styles.topContainer}>
                 {!conditions ? (
                     <>
@@ -303,38 +308,10 @@ const MapScreen = ({ navigation }) => {
                             placeholder="Enter your destination"
                             onPress={(data, details = null) => {
                                 // 'details' is provided when fetchDetails = true
-
                                 handleOnRouteSubmit('to', data)
                             }}
+                            fieldRef={toFieldRef}
                         />
-                        {/* <View style={styles.inputContainer}>
-                            <Icon
-                                name="search"
-                                style={{
-                                    fontSize: 18,
-                                    marginRight: 10,
-                                    color: '#4B4B4B',
-                                }}
-                            />
-                            <Text
-                                style={{
-                                    marginRight: 5,
-                                    fontWeight: '500',
-                                    opacity: 0.5,
-                                }}
-                            >
-                                To:
-                            </Text>
-                            <TextInput
-                                autoCorrect={false}
-                                placeholder="Glenwood Springs, CO"
-                                placeholderTextColor={COLORS.lightGray}
-                                onChangeText={(text) => {
-                                    handleOnRouteChanged(text, 'to')
-                                }}
-                                onSubmitEditing={handleOnRouteSubmit}
-                            />
-                        </View> */}
                     </>
                 ) : (
                     <View style={styles.roadDescriptionContainer}>
@@ -363,7 +340,6 @@ const MapScreen = ({ navigation }) => {
                     </View>
                 )}
             </View>
-
             <View style={styles.bottomButtonsContainer}>
                 <TouchableOpacity
                     onPress={() => {
@@ -388,15 +364,16 @@ const MapScreen = ({ navigation }) => {
             </View>
             {openModal && (
                 <ModalContext.Provider value={{ openModal, setOpenModal }}>
-                    <BottomSheet
+                    <BottomSheetTest
                         onDismiss={() => {
                             setOpenModal(false)
                         }}
                     >
                         <Event navigation={navigation} eventId={eventPressed} />
-                    </BottomSheet>
+                    </BottomSheetTest>
                 </ModalContext.Provider>
             )}
+
             {conditions && <ConditionsKey />}
         </View>
     )

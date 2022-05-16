@@ -6,46 +6,95 @@ import {
     ScrollView,
     TextInput,
 } from 'react-native'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import RouteInput from '../../components/Inputs/RouteInput'
 import { TYPOGRAPHY, COLORS } from '../../styles'
 import LocationFlatlist from '../../components/RouteLocation/LocationFlatlist'
+import { useLazyGetDirectionsQuery } from '../../services/roadbudApi'
+import GoogleMapsSearchInput from '../../components/GoogleMapsSearchInput'
+import RouteEvent from '../../components/RouteLocation/RouteEvent/RouteEvent'
+import { formatDateWithTime } from '../../utils'
 
-const locations = [
-    { id: 1, name: 'Glenwood Springs', events: 2 },
-    { id: 2, name: 'Eagle', events: 4 },
-    { id: 3, name: 'Silverthorne', events: 3 },
-]
+export default function RouteScreen({ route, navigation }) {
+    const toFieldRef = useRef(null)
+    const fromFieldRef = useRef(null)
+    const { to, from, events, toText, fromText } = useSelector(
+        (state) => state.directions
+    )
+    const [locations, setLocations] = useState()
 
-export default function RouteScreen({ navigation }) {
-    // If there is another object in array, next location = true
+    useEffect(() => {
+        if (events) {
+            let locs = []
+            events.map((event) => {
+                if (!locs.includes(event.nearByCity?.name)) {
+                    locs.push(event.nearByCity?.name)
+                }
+                setLocations(locs)
+            })
+        }
+    }, [events])
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>
-                    <RouteInput />
+                    <Text style={TYPOGRAPHY.detailsLargeLight}>
+                        {fromText} to {toText}
+                    </Text>
                 </View>
 
                 <View style={styles.content}>
-                    <Text style={styles.eventCounter}>9 events</Text>
+                    <Text style={styles.eventCounter}>
+                        {events?.length} Events
+                    </Text>
 
-                    {locations.map((place, index) => {
-                        return (
-                            <View key={index} style={styles.locationContainer}>
-                                <LocationFlatlist
-                                    navigation={navigation}
-                                    key={place.id}
-                                    numEvents={place.events}
-                                    location={place.name}
-                                    nextLocation={
-                                        locations.length == index + 1
-                                            ? false
-                                            : true
-                                    }
-                                />
-                            </View>
-                        )
-                    })}
+                    {locations !== (null || undefined) &&
+                        locations.map((location, index) => {
+                            let locationEvents = []
+
+                            events.filter((e) => {
+                                if (e.nearByCity?.name === location) {
+                                    locationEvents.push(e)
+                                }
+                            })
+                            return (
+                                <View>
+                                    <LocationFlatlist
+                                        location={String(location)}
+                                        numEvents={locationEvents.length}
+                                        navigation={navigation}
+                                        nextLocation={
+                                            locations.length == index + 1
+                                                ? false
+                                                : true
+                                        }
+                                    >
+                                        {locationEvents.map((event) => (
+                                            <RouteEvent
+                                                navigation={navigation}
+                                                key={event._id}
+                                                eventName={event.name}
+                                                numPosts={event.posts.length}
+                                                timeCreated={formatDateWithTime(
+                                                    event.createdAt
+                                                )}
+                                                dateCreated={event.date}
+                                                isCDOT={event.isCDOT}
+                                                eventId={event._id}
+                                                userCreated={
+                                                    event.isCDOT
+                                                        ? 'CDOT'
+                                                        : event.createdBy
+                                                              ?.fullName
+                                                }
+                                            />
+                                        ))}
+                                    </LocationFlatlist>
+                                </View>
+                            )
+                        })}
                 </View>
             </ScrollView>
         </SafeAreaView>

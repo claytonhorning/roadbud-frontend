@@ -3,42 +3,12 @@ import React from 'react'
 import LocationInfo from './LocationInfo'
 import RouteEvent from './RouteEvent/RouteEvent'
 
-const eventData = [
-    {
-        id: 1,
-        name: 'Landslide in Glenwood Springs Canyon',
-        posts: 2,
-        date: '3/18',
-        time: '8:15 AM',
-        user: 'David B.',
-        cdot: false,
-    },
-
-    {
-        id: 2,
-        name: 'Icy Road Conditions in Glenwood on HWY 82',
-        posts: 2,
-        date: '3/17',
-        time: '1:34 PM',
-        user: 'CDOT',
-        cdot: true,
-    },
-    {
-        id: 3,
-        name: 'Landslide in Glenwood Springs Canyon',
-        posts: 2,
-        date: '3/17',
-        time: '11:14 AM',
-        user: 'John S.',
-        cdot: false,
-    },
-]
-
 export default function index({
     location,
     nextLocation,
-    numEvents,
     navigation,
+    children,
+    numEvents,
 }) {
     return (
         <View>
@@ -47,20 +17,7 @@ export default function index({
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
             >
-                {eventData.map((event) => {
-                    return (
-                        <RouteEvent
-                            navigation={navigation}
-                            key={event.id}
-                            eventName={event.name}
-                            numPosts={event.posts}
-                            timeCreated={event.time}
-                            dateCreated={event.date}
-                            userCreated={event.user}
-                            isCDOT={event.cdot}
-                        />
-                    )
-                })}
+                {children}
             </ScrollView>
             {nextLocation && (
                 <View>
