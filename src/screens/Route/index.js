@@ -40,14 +40,18 @@ export default function RouteScreen({ route, navigation }) {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginHorizontal: 20 }}>
-                    <Text style={TYPOGRAPHY.detailsLargeLight}>
-                        {fromText} to {toText}
+                    <Text style={styles.directionText}>
+                        {fromText && toText
+                            ? `${fromText} to ${toText}`
+                            : 'Enter to and from paramters on the map view to see events along your route.'}
                     </Text>
                 </View>
 
                 <View style={styles.content}>
                     <Text style={styles.eventCounter}>
-                        {events?.length} Events
+                        {events?.length > 0 && toText && fromText
+                            ? events?.length + ' Events'
+                            : 'No events to show on this route'}
                     </Text>
 
                     {locations !== (null || undefined) &&
@@ -115,5 +119,10 @@ const styles = StyleSheet.create({
     },
     locationContainer: {
         paddingBottom: 10,
+    },
+    directionText: {
+        fontSize: 20,
+        color: COLORS.mediumGray,
+        marginTop: 10,
     },
 })

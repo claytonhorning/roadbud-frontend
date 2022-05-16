@@ -11,74 +11,77 @@ import NotificationToggler from '../../components/Notification/NotificationToggl
 import AddNotificationModal from '../../components/Notification/AddNotificationModal'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { COLORS, TYPOGRAPHY } from '../../styles'
+import ComingSoon from '../../components/ComingSoon'
 
 const NotificationsScreen = () => {
     const [modalVisible, setModalVisible] = useState(false)
     const [editToggled, setEditToggled] = useState(false)
 
     return (
-        <SafeAreaView style={styles.container}>
-            <AddNotificationModal
-                visible={modalVisible}
-                onClosePress={() => setModalVisible(!modalVisible)}
-            />
-            <ScrollView style={styles.content}>
-                <View style={styles.topContainer}>
-                    <Text style={TYPOGRAPHY.header}>Notifications</Text>
-                    <View style={styles.buttonsContainer}>
-                        <TouchableOpacity
-                            onPress={() => setEditToggled(!editToggled)}
-                            style={styles.editButton}
-                        >
-                            <Text style={styles.buttonText}>Edit</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => setModalVisible(!modalVisible)}
-                            style={styles.addButton}
-                        >
-                            <Text style={styles.buttonText}>Add</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                {/* Map through notifications */}
-                <View style={{ flexDirection: 'row' }}>
-                    <NotificationToggler
-                        cdotNotifications={true}
-                        roadbudNotifications={true}
-                        routeName="Glenwood to Denver"
-                    />
-                    {editToggled && (
-                        <View
-                            style={{
-                                flexDirection: 'column',
-                                justifyContent: 'space-around',
-                            }}
-                        >
-                            <TouchableOpacity>
-                                <Icon
-                                    style={{
-                                        marginLeft: 25,
-                                        fontSize: 25,
-                                        color: '#3d3d3d',
-                                    }}
-                                    name="note-edit"
-                                />
+        <ComingSoon>
+            <SafeAreaView style={styles.container}>
+                <AddNotificationModal
+                    visible={modalVisible}
+                    onClosePress={() => setModalVisible(!modalVisible)}
+                />
+                <ScrollView style={styles.content}>
+                    <View style={styles.topContainer}>
+                        <Text style={TYPOGRAPHY.header}>Notifications</Text>
+                        <View style={styles.buttonsContainer}>
+                            <TouchableOpacity
+                                onPress={() => setEditToggled(!editToggled)}
+                                style={styles.editButton}
+                            >
+                                <Text style={styles.buttonText}>Edit</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Icon
-                                    style={{
-                                        marginLeft: 25,
-                                        fontSize: 25,
-                                        color: '#F50000',
-                                    }}
-                                    name="delete"
-                                />
+                            <TouchableOpacity
+                                onPress={() => setModalVisible(!modalVisible)}
+                                style={styles.addButton}
+                            >
+                                <Text style={styles.buttonText}>Add</Text>
                             </TouchableOpacity>
                         </View>
-                    )}
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+                    </View>
+                    {/* Map through notifications */}
+                    <View style={{ flexDirection: 'row' }}>
+                        <NotificationToggler
+                            cdotNotifications={true}
+                            roadbudNotifications={true}
+                            routeName="Glenwood to Denver"
+                        />
+                        {editToggled && (
+                            <View
+                                style={{
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-around',
+                                }}
+                            >
+                                <TouchableOpacity>
+                                    <Icon
+                                        style={{
+                                            marginLeft: 25,
+                                            fontSize: 25,
+                                            color: '#3d3d3d',
+                                        }}
+                                        name="note-edit"
+                                    />
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Icon
+                                        style={{
+                                            marginLeft: 25,
+                                            fontSize: 25,
+                                            color: '#F50000',
+                                        }}
+                                        name="delete"
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </ComingSoon>
     )
 }
 

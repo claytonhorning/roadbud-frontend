@@ -18,6 +18,8 @@ import {
 } from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
+import { createAvatarLetters } from '../../utils'
+import AvatarLetters from '../../components/AvatarLetters'
 
 const AccountScreen = () => {
     const [errors, setErrors] = useState({})
@@ -75,12 +77,13 @@ const AccountScreen = () => {
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.content}>
                 <View style={styles.topContainer}>
-                    <Image
+                    {/* <Image
                         style={styles.avatar}
                         source={{
                             uri: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3087&q=80',
                         }}
-                    />
+                    /> */}
+                    <AvatarLetters />
                     <View>
                         <Pressable
                             onPress={() => {
@@ -111,7 +114,9 @@ const AccountScreen = () => {
                                 marginTop: 5,
                             }}
                         >
-                            {data.events.length} Events
+                            {data.events.length > 0
+                                ? `${data.events.length} Events`
+                                : 'No events created'}
                         </Text>
                         <ScrollView
                             style={{ paddingLeft: 20, paddingVertical: 10 }}
@@ -138,7 +143,9 @@ const AccountScreen = () => {
                                 marginTop: 5,
                             }}
                         >
-                            {data.posts.length} Posts
+                            {data.posts.length > 0
+                                ? `${data.posts.length} Posts`
+                                : 'No posts created'}
                         </Text>
                         <ScrollView
                             style={{ paddingLeft: 20, paddingVertical: 10 }}
@@ -284,7 +291,7 @@ const AccountScreen = () => {
                         Logout
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.deleteButton}>
+                {/* <TouchableOpacity style={styles.deleteButton}>
                     <Text
                         style={{
                             fontSize: 18,
@@ -294,7 +301,7 @@ const AccountScreen = () => {
                     >
                         Delete account
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </ScrollView>
         </SafeAreaView>
     )
