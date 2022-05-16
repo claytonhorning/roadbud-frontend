@@ -3,15 +3,14 @@ import React from 'react'
 import { COLORS } from '../../styles'
 import { useSelector } from 'react-redux'
 
-export default function AvatarLetters({ size }) {
-    const { user } = useSelector((state) => state.auth)
-    const [first, last] = user.fullName.split(' ')
+export default function AvatarLetters({ size, name }) {
+    const [first, last] = name.split(' ')
 
     const avatarSize = {
         height: size,
         width: size,
         borderRadius: size / 2,
-        marginRight: size / 2.5,
+        marginRight: size / 3,
     }
     const letterSize = {
         fontSize: size / 2,
@@ -32,7 +31,6 @@ export default function AvatarLetters({ size }) {
 const styles = StyleSheet.create({
     avatarLetters: {
         backgroundColor: '#ccc',
-
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

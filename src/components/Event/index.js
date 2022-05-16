@@ -17,6 +17,7 @@ import { useGetEventQuery } from '../../services/roadbudApi'
 import { formatDateWithTime } from '../../utils/index'
 import { ModalContext } from '../../utils/modalContext'
 import { UpdateEventFromComponent } from '../ActionSheets/UpdateEvent'
+import AvatarLetters from '../AvatarLetters'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
@@ -56,11 +57,25 @@ export default function Event({ eventId, navigation }) {
                         <Text style={TYPOGRAPHY.detailsLargeLight}>
                             {formatDateWithTime(eventData.startsAt)}
                         </Text>
-                        <Text style={TYPOGRAPHY.detailsLargeLight}>
-                            {eventData.isCDOT == true
-                                ? 'CDOT'
-                                : eventData?.createdBy?.fullName}
-                        </Text>
+                        <View
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                            }}
+                        >
+                            {!eventData.isCDOT && (
+                                <AvatarLetters
+                                    size={22}
+                                    name={eventData.createdBy?.fullName}
+                                />
+                            )}
+
+                            <Text style={TYPOGRAPHY.detailsLargeLight}>
+                                {eventData.isCDOT == true
+                                    ? 'CDOT'
+                                    : eventData?.createdBy?.fullName}
+                            </Text>
+                        </View>
                     </View>
 
                     <Text style={styles.header}>{eventData.name}</Text>

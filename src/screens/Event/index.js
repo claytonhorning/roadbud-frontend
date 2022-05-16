@@ -61,7 +61,12 @@ export default function EventScreen({ route, navigation }) {
                                 flexDirection: 'row',
                             }}
                         >
-                            <AvatarLetters size={22} />
+                            {!eventData.isCDOT && (
+                                <AvatarLetters
+                                    size={22}
+                                    name={eventData.createdBy?.fullName}
+                                />
+                            )}
                             <Text style={TYPOGRAPHY.detailsLargeLight}>
                                 {eventData.isCDOT
                                     ? 'CDOT'

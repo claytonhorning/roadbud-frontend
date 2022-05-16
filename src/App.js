@@ -19,6 +19,8 @@ const App = () => {
     const { token, loading } = useSelector((state) => state.auth)
     dispatch = useDispatch()
 
+    console.log('This is the token' + token)
+
     useEffect(() => {
         dispatch(loadUser())
     }, [])
