@@ -145,6 +145,8 @@ export default function ReportEventScreen({ navigation }) {
         setModalVisible(!modalVisible)
     }
 
+    console.log(postResult)
+
     if (isLoadingModal) {
         return (
             <View style={styles.overlay}>

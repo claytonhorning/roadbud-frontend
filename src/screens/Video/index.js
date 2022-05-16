@@ -9,6 +9,7 @@ import {
 import React from 'react'
 import Icon from '../../components/Icon'
 import { COLORS, TYPOGRAPHY } from '../../styles'
+import ComingSoon from '../../components/ComingSoon'
 
 const videoData = [
     { id: 1, name: 'I-70 175.30' },
@@ -19,50 +20,56 @@ const videoData = [
 
 export default function Video() {
     return (
-        <View style={styles.container}>
-            <View style={styles.content}>
-                <View style={styles.inputContainer}>
-                    <Icon
-                        name="search"
-                        style={{
-                            fontSize: 18,
-                            marginRight: 10,
-                            color: '#4B4B4B',
-                        }}
-                    />
-                    <Text
-                        style={{
-                            marginRight: 5,
-                            fontWeight: '500',
-                            opacity: 0.5,
-                        }}
-                    >
-                        Search:
+        <ComingSoon>
+            <View style={styles.container}>
+                <View style={styles.content}>
+                    <View style={styles.inputContainer}>
+                        <Icon
+                            name="search"
+                            style={{
+                                fontSize: 18,
+                                marginRight: 10,
+                                color: '#4B4B4B',
+                            }}
+                        />
+                        <Text
+                            style={{
+                                marginRight: 5,
+                                fontWeight: '500',
+                                opacity: 0.5,
+                            }}
+                        >
+                            Search:
+                        </Text>
+                        <TextInput
+                            autoCorrect={false}
+                            placeholder="Glenwood Springs, CO"
+                        />
+                    </View>
+                    <Text style={{ opacity: 0.5, marginVertical: 5 }}>
+                        8 Feeds
                     </Text>
-                    <TextInput
-                        autoCorrect={false}
-                        placeholder="Glenwood Springs, CO"
-                    />
+                    <ScrollView contentContainerStyle={styles.videoContainer}>
+                        {videoData.map((video) => (
+                            <TouchableOpacity
+                                key={video.id}
+                                style={styles.video}
+                            >
+                                <Text style={styles.videoNameText}>
+                                    {video.name}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
                 </View>
-                <Text style={{ opacity: 0.5, marginVertical: 5 }}>8 Feeds</Text>
-                <ScrollView contentContainerStyle={styles.videoContainer}>
-                    {videoData.map((video) => (
-                        <TouchableOpacity key={video.id} style={styles.video}>
-                            <Text style={styles.videoNameText}>
-                                {video.name}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
             </View>
-        </View>
+        </ComingSoon>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
         backgroundColor: COLORS.white,
     },
     content: {

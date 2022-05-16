@@ -17,6 +17,7 @@ import { formatDateWithTime } from '../../utils/index'
 import { useDispatch } from 'react-redux'
 import { roadbudApi } from '../../services/roadbudApi'
 import { UpdateEventFromScreen } from '../../components/ActionSheets/UpdateEvent'
+import AvatarLetters from '../../components/AvatarLetters'
 
 //TODO: Add bottom padding??? make images the right size and conditional rendering for posts without image
 
@@ -54,11 +55,19 @@ export default function EventScreen({ route, navigation }) {
                         <Text style={TYPOGRAPHY.detailsLargeLight}>
                             {formatDateWithTime(eventData.startsAt)}
                         </Text>
-                        <Text style={TYPOGRAPHY.detailsLargeLight}>
-                            {eventData.isCDOT
-                                ? 'CDOT'
-                                : eventData.createdBy?.fullName}
-                        </Text>
+                        <View
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                            }}
+                        >
+                            <AvatarLetters size={22} />
+                            <Text style={TYPOGRAPHY.detailsLargeLight}>
+                                {eventData.isCDOT
+                                    ? 'CDOT'
+                                    : eventData.createdBy?.fullName}
+                            </Text>
+                        </View>
                     </View>
                     <Text style={styles.header}>{eventData.name}</Text>
                     <View style={styles.optionsContainer}>
@@ -141,8 +150,7 @@ export default function EventScreen({ route, navigation }) {
                                     imageURI={post.imageUrl}
                                     time={formatDateWithTime(post.createdAt)}
                                     user={
-                                        post.createdBy?.fullName !==
-                                        (null || undefined)
+                                        post.createdBy !== (null || undefined)
                                             ? post.createdBy.fullName
                                             : 'CDOT'
                                     }
