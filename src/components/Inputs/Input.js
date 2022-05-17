@@ -40,14 +40,17 @@ const Input = ({
                     },
                 ]}
             >
-                <Icon
-                    name={iconName}
-                    style={{
-                        fontSize: 18,
-                        color: '#FF7A01',
-                        marginRight: 15,
-                    }}
-                />
+                {iconName && (
+                    <Icon
+                        name={iconName}
+                        style={{
+                            fontSize: 18,
+                            color: '#FF7A01',
+                            marginRight: 15,
+                        }}
+                    />
+                )}
+
                 <TextInput
                     secureTextEntry={hidePassword}
                     autoCorrect={false}
@@ -100,6 +103,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 0.5,
+        paddingLeft: 15,
     },
     largeInputContainer: {
         height: 110,
@@ -109,6 +113,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         borderWidth: 0.5,
         paddingTop: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
     },
     inputLabel: {
         color: '#000',
