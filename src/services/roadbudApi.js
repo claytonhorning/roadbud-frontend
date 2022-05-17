@@ -37,6 +37,13 @@ export const roadbudApi = createApi({
                 body: user,
             }),
         }),
+        loginUserOauth: build.mutation({
+            query: (token) => ({
+                url: '/oauth/login',
+                method: 'POST',
+                body: token,
+            }),
+        }),
         getUserData: build.query({
             query: () => '/auth/me',
             providesTags: ['User'],
@@ -103,6 +110,7 @@ export const roadbudApi = createApi({
 export const {
     useSignUpUserMutation,
     useLoginUserMutation,
+    useLoginUserOauthMutation,
     useGetUserDataQuery,
     useCreateEventMutation,
     useGetEventQuery,

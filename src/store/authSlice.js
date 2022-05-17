@@ -54,6 +54,15 @@ export const authSlice = createSlice({
                     state.token = payload.token
                     state.user = jwtDecode(payload.token)
                 }
+            ),
+            builder.addMatcher(
+                roadbudApi.endpoints.loginUserOauth.matchFulfilled,
+                (state, { payload }) => {
+                    console.log(payload)
+                    AsyncStorage.setItem('token', payload.token)
+                    state.token = payload.token
+                    state.user = jwtDecode(payload.token)
+                }
             )
     },
 })

@@ -13,6 +13,7 @@ const Button = ({ title, onPress = () => {} }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginVertical: 8,
+                borderRadius: 5,
             }}
         >
             <Text

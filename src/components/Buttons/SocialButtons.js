@@ -8,19 +8,22 @@ import {
 import { GOOGLE_IOS_CLIENT_ID } from '@env'
 import { useDispatch } from 'react-redux'
 import {
-    useLoginUserMutation,
+    useLoginUserOauthMutation,
     useSignUpUserMutation,
 } from '../../services/roadbudApi'
 import { TYPOGRAPHY } from '../../styles'
-import { loginOauth } from '../../store/authSlice'
-import { LoginManager, Profile } from 'react-native-fbsdk-next'
+import {
+    LoginManager,
+    Profile,
+    AuthenticationToken,
+} from 'react-native-fbsdk-next'
 
 export default function SocialButtons({ login = false, navigation }) {
     const [errors, setErrors] = useState([])
 
     dispatch = useDispatch()
     const [signUpUser, signUpResult] = useSignUpUserMutation()
-    const [loginUser, loginResult] = useLoginUserMutation()
+    const [loginUserOauth, loginResultOauth] = useLoginUserOauthMutation()
 
     return (
         <>
@@ -40,9 +43,12 @@ export default function SocialButtons({ login = false, navigation }) {
                                     }
 
                                     signUpUser(user).then((response) => {
+                                        console.log(response)
                                         //Need to login user if they have an account
-                                        dispatch(loginOauth(userInfo))
-                                        //DOESNT WORK
+                                        let oauthUser = {
+                                            idToken: userInfo.idToken,
+                                        }
+                                        loginUserOauth(oauthUser)
                                     })
                                 })
                             }
@@ -80,11 +86,22 @@ export default function SocialButtons({ login = false, navigation }) {
                                         email: data.email,
                                         // photoUrl: data.imageUrl
                                     }
-
-                                    signUpUser(user).then((response) => {
-                                        // loginOauth()
-                                        console.log('user already stored')
-                                    })
+                                    console.log(data.token)
+                                    AuthenticationToken.getAuthenticationTokenIOS().then(
+                                        (tokenData) => {
+                                            signUpUser(user).then(
+                                                (response) => {
+                                                    console.log(response)
+                                                    //Need to login user if they have an account
+                                                    let oauthUser = {
+                                                        idToken:
+                                                            tokenData?.authenticationToken,
+                                                    }
+                                                    loginUserOauth(oauthUser)
+                                                }
+                                            )
+                                        }
+                                    )
                                 })
                             }
                         },
