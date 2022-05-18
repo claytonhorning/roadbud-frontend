@@ -371,6 +371,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 20,
         borderRadius: 5,
+        marginBottom: 15,
     },
     deleteButton: {
         marginTop: 20,

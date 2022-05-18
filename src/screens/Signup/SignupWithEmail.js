@@ -13,6 +13,7 @@ import Logo from 'assets/img/logo/dark.png'
 import Button from '../../components/Buttons/Button'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useSignUpUserMutation } from '../../services/roadbudApi'
+import { COLORS } from '../../styles/colors'
 
 const { height, width } = Dimensions.get('window')
 
@@ -128,6 +129,7 @@ export default function SignUpWithEmail({ navigation }) {
                         error={errors.confirmPassword}
                         password
                     />
+
                     <Button title="Sign Up" onPress={validate} />
                 </View>
             </KeyboardAwareScrollView>
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 30,
         marginHorizontal: 20,
+        backgroundColor: COLORS.white,
     },
     logo: {
         resizeMode: 'contain',
