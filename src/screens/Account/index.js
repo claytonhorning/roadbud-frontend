@@ -18,7 +18,6 @@ import {
 } from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
-import { createAvatarLetters } from '../../utils'
 import AvatarLetters from '../../components/AvatarLetters'
 
 const AccountScreen = () => {

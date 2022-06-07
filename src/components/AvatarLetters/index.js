@@ -19,10 +19,10 @@ export default function AvatarLetters({ size, name }) {
     return (
         <View style={[styles.avatarLetters, avatarSize]}>
             <Text style={[styles.avatarChar, letterSize]}>
-                {first.charAt(0)}
+                {first?.charAt(0)}
             </Text>
             <Text style={[styles.avatarChar, letterSize]}>
-                {last.charAt(0)}
+                {last?.charAt(0)}
             </Text>
         </View>
     )
