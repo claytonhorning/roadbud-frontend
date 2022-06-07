@@ -18,7 +18,6 @@ import {
 } from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
-import { createAvatarLetters } from '../../utils'
 import AvatarLetters from '../../components/AvatarLetters'
 
 const AccountScreen = () => {
@@ -371,6 +370,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginHorizontal: 20,
         borderRadius: 5,
+        marginBottom: 15,
     },
     deleteButton: {
         marginTop: 20,

@@ -13,6 +13,7 @@ import {
 import Car from 'assets/img/car.svg'
 import Logo from 'assets/img/logo/dark.png'
 import SocialButtons from '../../components/Buttons/SocialButtons'
+import { COLORS } from '../../styles'
 
 const { height, width } = Dimensions.get('window')
 
@@ -48,12 +49,14 @@ export default function SignUpOptions({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: COLORS.white,
     },
     topContainer: {
+        paddingTop: 20,
         flex: 2,
         alignItems: 'center',
-
         zIndex: 1,
+        marginHorizontal: 15,
     },
     header: {
         fontSize: 22,
@@ -61,43 +64,6 @@ const styles = StyleSheet.create({
         color: '#000',
         marginBottom: 20,
         opacity: 0.7,
-    },
-    signupOption: {
-        marginVertical: 15,
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#fff',
-        height: 60,
-        borderRadius: 10,
-    },
-    signupFB: {
-        paddingHorizontal: 25,
-        marginVertical: 15,
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#1877F2',
-        height: 60,
-        borderRadius: 10,
-    },
-    signupEmail: {
-        paddingHorizontal: 25,
-        marginVertical: 15,
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#000',
-        height: 60,
-        borderRadius: 10,
-    },
-    signupOptionText: {
-        fontSize: 16,
-        fontWeight: '500',
-        marginLeft: 15,
-    },
-    signupTextLight: {
-        fontSize: 16,
-        fontWeight: '500',
-        marginLeft: 15,
-        color: '#fff',
     },
     logo: {
         resizeMode: 'contain',

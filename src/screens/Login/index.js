@@ -16,6 +16,7 @@ import SocialButtons from '../../components/Buttons/SocialButtons'
 import Button from '../../components/Buttons/Button'
 import { useDispatch } from 'react-redux'
 import { useLoginUserMutation } from '../../services/roadbudApi'
+import { COLORS } from '../../styles'
 
 const { height, width } = Dimensions.get('window')
 
@@ -35,13 +36,11 @@ export default function Login({ navigation }) {
             password: inputs.password,
         }
 
-        signInUser(user)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((error) => {
-                console.log(error.response)
-            })
+        signInUser(user).then((res) => {
+            if (res.error !== null) {
+                handleError(res.error.data.error, 'login')
+            }
+        })
     }
     const validate = () => {
         Keyboard.dismiss()
@@ -74,6 +73,7 @@ export default function Login({ navigation }) {
     const handleError = (error, input) => {
         setErrors((prevState) => ({ ...prevState, [input]: error }))
     }
+    console.log(errors)
     return (
         <SafeAreaView style={{ backgroundColor: '#fff', flex: 1 }}>
             <KeyboardAwareScrollView style={styles.container}>
@@ -96,6 +96,18 @@ export default function Login({ navigation }) {
                     error={errors.password}
                 />
                 <Button title="Login" onPress={validate} />
+                {errors.login && (
+                    <Text
+                        style={{
+                            color: COLORS.warning,
+                            textAlign: 'center',
+                            marginBottom: 3,
+                        }}
+                    >
+                        {errors.login}
+                    </Text>
+                )}
+
                 <View style={styles.signupTextRow}>
                     <Text style={styles.signupText}>
                         Don't have an account?{' '}

@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from '../../components/Icon'
-import { TYPOGRAPHY, SHADOWS } from '../../styles'
+import { TYPOGRAPHY, SHADOWS, COLORS } from '../../styles'
 const PostScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
@@ -27,13 +27,15 @@ const PostScreen = ({ navigation }) => {
                         Report new event
                     </Text>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                     onPress={() => navigation.navigate('PostToEventScreen')}
                     style={styles.postToEventButton}
+                    disabled={true}
                 >
                     <Text
                         style={{
-                            color: '#FF7A01',
+                            color: COLORS.primary,
                             fontSize: 16,
                             fontWeight: '600',
                             fontFamily: 'Montserrat-Regular',
@@ -42,6 +44,7 @@ const PostScreen = ({ navigation }) => {
                         Add to existing event
                     </Text>
                 </TouchableOpacity>
+
                 <View style={styles.eventNearContainer}>
                     <View style={styles.postToHeader}>
                         <Text
@@ -55,7 +58,7 @@ const PostScreen = ({ navigation }) => {
                             Post to an event near you
                         </Text>
                     </View>
-                    <TouchableOpacity style={styles.specificEventContainer}>
+                    {/* <TouchableOpacity style={styles.specificEventContainer}>
                         <View
                             style={{
                                 flexDirection: 'row',
@@ -123,7 +126,8 @@ const PostScreen = ({ navigation }) => {
                         >
                             Snowy Conditions on HW 6
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
+
                     <TouchableOpacity style={styles.specificEventContainer}>
                         <View
                             style={{
@@ -135,7 +139,7 @@ const PostScreen = ({ navigation }) => {
                                 style={{ fontSize: 18, marginRight: 3 }}
                                 name="pin"
                             />
-                            <Text>3.1 mi.</Text>
+                            <Text>1.2 mi.</Text>
                         </View>
                         <Text
                             style={{
@@ -144,7 +148,7 @@ const PostScreen = ({ navigation }) => {
                                 marginLeft: 10,
                             }}
                         >
-                            Landslide in Glenwood Canyon
+                            Feature coming soon
                         </Text>
                     </TouchableOpacity>
                 </View>
