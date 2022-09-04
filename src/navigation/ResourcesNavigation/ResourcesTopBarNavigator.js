@@ -11,10 +11,10 @@ export default function RouteTopBarNavigator() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
             <ResourcesTopBar.Navigator>
-                <ResourcesTopBar.Screen
+                {/* <ResourcesTopBar.Screen
                     name="Live Videos"
                     component={VideoScreen}
-                />
+                /> */}
                 <ResourcesTopBar.Screen
                     name="Planned Events"
                     component={PlannedEventsScreen}

@@ -64,16 +64,16 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow access to camera to post photos.</string>
+	<string>Allow Roadbud to access your camera to take a photo of the event.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow access to location to use your location.</string>
+	<string>Turning on location services helps Roadbud show events near you.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow access to microphone to use microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to photo library to post photos.</string>
+	<string>Allow Roadbud to access your photo library to post pictures of the event.</string>
 	<key>UIAppFonts</key>
 	<array>
-			<string>AntDesign.ttf</string>
+		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>Feather.ttf</string>
