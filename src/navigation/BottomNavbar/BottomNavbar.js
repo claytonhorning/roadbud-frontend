@@ -42,7 +42,7 @@ export default function BottomNavbar() {
                     ),
                 }}
             />
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="Post"
                 component={PostScreenNavigator}
                 options={{
@@ -52,8 +52,8 @@ export default function BottomNavbar() {
                         <Icon color={color} name="post" size={25} />
                     ),
                 }}
-            /> */}
-            <Tab.Screen
+            />
+            {/* <Tab.Screen
                 name="Notifications"
                 component={NotificationsScreen}
                 options={{
@@ -63,7 +63,7 @@ export default function BottomNavbar() {
                         <Icon color={color} name="bell" size={25} />
                     ),
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Account"
                 component={AccountScreen}
