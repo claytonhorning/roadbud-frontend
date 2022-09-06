@@ -17,6 +17,7 @@ import {
     Profile,
     AuthenticationToken,
 } from 'react-native-fbsdk-next'
+import { AppleButton } from '@invertase/react-native-apple-authentication'
 
 export default function SocialButtons({ login = false, navigation }) {
     const [errors, setErrors] = useState([])
@@ -27,7 +28,7 @@ export default function SocialButtons({ login = false, navigation }) {
 
     return (
         <>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => {
                     GoogleSignin.configure({
                         iosClientId: GOOGLE_IOS_CLIENT_ID,
@@ -66,8 +67,8 @@ export default function SocialButtons({ login = false, navigation }) {
                 <Text style={styles.signupOptionText}>
                     {login ? 'Log in' : 'Sign up'} with Google
                 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity
                 onPress={() => {
                     LoginManager.logInWithPermissions([
                         'public_profile',
@@ -119,7 +120,16 @@ export default function SocialButtons({ login = false, navigation }) {
                 <Text style={styles.signupTextLight}>
                     {login ? 'Log in' : 'Sign up'} with Facebook
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+
+            {/* <AppleButton
+                buttonStyle={AppleButton.Style.BLACK}
+                buttonType={AppleButton.Type.SIGN_IN}
+                style={{
+                    height: 60,
+                }}
+                onPress={() => onAppleButtonPress()}
+            /> */}
 
             {login ? null : (
                 <TouchableOpacity
