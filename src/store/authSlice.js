@@ -63,6 +63,15 @@ export const authSlice = createSlice({
                     state.token = payload.token
                     state.user = jwtDecode(payload.token)
                 }
+            ),
+            builder.addMatcher(
+                roadbudApi.endpoints.deleteUser.matchFulfilled,
+                (state, { payload }) => {
+                    console.log(payload)
+                    AsyncStorage.removeItem('token')
+                    state.token = null
+                    state.user = null
+                }
             )
     },
 })

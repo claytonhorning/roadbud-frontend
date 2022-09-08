@@ -15,6 +15,7 @@ import { logoutUser } from '../../store/authSlice'
 import {
     useGetUserDataQuery,
     useUpdateUserDataSettingsMutation,
+    useDeleteUserMutation,
 } from '../../services/roadbudApi'
 import { COLORS, SHADOWS, TYPOGRAPHY } from '../../styles'
 import { formatDateWithTime } from '../../utils'
@@ -22,6 +23,7 @@ import AvatarLetters from '../../components/AvatarLetters'
 
 const AccountScreen = () => {
     const [errors, setErrors] = useState({})
+    const [deleteUser, userResult] = useDeleteUserMutation()
     const handleError = (error, input) => {
         setErrors((prevState) => ({ ...prevState, [input]: error }))
     }
@@ -32,20 +34,27 @@ const AccountScreen = () => {
     })
     const { user } = useSelector((state) => state.auth)
 
-    console.log(user)
-
     dispatch = useDispatch()
 
     const handleLogout = () => {
         try {
-            dispatch(logoutUser())
+            logoutUser()
         } catch (error) {
             handleError(error, 'logout')
         }
     }
 
+    const handleDelete = () => {
+        try {
+            deleteUser(user._id)
+        } catch (error) {
+            handleError(error, 'delete')
+        }
+    }
+
     const { data, isLoading, error } = useGetUserDataQuery()
-    const [setUserSettings, result] = useUpdateUserDataSettingsMutation()
+    const [setUserSettings, settingsResult] =
+        useUpdateUserDataSettingsMutation()
 
     useEffect(() => {
         if (data) {
@@ -292,7 +301,10 @@ const AccountScreen = () => {
                         Logout
                     </Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity style={styles.deleteButton}>
+                <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={handleDelete}
+                >
                     <Text
                         style={{
                             fontSize: 18,
@@ -302,7 +314,7 @@ const AccountScreen = () => {
                     >
                         Delete account
                     </Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
@@ -373,7 +385,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     deleteButton: {
-        marginTop: 20,
+        marginTop: 5,
         backgroundColor: '#707070',
         height: 55,
         alignItems: 'center',

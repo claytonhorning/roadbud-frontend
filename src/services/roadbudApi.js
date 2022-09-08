@@ -57,6 +57,15 @@ export const roadbudApi = createApi({
             invalidatesTags: ['User'],
         }),
 
+        //USER ENDPOINTS
+        deleteUser: build.mutation({
+            query: (id) => ({
+                url: `/user/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['User'],
+        }),
+
         // EVENT ENDPOINTS
         getEvents: build.query({
             query: () => '/event',
@@ -121,4 +130,5 @@ export const {
     useDeleteEventMutation,
     useGetDirectionsQuery,
     useLazyGetDirectionsQuery,
+    useDeleteUserMutation,
 } = roadbudApi
