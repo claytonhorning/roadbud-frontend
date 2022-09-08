@@ -38,13 +38,14 @@ const AccountScreen = () => {
 
     const handleLogout = () => {
         try {
-            logoutUser()
+            dispatch(logoutUser())
         } catch (error) {
             handleError(error, 'logout')
         }
     }
 
     const handleDelete = () => {
+        console.log('hello')
         try {
             deleteUser(user._id)
         } catch (error) {
